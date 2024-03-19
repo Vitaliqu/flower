@@ -1,0 +1,138 @@
+.footer {
+    width: 100vw;
+    color: white;
+}
+
+.top {
+    height: 3rem;
+    background-color: var(--backgroundGreed);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    font-size: 1.5rem;
+    font-weight: 600;
+    justify-content: center;
+}
+
+.logoText {
+    font-family: "Fjalla One", sans-serif;
+    font-size: 1.75rem;
+    font-weight: 400;
+}
+
+.top p {
+    margin: 0 0.5rem;
+}
+
+.main {
+    padding: 2rem 10%;
+    background-color: var(--textBrown);
+    display: flex;
+    flex-direction: row;
+}
+
+.about {
+    width: calc(50% - 2rem);
+    padding-right: 2rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.aboutLabel, .infoLabel {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.aboutText {
+    font-weight: 300;
+}
+
+.info {
+    margin-left: 2rem;
+}
+
+.infoLabel {
+}
+
+.addressWrapper, .phoneWrapper, .faceBookWrapper, .mailWrapper {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    flex-direction: row;
+    margin: 0.5rem 0;
+}
+
+.addressWrapper img, .phoneWrapper img, .faceBookWrapper img {
+    width: 2rem;
+    margin-right: 0.5rem;
+}
+
+.addressWrapper img, .mailWrapper img {
+    filter: invert();
+}
+
+.addressText {
+}
+
+.phoneWrapper {
+}
+
+.phoneText {
+}
+
+.faceBookWrapper {
+}
+
+.faceBook {
+}
+
+.mailWrapper {
+}
+
+.mailWrapper img {
+    margin-right: 0.6rem;
+    width: 2rem;
+}
+
+.mailText {
+}
+
+@media (max-width: 680px) {
+    .main {
+        flex-direction: column;
+        padding-top: 0;
+    }
+
+    .about, .info {
+        margin-left: 0;
+        width: 100%;
+        margin-bottom: 1rem;
+    }
+
+    .aboutLabel, .infoLabel {
+        margin-top: 1rem;
+        font-size: 1.25rem;
+    }
+
+    .aboutText {
+        font-size: 0.75rem;
+    }
+
+
+    .logoLabel {
+        font-size: 1rem;
+        margin: 0 0.5rem;
+    }
+
+    .logoText {
+        font-family: "Fjalla One", sans-serif;
+        font-size: 1.25rem;
+        font-weight: 400;
+    }
+
+    .addressText, .phoneText, .faceBook, .mailText{
+        font-size: 0.85rem;
+    }
+
+}
