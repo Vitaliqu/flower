@@ -6,18 +6,14 @@ import hamburger from "./assets/hamburger.png"
 import phone from "./assets/phone.svg"
 
 const useMediaQuery = (query) => {
-    const [matches, setMatches] = useState(false);
+    const [matches, setMatches] = useState(window.matchMedia(query).matches);
     useEffect(() => {
         const matchQueryList = window.matchMedia(query);
 
-        function handleChange(e) {
-            setMatches(e.matches);
-        }
+        const handleChange = (e) => setMatches(e.matches);
 
         matchQueryList.addEventListener("change", handleChange);
-        return () => {
-            matchQueryList.removeEventListener("change", handleChange);
-        };
+        return () => matchQueryList.removeEventListener("change", handleChange);
     }, [query]);
     return matches;
 }
@@ -25,10 +21,9 @@ const useMediaQuery = (query) => {
 
 const App = () => {
     const isTablet = useMediaQuery("(max-width:992px)")
-    const five = useMediaQuery("(max-width:1200px)")
     return <div className={styles.header}>
         <div className={styles.searchBar}>
-            <p className={styles.phone}><img  src={phone} alt={phone}/>+380-123-456-789</p>
+            <p className={styles.phone}><img src={phone} alt={phone}/>+380-123-456-789</p>
             {isTablet && <div className={styles.dropDown}><img src={hamburger} alt="hamburger"/></div>}
             <div className={styles.logoText}>
                 <p>
