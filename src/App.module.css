@@ -1,0 +1,160 @@
+:root {
+    --backgroundGreed: #79A03F;
+    --textBrown: #4F4038;
+}
+
+p {
+    line-height: 1;
+    margin: 0;
+}
+
+body, html {
+    width: 100vw;;
+}
+
+.header {
+    background-color: var(--backgroundGreed);
+    position: fixed;
+    display: flex;
+    top: 0;
+    left: 0;
+    justify-content: center;
+    align-items: center;
+    right: 0;
+    height: 6rem;
+}
+
+.searchBar {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 6rem;
+    flex-direction: row;
+    width: 85%;
+    box-sizing: border-box;
+    flex-shrink: 0;
+    padding: 0 clamp(1rem, 8vw, 3rem);
+    height: 6rem;
+    box-shadow: 2px 2px 5px #838383;
+    border-radius: 50px;
+    background-color: white;
+}
+
+.logoText {
+    width: auto;
+    margin-left: 0.5rem;
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    flex-direction: column;
+    font-size: clamp(1.75rem, 8vw, 2.25rem);
+    color: var(--textBrown);
+    font-family: "Fjalla One", sans-serif;
+}
+
+.gardenCenter {
+    font-family: "Roboto", sans-serif;
+    color: var(--textBrown);
+    font-size: clamp(0.75rem, 3.5vw, 1rem);
+    font-weight: 600;
+}
+
+.navigationPanel {
+    font-family: "Montserrat", sans-serif;
+    font-weight: 600;
+    color: var(--textBrown);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: auto;
+}
+
+.navigationPanel p {
+    margin: 0 clamp(0.5rem, 1.25dvw, 1.25rem);
+}
+
+.rightPart {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.glass {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 0.5rem;
+}
+
+.glass img {
+    height: 1.5rem;
+    width: 1.5rem;
+}
+
+.account {
+    margin-left: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.account img {
+    filter: invert();
+    height: 1.5rem;
+    width: 1.5rem;
+}
+
+.dropDown {
+    display: flex;
+}
+
+.dropDown img {
+    height: 1.5rem;
+}
+
+.phone {
+    position: absolute;
+    font-size: 1.15rem;
+    margin-left: -1rem;
+    display: flex;
+    align-items: center;
+    top: -2.15rem;
+    font-family: "Montserrat", sans-serif;
+    color: white;
+
+}
+
+.phone img {
+    height: 1.5rem;
+}
+
+@media (max-width: 992px) {
+
+
+}
+
+@media (max-width: 768px) {
+    .header {
+        height: 3rem;
+    }
+
+    .searchBar {
+        width: 100%;
+        border-radius: 0;
+        margin-top: 4.5rem;
+        height: 4.5rem;
+    }
+
+    .phone {
+        margin-left: 0rem;
+        top: -1.15rem;
+        font-size: 0.75rem;
+    }
+
+    .phone img {
+        height: 0.75rem;
+    }
+
+}
