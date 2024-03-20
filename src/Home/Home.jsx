@@ -33,12 +33,12 @@ const Home = (filter) => {
                     <img src={plant} alt="plant" className={styles.plant}/>
                 </div>
                 <div className={styles.categorySwitch}>
-                    <div className={styles.all} style={filter.filter === "all" ? active : {}}><Link to='/'/>Всі
+                    <div className={styles.all} style={filter.filter === "all" ? active : {}}><Link to='/flower/'/>Всі
                     </div>
-                    <div className={styles.new} style={filter.filter === "new" ? active : {}}><Link to='/new'/>Новинки
+                    <div className={styles.new} style={filter.filter === "new" ? active : {}}><Link to='/flower/new'/>Новинки
                     </div>
                     <div className={styles.popular} style={filter.filter === "popular" ? active : {}}><Link
-                        to='/popular'/>Популярні
+                        to='/flower/popular'/>Популярні
                     </div>
                 </div>
             </div>

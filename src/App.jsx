@@ -8,9 +8,9 @@ const App = () => {
         <Header/>
         <BrowserRouter>
             <Routes>
-                <Route path="/" element={<Home filter={'all'}/>}></Route>
-                <Route path="new/" element={<Home filter={'new'}/>}></Route>
-                <Route path="popular/" element={<Home filter={'popular'}/>}></Route>
+                <Route path="/flower/" element={<Home filter={'all'}/>}></Route>
+                <Route path="/flower/new/" element={<Home filter={'new'}/>}></Route>
+                <Route path="flower/popular/" element={<Home filter={'popular'}/>}></Route>
             </Routes>
         </BrowserRouter>
         <Footer/>
