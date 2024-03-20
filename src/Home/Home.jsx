@@ -6,23 +6,25 @@ import four from "../../public/4.png"
 import five from "../../public/5.png"
 import six from "../../public/6.png"
 import plant from "../assets/plant.png"
+import {Link} from "react-router-dom";
 
-const flowers = [
-    {name: "Магнолії", image: one},
-    {name: "Ялина - Picea", image: two},
-    {name: "Ялиці - Abies", image: three},
-    {name: "Листяні кущі", image: four},
-    {name: "Японські клени", image: five},
-    {name: "Штамбові авойні рослини", image: six},
-    {name: "Магнолії", image: one},
-    {name: "Ялина - Picea", image: two},
-    {name: "Ялиці - Abies", image: three},
-    {name: "Листяні кущі", image: four},
-    {name: "Японські клени", image: five},
-    {name: "Штамбові авойні рослини", image: six},
+let flowers = [
+    {name: "Магнолії", image: one, new: false, popular: true},
+    {name: "Ялина - Picea", image: two, new: true, popular: true},
+    {name: "Ялиці - Abies", image: three, new: true, popular: true},
+    {name: "Листяні кущі", image: four, new: false, popular: false},
+    {name: "Японські клени", image: five, new: false, popular: false},
+    {name: "Штамбові авойні рослини", image: six, new: false, popular: true},
+    {name: "Магнолії", image: one, new: true, popular: false},
+    {name: "Ялина - Picea", image: two, new: true, popular: true},
+    {name: "Ялиці - Abies", image: three, new: true, popular: false},
+    {name: "Листяні кущі", image: four, new: true, popular: false},
+    {name: "Японські клени", image: five, new: false, popular: false},
+    {name: "Штамбові авойні рослини", image: six, new: false, popular: false},
 ]
 
-const Home = () => {
+const Home = (filter) => {
+    const active = {color: "white", backgroundColor: "#79A03F"}
     return <>
         <div className={styles.home}>
             <div className={styles.flowersCategory}>
@@ -31,19 +33,26 @@ const Home = () => {
                     <img src={plant} alt="plant" className={styles.plant}/>
                 </div>
                 <div className={styles.categorySwitch}>
-                    <div className={styles.all} style={{color: "white", backgroundColor: "#79A03F"}}>Всі</div>
-                    <div className={styles.new}>Новинки</div>
-                    <div className={styles.popular}>Популярні</div>
+                    <div className={styles.all} style={filter.filter === "all" ? active : {}}><Link to='/'/>Всі
+                    </div>
+                    <div className={styles.new} style={filter.filter === "new" ? active : {}}><Link to='/new'/>Новинки
+                    </div>
+                    <div className={styles.popular} style={filter.filter === "popular" ? active : {}}><Link
+                        to='/popular'/>Популярні
+                    </div>
                 </div>
             </div>
             <div className={styles.categoryGrid}>
-                {flowers.map((element, index) => {
-                    return <div className={styles.categoryCard} key={index}>
-                        <div className={styles.imageHolder}><img className={styles.cardImage} src={element.image} alt="img"/>
+                {flowers
+                    .filter(element => filter.filter=== "all" ? true : element[filter.filter]) // Filter based on selected filter
+                    .map((element, index) => (
+                        <div className={styles.categoryCard} key={index}>
+                            <div className={styles.imageHolder}>
+                                <img className={styles.cardImage} src={element.image} alt="img" />
+                            </div>
+                            <p className={styles.categoryName}>{element.name}</p>
                         </div>
-                        <p className={styles.categoryName}>{element.name}</p>
-                    </div>
-                })}
+                    ))}
             </div>
         </div>
     </>

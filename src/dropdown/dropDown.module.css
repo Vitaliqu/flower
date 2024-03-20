@@ -1,0 +1,51 @@
+.dropDownMenu {
+    background-color: var(--backgroundGray);
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: start;
+    height: 100vh;
+    overflow: hidden;
+    margin-top: 6rem;
+    z-index: -1;
+    box-shadow: 2px 2px 10px #444444;
+    transition: width 0.3\s ease-in-out;
+    width: 0;
+}
+
+.dropDownList {
+    margin-top: 4rem;
+    padding: 0;
+    z-index: -100;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    flex-direction: column;
+}
+
+li {
+    font-family: "Montserrat", sans-serif;
+    font-weight: 600;
+    z-index: -100;
+    color: var(--textBrown);
+    font-size: 1.1rem;
+    padding: clamp(0rem, 2vh, 1rem) clamp(1rem, 8vw, 3rem);
+    list-style: none;
+    display: flex;
+}
+
+li:hover {
+    cursor: pointer;
+    z-index: -100;
+    color: white;
+    background-color: var(--backgroundGreed);
+}
+
+@media (max-width: 768px){
+    .dropDownList{
+        margin-top: clamp(1rem, 8vh, 3rem);
+    }
+    .dropDownMenu{
+    }
+}

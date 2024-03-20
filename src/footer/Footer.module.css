@@ -121,12 +121,12 @@
 
 
     .logoLabel {
+        font-family: "Montserrat", sans-serif;
         font-size: 1rem;
         margin: 0 0.5rem;
     }
 
     .logoText {
-        font-family: "Fjalla One", sans-serif;
         font-size: 1.25rem;
         font-weight: 400;
     }

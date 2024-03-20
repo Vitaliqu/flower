@@ -9,7 +9,6 @@ p {
 }
 
 
-
 .header {
     background-color: var(--backgroundGreed);
     position: fixed;
@@ -20,6 +19,7 @@ p {
     align-items: center;
     right: 0;
     height: 6rem;
+    z-index: 2;
 }
 
 .searchBar {
@@ -118,6 +118,18 @@ p {
     align-items: center;
     font-family: "Montserrat", sans-serif;
     color: white;
+}
+
+.hamburger {
+    position: relative;
+    transition: transform 0.2s, opacity 0.2s;
+}
+
+.x {
+    position: absolute;
+    transition: transform 0.5s, opacity 0.3s;
+    opacity: 0;
+    display: flex;
 }
 
 .phone img {
