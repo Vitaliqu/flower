@@ -1,16 +1,21 @@
 :root {
-    --backgroundGreed: #79A03F;
+    --backgroundGreen: #79A03F;
     --textBrown: #4F4038;
 }
 
 p {
+    position: relative;
     line-height: 1;
     margin: 0;
+    user-select: none;
+}
+span{
+    cursor: pointer;
 }
 
 
 .header {
-    background-color: var(--backgroundGreed);
+    background-color: var(--backgroundGreen);
     position: fixed;
     display: flex;
     top: 0;
@@ -70,7 +75,7 @@ p {
     width: auto;
 }
 
-.navigationPanel p {
+.navigationPanel p,.navigationPanel span {
     margin: 0 clamp(0.5rem, 1.25dvw, 1.25rem);
 }
 
@@ -103,12 +108,13 @@ p {
     width: 2.25rem;
 }
 
-.dropDown {
+.hamburgerMenu {
+    cursor: pointer;
     display: flex;
 }
 
-.dropDown img {
-    height: 1.5rem;
+.hamburgerMenu img {
+    height: 2rem;
 }
 
 .phone, .faceBook {
@@ -121,13 +127,14 @@ p {
 }
 
 .hamburger {
+    height: 4rem;
     position: relative;
-    transition: transform 0.2s, opacity 0.2s;
+    transition: transform 0.3s ease-in-out, opacity 0.2s;
 }
 
 .x {
     position: absolute;
-    transition: transform 0.5s, opacity 0.3s;
+    transition: transform 0.3s, opacity 0.2s;
     opacity: 0;
     display: flex;
 }

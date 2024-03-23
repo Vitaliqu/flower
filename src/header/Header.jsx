@@ -8,11 +8,23 @@ import phone from "../assets/phone.svg"
 import faceBook from "../assets/facebook.svg"
 import DropDown from "../dropdown/dropDown.jsx";
 import {useState} from "react";
+import {Link, useLocation} from "react-router-dom";
+import {CATALOG_ROUTE, DELIVERY_ROUTE, HOME_ROUTE, NEW_ROUTE, POPULAR_ROUTE, REVIEWS_ROUTE} from "../utils/consts.jsx";
 
 
 const Header = () => {
     const isTablet = useMediaQuery("(max-width:992px)")
     const [isOpened, setIsOpened] = useState(false)
+    const activeStyle = {color: "#79A03FFF"};
+
+    const path = useLocation().pathname;
+
+    const Item = ({path, label, active}) => (
+        <p style={active ? {...activeStyle} : {}}>
+            <Link to={path}/>{label}
+        </p>
+    );
+
     return (
         <>
             <div className={styles.header}>
@@ -22,12 +34,13 @@ const Header = () => {
                 </div>
                 <div className={styles.searchBar}>
                     {isTablet &&
-                        <div className={styles.dropDown}><DropDown isOpened={isOpened}/>
+                        <div className={styles.hamburgerMenu}>
+                            <DropDown isOpened={isOpened} setIsOpened={setIsOpened}/>
                             <img className={styles.hamburger}
-                                 style={isOpened ? {opacity: "0", transform: "rotateX(180deg)"} : {}}
+                                 style={isOpened ? {opacity: "0", transform: "rotateZ(180deg)"} : {}}
                                  onClick={() => setIsOpened(!isOpened)} src={hamburger} alt="hamburger"/>
                             <img className={styles.x}
-                                 style={isOpened ? {opacity: "1", transform: "rotateX(180deg)"} : {}}
+                                 style={isOpened ? {opacity: "1", transform: "rotateZ(180deg)"} : {}}
                                  onClick={() => setIsOpened(!isOpened)} src={x} alt="hamburger"/>
                         </div>}
                     <div className={styles.logoText}>
@@ -38,11 +51,17 @@ const Header = () => {
                         <p className={styles.gardenCenter}>Садовий центр</p>
                     </div>
                     {!isTablet && <div className={styles.navigationPanel}>
-                        <p style={{color: "#79A03F"}}>Головна</p>
-                        <p>Каталог</p>
-                        <p>Доставка</p>
-                        <p>Відгуки</p>
-                        <p>Детальніше</p>
+                        <Item path={HOME_ROUTE} label="Головна"
+                              active={path === HOME_ROUTE || path === NEW_ROUTE || path === POPULAR_ROUTE}/>
+                        <Item path={CATALOG_ROUTE} label="Каталог" active={path.includes(CATALOG_ROUTE)}/>
+                        <Item path={DELIVERY_ROUTE} label="Доставка" active={path.includes(DELIVERY_ROUTE)}/>
+                        <Item path={REVIEWS_ROUTE} label="Відгуки" active={path.includes(REVIEWS_ROUTE)}/>
+                        <span onClick={() => window.scrollTo({
+                            top: document.documentElement.scrollHeight,
+                            behavior: "smooth"
+                        })}>
+                            Детальніше
+                        </span>
                     </div>}
                     <div className={styles.rightPart}>
                         <div className={styles.glass}><img src={glass} alt="glass"/></div>

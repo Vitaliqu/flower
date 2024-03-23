@@ -1,0 +1,27 @@
+.delivery {
+    width: 80%;
+    margin-left:12%;
+    display: flex;
+    margin-top: 12rem;
+    margin-bottom: 3rem;
+    flex-direction: column;
+}
+
+.deliveryTitle {
+    color: var(--textBrown);
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.deliveryText {
+    color: var(--textBrown);
+
+}
+
+@media (max-width: 768px) {
+    .delivery {
+        margin-top: 8rem;
+        margin-bottom: 0;
+    }
+}

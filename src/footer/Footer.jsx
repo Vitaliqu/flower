@@ -6,7 +6,7 @@ import mail from "../assets/mail.png"
 
 const Footer = () => {
     return <>
-        <div className={styles.footer}>
+        <div id="footer" className={styles.footer}>
             <div className={styles.top}>
                 <p className={styles.logoText}>Flower O`N</p>
                 <p className={styles.logoLabel}>Садовий центр</p>

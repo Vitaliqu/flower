@@ -101,7 +101,7 @@ a {
 
 .cardImage {
     display: flex;
-    width: 90%;
+    width: 95%;
     z-index: -1;
 }
 
@@ -188,7 +188,7 @@ a {
     }
 
     .cardImage {
-        width: 90%;
+        width: 95%;
     }
 
 }

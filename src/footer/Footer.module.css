@@ -1,11 +1,11 @@
 .footer {
-    width: 100vw;
+    width: 100%;
     color: white;
 }
 
 .top {
     height: 3rem;
-    background-color: var(--backgroundGreed);
+    background-color: var(--backgroundGreen);
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -45,7 +45,9 @@
 }
 
 .aboutText {
-    font-weight: 300;
+    font-size: 1rem;
+    font-weight: 200;
+    line-height: 1rem;
 }
 
 .info {
@@ -72,42 +74,28 @@
     filter: invert();
 }
 
-.addressText {
-}
-
-.phoneWrapper {
-}
-
-.phoneText {
-}
-
-.faceBookWrapper {
-}
-
-.faceBook {
-}
-
-.mailWrapper {
-}
-
 .mailWrapper img {
     margin-right: 0.6rem;
     width: 2rem;
-}
-
-.mailText {
 }
 
 @media (max-width: 680px) {
     .main {
         flex-direction: column;
         padding-top: 0;
+        padding-bottom: 0;
+    }
+    .about{
+        margin-top: 1rem;
     }
 
     .about, .info {
         margin-left: 0;
         width: 100%;
         margin-bottom: 1rem;
+    }
+    .info{
+        margin-bottom: 0;
     }
 
     .aboutLabel, .infoLabel {
@@ -131,7 +119,7 @@
         font-weight: 400;
     }
 
-    .addressText, .phoneText, .faceBook, .mailText{
+    .addressText, .phoneText, .faceBook, .mailText {
         font-size: 0.85rem;
     }
 
