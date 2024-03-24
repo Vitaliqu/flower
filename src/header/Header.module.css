@@ -180,7 +180,6 @@ span{
 
     .phone, .faceBook {
         margin-left: 0;
-        top: -1.15rem;
         font-size: clamp(0.5rem, 4vw, 0.75rem);
     }
 
