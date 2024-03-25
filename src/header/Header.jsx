@@ -20,10 +20,10 @@ const Header = () => {
 
     const Item = ({path, label, active}) => (
         <p style={active ? {...activeStyle} : {}}>
-            <Link to={path} onClick={() => requestAnimationFrame(() => window.scrollTo({
+            <Link to={path} onClick={() => setTimeout(() => window.scrollTo({
                 top: 0,
                 behavior: "smooth"
-            }))}/>{label}
+            }),50)}/>{label}
         </p>);
 
     return (

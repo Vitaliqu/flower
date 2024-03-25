@@ -17,10 +17,11 @@ const DropDown = (state) => {
 
     const closeMenu = () => {
         setIsOpened(false)
-        window.scrollTo({
+        setTimeout(() => window.scrollTo({
             top: 0,
             behavior: "smooth"
-        });
+        }), 20)
+
     };
     const Item = ({path, label, active, onClick}) => (
         <li className={styles.navigate} style={active ? {...activeStyle} : {}} onClick={onClick}>
