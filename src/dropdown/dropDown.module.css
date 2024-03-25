@@ -24,7 +24,7 @@
     flex-direction: column;
 }
 
-li {
+.navigate {
     transition: background-color 0.25s, color 0.25s;
     position: relative;
     font-family: "Montserrat", sans-serif;
@@ -43,7 +43,7 @@ a{
     left: 0;
     top:0;
 }
-li:hover {
+.navigate:hover {
     cursor: pointer;
     z-index: -100;
     color: white;

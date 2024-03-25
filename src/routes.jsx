@@ -9,6 +9,8 @@ import {
 } from "./utils/consts.jsx";
 import Home from "./Home/Home.jsx";
 import Delivery from "./delivery/Delivery.jsx";
+import Catalog from "./catalog/Catalog.jsx";
+import {flowers, flowers_category} from "./database.js";
 
 export const authorizedRoutes = [
     {
@@ -43,7 +45,7 @@ export const publicRoutes = [
     },
     {
         path: CATALOG_ROUTE,
-        component: <div>catalog</div>
+        component: <Catalog/>
     },
     {
         path: DELIVERY_ROUTE,
@@ -53,4 +55,10 @@ export const publicRoutes = [
         path: REVIEWS_ROUTE,
         component: <div>reviews</div>
     }
-]
+    , ...flowers_category.map(element => {
+        return {
+            path: "/catalog/" + element.name,
+            component: element.name
+        }
+    })]
+console.log(publicRoutes)

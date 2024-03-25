@@ -3,17 +3,18 @@ import {Link, useLocation} from "react-router-dom"
 import {CATALOG_ROUTE, DELIVERY_ROUTE, HOME_ROUTE, NEW_ROUTE, POPULAR_ROUTE, REVIEWS_ROUTE} from "../utils/consts.jsx";
 
 const DropDown = (state) => {
+
+    const path = useLocation().pathname;
+    const activeStyle = {backgroundColor: "#79A03F", color: "white"};
+    const {isOpened, setIsOpened} = state;
     const scrollToFooter = () => {
         setIsOpened(false);
         window.scrollTo({
             top: document.documentElement.scrollHeight,
             behavior: "smooth"
         });
-
     };
-    const path = useLocation().pathname;
-    const activeStyle = {backgroundColor: "#79A03F", color: "white"};
-    const {isOpened, setIsOpened} = state;
+
     const closeMenu = () => {
         setIsOpened(false)
         window.scrollTo({
@@ -22,7 +23,7 @@ const DropDown = (state) => {
         });
     };
     const Item = ({path, label, active, onClick}) => (
-        <li style={active ? {...activeStyle} : {}} onClick={onClick}>
+        <li className={styles.navigate} style={active ? {...activeStyle} : {}} onClick={onClick}>
             <Link to={path}/>{label}
         </li>
     );
@@ -35,7 +36,7 @@ const DropDown = (state) => {
             <Item path={CATALOG_ROUTE} label="Каталог" active={path.includes(CATALOG_ROUTE)} onClick={closeMenu}/>
             <Item path={DELIVERY_ROUTE} label="Доставка" active={path.includes(DELIVERY_ROUTE)} onClick={closeMenu}/>
             <Item path={REVIEWS_ROUTE} label="Відгуки" active={path.includes(REVIEWS_ROUTE)} onClick={closeMenu}/>
-            <li onClick={scrollToFooter}>
+            <li className={styles.navigate} onClick={scrollToFooter}>
                 Детальніше
             </li>
         </ul>

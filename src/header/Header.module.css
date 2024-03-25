@@ -1,6 +1,9 @@
 :root {
     --backgroundGreen: #79A03F;
     --textBrown: #4F4038;
+    --backgroundGray: #EEECEF;
+    --borderGray: #bdbdbd;
+
 }
 
 p {

@@ -1,10 +1,16 @@
+.deliveryWrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
 .delivery {
     width: 80%;
-    margin-left:12%;
     display: flex;
     margin-top: 12rem;
     margin-bottom: 3rem;
     flex-direction: column;
+    max-width: 1320px;
 }
 
 .deliveryTitle {

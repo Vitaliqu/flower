@@ -16,14 +16,15 @@ const Header = () => {
     const isTablet = useMediaQuery("(max-width:992px)")
     const [isOpened, setIsOpened] = useState(false)
     const activeStyle = {color: "#79A03FFF"};
-
     const path = useLocation().pathname;
 
     const Item = ({path, label, active}) => (
         <p style={active ? {...activeStyle} : {}}>
-            <Link to={path}/>{label}
-        </p>
-    );
+            <Link to={path} onClick={() => requestAnimationFrame(() => window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            }))}/>{label}
+        </p>);
 
     return (
         <>
