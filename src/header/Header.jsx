@@ -7,9 +7,10 @@ import hamburger from "../assets/hamburger.png"
 import phone from "../assets/phone.svg"
 import faceBook from "../assets/facebook.svg"
 import DropDown from "../dropdown/dropDown.jsx";
-import {useState} from "react";
+import {useContext, useState} from "react";
 import {Link, useLocation} from "react-router-dom";
 import {CATALOG_ROUTE, DELIVERY_ROUTE, HOME_ROUTE, NEW_ROUTE, POPULAR_ROUTE, REVIEWS_ROUTE} from "../utils/consts.jsx";
+import {Context} from "../main.jsx";
 
 
 const Header = () => {
@@ -17,13 +18,13 @@ const Header = () => {
     const [isOpened, setIsOpened] = useState(false)
     const activeStyle = {color: "#79A03FFF"};
     const path = useLocation().pathname;
-
+    const {user} = useContext(Context)
     const Item = ({path, label, active}) => (
         <p style={active ? {...activeStyle} : {}}>
             <Link to={path} onClick={() => setTimeout(() => window.scrollTo({
                 top: 0,
                 behavior: "smooth"
-            }),50)}/>{label}
+            }), 50)}/>{label}
         </p>);
 
     return (
@@ -56,7 +57,7 @@ const Header = () => {
                               active={path === HOME_ROUTE || path === NEW_ROUTE || path === POPULAR_ROUTE}/>
                         <Item path={CATALOG_ROUTE} label="Каталог" active={path.includes(CATALOG_ROUTE)}/>
                         <Item path={DELIVERY_ROUTE} label="Доставка" active={path.includes(DELIVERY_ROUTE)}/>
-                        <Item path={REVIEWS_ROUTE} label="Відгуки" active={path.includes(REVIEWS_ROUTE)}/>
+                        {/*<Item path={REVIEWS_ROUTE} label="Відгуки" active={path.includes(REVIEWS_ROUTE)}/>*/}
                         <span onClick={() => window.scrollTo({
                             top: document.documentElement.scrollHeight,
                             behavior: "smooth"

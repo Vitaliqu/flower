@@ -58,7 +58,6 @@ export const publicRoutes = [
     , ...flowers_category.map(element => {
         return {
             path: "/catalog/" + element.name,
-            component: element.name
+            component: <Catalog/>
         }
     })]
-console.log(publicRoutes)

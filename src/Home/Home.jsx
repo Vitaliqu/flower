@@ -1,9 +1,8 @@
 import styles from "./Home.module.css"
 import plant from "../assets/plant.png"
 import {Link} from "react-router-dom";
-import {HOME_ROUTE, NEW_ROUTE, POPULAR_ROUTE} from "../utils/consts.jsx";
+import {CATALOG_ROUTE, HOME_ROUTE, NEW_ROUTE, POPULAR_ROUTE} from "../utils/consts.jsx";
 import {flowers_category} from "../database.js";
-
 
 
 const Home = (filter) => {
@@ -31,11 +30,16 @@ const Home = (filter) => {
                 </div>
             </div>
             <div className={styles.categoryGrid}>
-                {flowers_category.filter(element => filter.filter=== "all" ? true : element[filter.filter])
+                {flowers_category.filter(element => filter.filter === "all" ? true : element[filter.filter])
                     .map((element, index) => (
                         <div className={styles.categoryCard} key={index}>
                             <div className={styles.imageHolder}>
-                                <img className={styles.cardImage} src={element.image} alt="img" />
+                                <Link className={styles.cardLink} to={CATALOG_ROUTE + '/' + element.name}
+                                      onClick={() => setTimeout(() => window.scrollTo({
+                                          top: 0,
+                                          behavior: "smooth"
+                                      }), 50)}/>
+                                <img className={styles.cardImage} src={element.image} alt="img"/>
                             </div>
                             <p className={styles.categoryName}>{element.name}</p>
                         </div>

@@ -36,7 +36,7 @@ const DropDown = (state) => {
                   active={path === HOME_ROUTE || path === NEW_ROUTE || path === POPULAR_ROUTE} onClick={closeMenu}/>
             <Item path={CATALOG_ROUTE} label="Каталог" active={path.includes(CATALOG_ROUTE)} onClick={closeMenu}/>
             <Item path={DELIVERY_ROUTE} label="Доставка" active={path.includes(DELIVERY_ROUTE)} onClick={closeMenu}/>
-            <Item path={REVIEWS_ROUTE} label="Відгуки" active={path.includes(REVIEWS_ROUTE)} onClick={closeMenu}/>
+            {/*<Item path={REVIEWS_ROUTE} label="Відгуки" active={path.includes(REVIEWS_ROUTE)} onClick={closeMenu}/>*/}
             <li className={styles.navigate} onClick={scrollToFooter}>
                 Детальніше
             </li>

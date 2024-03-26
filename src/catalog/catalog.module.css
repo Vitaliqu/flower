@@ -1,16 +1,9 @@
-.catalogWrapper {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    margin-top: 15rem;
-    width: 100%;
-}
-
 .catalog {
+    margin-top: 15rem;
     width: 80%;
     max-width: 1320px;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
 }
 
 .horizontalWrapper {
@@ -27,21 +20,29 @@
 }
 
 .categorySelect {
+    margin: 0;
+    padding: 0;
     border-radius: 4px;
-    display: flex;
-    width: 16rem;
-    height: 100%;
-    flex-direction: column;
     background-color: var(--backgroundGray);
-    z-index: -2;
+    height: max-content;
 }
 
 .category {
+    transition: color 0.3s;
+    position: relative;
     list-style: none;
     font-weight: 400;
     padding: 1rem 1rem;
-    z-index: 100;
     font-size: 1rem;
+    cursor: pointer;
+}
+
+.category:hover {
+    color: var(--backgroundGreen);
+}
+
+a {
+    position: absolute;
 }
 
 .flowersGrid {
@@ -122,6 +123,7 @@
 }
 
 .sortTypes {
+    z-index: 1;
     transition: height 0.3s;
     height: 0;
     overflow: hidden;
@@ -142,11 +144,12 @@
     font-weight: 500;
     color: var(--textBrown);
     display: flex;
-    z-index: 1;
 }
+
 .filterType:hover {
     color: var(--backgroundGreen);
 }
+
 .pageSelect {
 }
 
@@ -169,8 +172,7 @@
     align-items: center;
     justify-content: center;
     width: 100%;
-    height: 14.5rem;
-    z-index: -2;
+    height: 14rem;
 }
 
 .cardImage {
@@ -178,14 +180,29 @@
     border-radius: 10px;
     display: flex;
     width: 95%;
-    z-index: -100;
+    height: 95%;
+}
+.cardLink{
+    position: absolute;
+}
+
+.new {
+    right: 0;
+    top: 0;
+    font-weight: 700;
+    font-size: 1rem;
+    padding: 0.8rem 0.8rem;
+    margin: 0.5rem 0.5rem;
+    border-radius: 10px;
+    position: absolute;
+    color: white;
+    background-color: var(--backgroundGreen);
 }
 
 .flowerName {
     margin-left: 5%;
     font-weight: 400;
     margin-top: 0.5rem;
-    z-index: -29;
     margin-bottom: 1rem;
 }
 
@@ -200,12 +217,10 @@
 }
 
 .currency {
-    z-index: -20;
     color: var(--backgroundGreen);
     font-weight: 500;
     font-size: 1.2rem;
     margin-bottom: 0.05rem;
-
 }
 
 .priceWrapper {
@@ -215,7 +230,6 @@
 }
 
 .price {
-    z-index: -20;
     margin-right: 0.1rem;
     font-weight: 500;
     color: var(--backgroundGreen);
@@ -231,17 +245,20 @@
     align-items: center;
 }
 
+
 .heart {
     object-fit: contain;
     width: 1.5rem;
 }
 
 @media (max-width: 1500px) {
-        .flowersGrid{
-            grid-template-columns: repeat(3, 1fr);
-        }
-}@media (max-width: 1200px) {
-        .flowersGrid{
-            grid-template-columns: repeat(2, 1fr);
-        }
+    .flowersGrid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 1200px) {
+    .flowersGrid {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }
