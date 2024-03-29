@@ -1,0 +1,82 @@
+.container {
+    width: 300px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: calc(100vh - 6rem);
+    flex-shrink: 0;
+    margin-top: 6rem;
+}
+
+.loginLabel {
+    font-family: "Montserrat", sans-serif;
+    color: var(--textBrown);
+    font-weight: 500;
+}
+
+.password {
+}
+
+.registerWrapper {
+    font-family: "Montserrat", sans-serif;
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 2rem;
+    justify-content: start;
+}
+.registerLabel{
+    justify-content: start;
+    height: 100%;
+    align-items: center;
+    width: fit-content;
+    display: flex;
+    flex-direction: row;
+    font-size: 0.8rem;
+    margin-right: 0.2rem;
+}
+.register{
+    font-size: 0.8rem;
+    width: 8rem;
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+.passwordConfirm {
+
+}
+
+input {
+    font-family: "Montserrat", sans-serif;
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 8px;
+    box-sizing: border-box;
+    border-radius: 4px;
+    border: 1px solid var(--borderGray);
+}
+
+input:focus {
+    outline: none;
+}
+
+button {
+    font-family: "Montserrat", sans-serif;
+    font-weight: 500;
+    font-size: 1.2rem;
+    width: 100%;
+    padding: 10px;
+    border-radius: 4px;
+    background-color: var(--backgroundGreen);
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: var(--backgroundGreen);
+}

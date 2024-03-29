@@ -1,6 +1,6 @@
 export const ADMIN_ROUTE = '/admin'
 export const LOGIN_ROUTE = '/login'
-export const REGISTRATION_ROUTE = '/register'
+export const REGISTRATION_ROUTE = '/registration'
 export const HOME_ROUTE = '/'
 export const NEW_ROUTE = '/new'
 export const POPULAR_ROUTE = '/popular'

@@ -8,12 +8,22 @@ import phone from "../assets/phone.svg"
 import faceBook from "../assets/facebook.svg"
 import DropDown from "../dropdown/dropDown.jsx";
 import {useContext, useState} from "react";
-import {Link, useLocation} from "react-router-dom";
-import {CATALOG_ROUTE, DELIVERY_ROUTE, HOME_ROUTE, NEW_ROUTE, POPULAR_ROUTE, REVIEWS_ROUTE} from "../utils/consts.jsx";
+import {Link, useLocation, useNavigate} from "react-router-dom";
+import {
+    CATALOG_ROUTE,
+    DELIVERY_ROUTE,
+    HOME_ROUTE, LIKED_ROUTE,
+    NEW_ROUTE,
+    POPULAR_ROUTE,
+    REGISTRATION_ROUTE,
+    REVIEWS_ROUTE
+} from "../utils/consts.jsx";
 import {Context} from "../main.jsx";
+import {observer} from "mobx-react-lite";
 
 
-const Header = () => {
+const Header = observer(() => {
+    const navigate = useNavigate()
     const isTablet = useMediaQuery("(max-width:992px)")
     const [isOpened, setIsOpened] = useState(false)
     const activeStyle = {color: "#79A03FFF"};
@@ -67,10 +77,12 @@ const Header = () => {
                     </div>}
                     <div className={styles.rightPart}>
                         <div className={styles.glass}><img src={glass} alt="glass"/></div>
-                        <div className={styles.account}><img src={account} alt="account"/></div>
+                        <div className={styles.account}
+                             onClick={() => user._isAuth ? navigate(LIKED_ROUTE) : navigate(REGISTRATION_ROUTE)}><img
+                            src={account} alt="account"/></div>
                     </div>
                 </div>
             </div>
         </>)
-}
+})
 export default Header

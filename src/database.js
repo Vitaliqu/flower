@@ -22,7 +22,7 @@ export const flowers = [
         new: false,
         popular: true,
         description: "Магнолія Роуз Марі - це наша гордість і найбільше вираження краси та елегантності у світі квітів.",
-        price: 4532120,
+        price: 45320.23,
         quantity: 1
     },
     {

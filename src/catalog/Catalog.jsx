@@ -3,12 +3,20 @@ import grid from '../assets/grid.svg';
 import wideGrid from '../assets/widegrid.svg';
 import heart from '../assets/heart.png';
 import {flowers_category, flowers} from "../database.js";
-import {useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import dropDown from "../assets/dropdown.png";
 import {Link, useLocation} from "react-router-dom";
 import {CATALOG_ROUTE} from "../utils/consts.jsx";
+import {Context} from "../main.jsx";
+import {fetchCategory} from "../http/flowerApi.jsx";
+import {observer} from "mobx-react-lite";
 
-const Catalog = () => {
+const Catalog = observer(() => {
+    const {flower} = useContext(Context)
+    useEffect(() => {
+        fetchCategory().then(data => flower.setCategories(data))
+    }, []);
+
     const path = useLocation().pathname;
     const [filter, setFilter] = useState(localStorage.getItem('filter') === null ? "Новинки" : localStorage.getItem('filter'))
     const [isOpened, setOpened] = useState(false)
@@ -18,7 +26,7 @@ const Catalog = () => {
             <Link to={`/catalog/${element.name}`} onClick={() => setTimeout(() => window.scrollTo({
                 top: 0,
                 behavior: "smooth"
-            }),50)}/>
+            }), 50)}/>
             {element.name}</li>
     );
     const filteredArray = (array, filter) => {
@@ -62,7 +70,7 @@ const Catalog = () => {
             <p className={styles.flowerName}>{element.name}</p>
             <div className={styles.cardDescription}>
                 <div className={styles.priceWrapper}>
-                    <p className={styles.price}>{element.price.toLocaleString().replaceAll(",", " ")}</p>
+                    <p className={styles.price}>{element.price.toLocaleString().replaceAll(",", " ").replaceAll(".", ",")}</p>
                     <p className={styles.currency}>₴</p>
                 </div>
                 <img className={styles.heart} src={heart} alt=""/>
@@ -77,7 +85,7 @@ const Catalog = () => {
                     style={path === CATALOG_ROUTE ? {color: "#79A03FFF"} : {}}>Всі
                     <Link to={CATALOG_ROUTE}/>
                 </li>
-                {flowers_category.map(renderCategory)}
+                {flower.categories.map(renderCategory)}
             </ul>
             <div className={styles.flowersWrapper}>
                 <p className={styles.categoryLabel}>Магнолії</p>
@@ -109,6 +117,6 @@ const Catalog = () => {
             </div>
         </div>
     );
-};
+});
 
 export default Catalog;

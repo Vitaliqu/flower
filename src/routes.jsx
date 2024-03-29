@@ -10,7 +10,12 @@ import {
 import Home from "./Home/Home.jsx";
 import Delivery from "./delivery/Delivery.jsx";
 import Catalog from "./catalog/Catalog.jsx";
-import {flowers, flowers_category} from "./database.js";
+import Registration from "./register/Register.jsx";
+import Login from "./login/Login.jsx";
+import Liked from "./Liked/Liked.jsx";
+
+import {fetchCategory} from "./http/flowerApi.jsx";
+const categories = await fetchCategory()
 
 export const authorizedRoutes = [
     {
@@ -19,17 +24,17 @@ export const authorizedRoutes = [
     },
     {
         path: LIKED_ROUTE,
-        component: <></>
+        component: <Liked/>
     }
 ]
-export const publicRoutes = [
+export let publicRoutes = [
     {
         path: LOGIN_ROUTE,
-        component: <div>login</div>
+        component: <Login/>
     },
     {
         path: REGISTRATION_ROUTE,
-        component: <>register</>
+        component: <Registration/>
     },
     {
         path: HOME_ROUTE,
@@ -37,7 +42,7 @@ export const publicRoutes = [
     },
     {
         path: NEW_ROUTE,
-        component: <Home filter={"new"}/>
+        component: <Home filter={"isNew"}/>
     },
     {
         path: POPULAR_ROUTE,
@@ -55,9 +60,10 @@ export const publicRoutes = [
         path: REVIEWS_ROUTE,
         component: <div>reviews</div>
     }
-    , ...flowers_category.map(element => {
+    , ...categories.map(element => {
         return {
             path: "/catalog/" + element.name,
             component: <Catalog/>
         }
-    })]
+    })
+]

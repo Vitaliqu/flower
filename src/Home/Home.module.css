@@ -11,6 +11,13 @@ div {
     flex-direction: column;
 }
 
+.createCategory {
+    font-size: 1.5rem;
+    display: flex;
+    justify-content: end;
+    align-items: center;
+}
+
 .flowersCategory {
     display: flex;
     flex-direction: column;
@@ -55,6 +62,47 @@ div {
     width: 3.5rem;
 }
 
+.categoryAdmin {
+    position: absolute;
+    right: 1rem;
+    top: 1rem;
+    display: flex;
+    flex-direction: row;
+}
+
+.delete {
+    border-radius: 4px;
+    background-color: #de5151;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    display: flex;
+    width: 1.5rem;
+    height: 1.5rem;
+    z-index: 2;
+}
+
+.edit {
+    z-index: 2;
+    border-radius: 4px;
+    margin-right: 0.4rem;
+    cursor: pointer;
+    background-color: #e1e171;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+.editImage {
+    width: 1rem;
+}
+
+.deleteImage {
+    width: 1rem;
+}
+
 .categoryGrid {
     margin-top: 3rem;
     width: 85%;
@@ -85,6 +133,7 @@ a {
 
 .imageHolder {
     position: relative;
+    cursor: pointer;
     border-radius: 10px;
     background-color: var(--backgroundGray);
     display: flex;
@@ -94,6 +143,7 @@ a {
     justify-content: center;
     width: 100%;
     height: 14rem;
+    z-index: 1;
 }
 
 .cardImage {
@@ -102,10 +152,6 @@ a {
     width: 95%;
     height: 95%;
     border-radius: 10px;
-}
-
-.cardLink {
-    z-index: 1;
 }
 
 .imageHolder:hover {
@@ -193,7 +239,6 @@ a {
     .imageHolder {
         width: 100%;
         height: 44vw;
-        z-index: -2;
     }
 
     .cardImage {
