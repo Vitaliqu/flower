@@ -54,7 +54,6 @@ export let publicRoutes = [
     }
 ];
 
-// Fetch categories asynchronously and update publicRoutes
 (async () => {
     const categories = await fetchCategory();
     publicRoutes = [
