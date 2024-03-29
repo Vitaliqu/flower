@@ -1,13 +1,20 @@
-import React, { useEffect, useState } from 'react';
-import { ADMIN_ROUTE, LIKED_ROUTE, LOGIN_ROUTE, REGISTRATION_ROUTE, HOME_ROUTE, NEW_ROUTE, POPULAR_ROUTE, CATALOG_ROUTE, DELIVERY_ROUTE, REVIEWS_ROUTE } from "./utils/consts.jsx";
+import {
+    ADMIN_ROUTE, CATALOG_ROUTE, DELIVERY_ROUTE,
+    HOME_ROUTE,
+    LIKED_ROUTE,
+    LOGIN_ROUTE,
+    NEW_ROUTE,
+    POPULAR_ROUTE,
+    REGISTRATION_ROUTE, REVIEWS_ROUTE
+} from "./utils/consts.jsx";
 import Home from "./Home/Home.jsx";
 import Delivery from "./delivery/Delivery.jsx";
 import Catalog from "./catalog/Catalog.jsx";
 import Registration from "./register/Register.jsx";
 import Login from "./login/Login.jsx";
 import Liked from "./Liked/Liked.jsx";
-import { fetchCategory } from "./http/flowerApi.jsx";
 
+import {fetchCategory} from "./http/flowerApi.jsx";
 export const authorizedRoutes = [
     {
         path: ADMIN_ROUTE,
@@ -18,7 +25,6 @@ export const authorizedRoutes = [
         component: <Liked/>
     }
 ]
-
 export let publicRoutes = [
     {
         path: LOGIN_ROUTE,
@@ -52,15 +58,10 @@ export let publicRoutes = [
         path: REVIEWS_ROUTE,
         component: <div>reviews</div>
     }
-];
-
-(async () => {
-    const categories = await fetchCategory();
-    publicRoutes = [
-        ...publicRoutes,
-        ...categories.map(element => ({
-            path: `/catalog/${element.name}`,
-            component: <Catalog/>
-        }))
-    ];
-})();
+    // , ...fetchCategory().categories.map(element => {
+    //     return {
+    //         path: "/catalog/" + element.name,
+    //         component: <Catalog/>
+    //     }
+    // })
+]
