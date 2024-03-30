@@ -13,7 +13,8 @@ const Login = observer(() => {
         email: '',
         password: '',
     });
-    const handleLogin = async () => {
+    const handleLogin = async (e) => {
+        e.preventDefault()
         if (formData.email.trim() === '' || formData.password.trim() === '') {
             alert('Будь ласка, заповніть всі поля');
             return;
@@ -21,9 +22,9 @@ const Login = observer(() => {
 
         try {
             const data = await login(formData.email, formData.password);
-            if(data.role ==="ADMIN") user._isAdmin = true
+            if (data.role === "ADMIN") user.setIsAdmin(true)
             user.setUser(user)
-            user._isAuth = true
+            user.setIsAuth(true)
             navigate(HOME_ROUTE)
         } catch (e) {
             alert(e.response.data.message)

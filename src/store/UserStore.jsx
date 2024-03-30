@@ -16,11 +16,19 @@ export default class UserStore {
         this._user = user
     }
 
+    setIsAdmin(bool) {
+        this._isAdmin = bool
+    }
+
     get auth() {
         return this._isAuth
     }
 
     get user() {
         return this._user
+    }
+
+    get admin() {
+        return this._isAdmin
     }
 }

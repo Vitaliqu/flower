@@ -14,7 +14,8 @@ const Registration = observer(() => {
         password: '',
         confirmPassword: ''
     });
-    const handleRegistration = async () => {
+    const handleRegistration = async (e) => {
+        e.preventDefault()
         if (formData.password !== formData.confirmPassword) {
             alert('Паролі не співпадають')
             return
@@ -31,12 +32,12 @@ const Registration = observer(() => {
 
         try {
             const data = await registration(formData.email, formData.password);
-            if(data.role ==="ADMIN") user._isAdmin = true
+            if(data.role ==="ADMIN") user.setIsAdmin(true)
             user.setUser(user)
-            user._isAuth = true
+            user.setIsAuth(true)
             navigate(HOME_ROUTE)
         } catch (e) {
-            alert(e.response.data.message)
+            alert(e)
         }
 
     }

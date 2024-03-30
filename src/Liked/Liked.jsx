@@ -14,8 +14,9 @@ const Liked = observer(() => {
         <div className={styles.container}>
             <p className={styles.exit} onClick={async () => {
                 localStorage.clear()
-                user._isAuth = false
-                user._user = {}
+                user.setIsAuth(false)
+                user.setUser(user)
+                user.setIsAdmin(false)
                 const updatedCategories = await fetchCategory();
                 await flower.setCategories(updatedCategories);
                 navigate(HOME_ROUTE)

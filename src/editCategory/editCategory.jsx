@@ -29,12 +29,23 @@ const EditCategory = observer(({setEdit, id}) => {
     };
 
     const handleSubmit = async (id) => {
+        const categories = await fetchCategory();
+        if (categories.find(element => element.name === name)) {
+            alert("Категорія з такою назвою вже існує");
+            return
+        }
+        const data = await fetchCategory()
+        const oldImageResponse = await fetch(import.meta.env.VITE_API + "/" + data.find(element => element.id === id).image);
+        const oldImageBlob = await oldImageResponse.blob();
         const formData = new FormData()
-        formData.append("name", name)
-        formData.append("image", image)
+
+        formData.append("name", name ? name : categories.find(element => element.id === id).name)
+        formData.append("image", image ? image : oldImageBlob)
         formData.append("isNew", isNew)
         formData.append("popular", isPopular)
+
         setEdit(false)
+
         await editCategory(id, formData)
         const updatedCategories = await fetchCategory();
         flower.setCategories(updatedCategories);
