@@ -1,8 +1,8 @@
 import {useContext, useState} from 'react';
 import styles from './createCategory.module.css';
 import {createCategory, fetchCategory} from "../http/flowerApi.jsx";
-import {registration} from "../http/userApi.jsx";
 import {Context} from "../main.jsx";
+import {compress, compressAccurately} from 'image-conversion';
 
 const CreateCategory = ({setCreate}) => {
     const {flower} = useContext(Context)
