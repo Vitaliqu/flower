@@ -250,14 +250,14 @@ const Catalog = observer(() => {
                             {user._isAdmin && createFlower()}
                             {filteredArray(flower.flowers, filter).map(renderFlowerCard)}
                         </div>
-                        <div className={styles.pageSelect}>12134567</div>
+                        {/*<div className={styles.pageSelect}>12134567</div>*/}
                     </> :
                     <>
                         <div className={styles.horizontalFlowersGrid}>
                             {user._isAdmin && createHorizontalFlower()}
                             {filteredArray(flower.flowers, filter).map(renderHorizontalFlowerCard)}
                         </div>
-                        <div className={styles.pageSelect}>12134567</div>
+                        {/*<div className={styles.pageSelect}>12134567</div>*/}
                     </>}
 
             </div>
