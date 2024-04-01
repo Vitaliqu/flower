@@ -151,9 +151,6 @@ a {
     padding: 0 1rem;
     cursor: pointer;
 }
-p{
-    color:var(--textBrown)
-}
 .sortDropdown img {
     transition: transform 0.3s;
     transform: rotate(90deg);
