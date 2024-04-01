@@ -36,6 +36,7 @@
     top: 3rem;
     height: 12rem;
     overflow:scroll;
+    width: 100%;
 }
 
 .categoryList li {
