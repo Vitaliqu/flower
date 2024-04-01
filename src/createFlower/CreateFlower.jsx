@@ -66,7 +66,7 @@ const CreateFlower = ({setCreate}) => {
         formData.append("price", price)
         formData.append("isNew", isNew)
         formData.append("popular", isPopular)
-        formData.append("description", description)
+        formData.append("description", description.replaceAll("\n","<br/>"))
         !(categoryText === "Категорія" || categoryText === "Немає") ? formData.append("categoryId", flower.categories.find(element => element.name === categoryText).id) : null
         setCreate(false)
         await createFlower(formData)
@@ -103,7 +103,7 @@ const CreateFlower = ({setCreate}) => {
                 <input type="text" placeholder="Назва" value={name} onChange={handleNameChange}/>
                 <input type={'file'} accept={"image/jpeg"} onChange={handleImageChange}/>
                 <input type="text" placeholder="Ціна" onChange={handlePriceChange}/>
-                <input className={styles.description} type="text" placeholder="Опис"
+                <textarea className={styles.description}  placeholder="Опис"
                        onChange={handleDescriptionChange}/>
                 <div className={styles.Wrapper}>
                     <p className={styles.Label}>Новинка</p>

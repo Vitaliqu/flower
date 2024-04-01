@@ -55,7 +55,7 @@ const EditFlower = ({setEdit, id}) => {
         formData.append("isNew", isNew)
         console.log(flower.flowers.find(element => element.id === id).categoryId)
         formData.append("popular", isPopular)
-        formData.append("description", description ? description : flower.flowers.find(element => element.id === id).description)
+        formData.append("description", description ? description.replaceAll("\n","<br/>") : flower.flowers.find(element => element.id === id).description.replaceAll("\n","<br/>"))
         if (!(categoryText === "Категорія" || categoryText === "Немає")) formData.append("categoryId", flower.categories.find(element => element.name === categoryText).id)
         setEdit(false)
         await editFlower(id, formData)
@@ -92,7 +92,7 @@ const EditFlower = ({setEdit, id}) => {
                 <input type="text" placeholder="Назва" value={name} onChange={handleNameChange}/>
                 <input type="file" accept="image/*" onChange={handleImageChange}/>
                 <input type="text" placeholder="Ціна" onChange={handlePriceChange}/>
-                <input className={styles.description} type="text" placeholder="Опис"
+                <textarea className={styles.description} placeholder="Опис"
                        onChange={handleDescriptionChange}/>
                 <div className={styles.Wrapper}>
                     <p className={styles.Label}>Новинка</p>

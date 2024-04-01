@@ -41,8 +41,10 @@ const Header = observer(() => {
         <>
             <div className={styles.header}>
                 <div className={styles.infoWrapper}>
-                    <p className={styles.phone}><img src={phone} alt={phone}/>+380-123-456-789</p>
-                    <p className={styles.faceBook}><img src={faceBook} alt={faceBook}/>Офіційна группа</p>
+                    <p className={styles.phone}><img src={phone} alt={phone}/>+38-068-688-06-27</p>
+                    <p className={styles.faceBook}><img src={faceBook} alt={faceBook}/><a
+                        href="https://www.facebook.com/groups/246459866644485/?locale=ru_RU" target={"_blank"}></a>Офіційна
+                        группа</p>
                 </div>
                 <div className={styles.searchBar}>
                     {isTablet &&

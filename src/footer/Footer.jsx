@@ -26,19 +26,21 @@ const Footer = () => {
                         <p className={styles.infoLabel}>Зворотній Зв’язок</p>
                         <div className={styles.addressWrapper}>
                             <img src={address} alt="address"/>
-                            <p className={styles.addressText}>Ужгород - вулиця Гленца, 1</p>
+                            <p className={styles.addressText}>м.Хуст, об'їзна дорога, (біля кільця)</p>
                         </div>
                         <div className={styles.phoneWrapper}>
                             <img src={phone} alt="phone"/>
-                            <p className={styles.phoneText}>+380-123-456-789</p>
+                            <p className={styles.phoneText}>+38-068-688-06-27</p>
                         </div>
                         <div className={styles.faceBookWrapper}>
                             <img src={faceBook} alt={faceBook}/>
+                            <a className={styles.facebookLink}
+                                href="https://www.facebook.com/groups/246459866644485/?locale=ru_RU" target={"_blank"}></a>
                             <p className={styles.faceBook}>Офіційна группа</p>
                         </div>
                         <div className={styles.mailWrapper}>
                             <img src={mail} alt="mail"/>
-                            <p className={styles.mailText}>examole@gmail.com</p>
+                            <p className={styles.mailText}>example@gmail.com</p>
                         </div>
                     </div>
                 </div>

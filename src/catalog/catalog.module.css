@@ -68,7 +68,7 @@ a {
     font-weight: 300;
     position: absolute;
     top: -3.5rem;
-    font-size: 2.5rem;
+    font-size: 1.9rem;
 }
 
 .sortMenu {
@@ -512,7 +512,10 @@ a {
         width: 100%;
         grid-template-columns: repeat(3, 1fr);
     }
-
+    .categoryLabel {
+        margin-top: 0.6rem;
+        font-size: 1.6rem;
+    }
     .horizontalFlowersGrid {
         margin-top: 2rem;
         width: 100%;
@@ -623,6 +626,11 @@ a {
 
 }
 
+@media (max-width: 500px) {
+    .categoryLabel {
+        font-size: 1.2rem;
+    }
+}
 @media (max-width: 400px) {
     .sortMenu {
         width: 100%;

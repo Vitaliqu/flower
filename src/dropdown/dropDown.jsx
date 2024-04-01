@@ -45,11 +45,13 @@ const DropDown = (state) => {
                 behavior: "smooth"
             }), 50)
         }}>{element.name}</li>);
+
     const selectCategory = () => {
         return <>
             <div className={styles.categories}>
                 <li className={styles.category}
                     onClick={() => {
+                        flower.setCurrentCategory(null)
                         setOpenedCategories(false)
                         fetchFlower(null, 1, flower.totalCount).then(data => {
                             flower.setFlowers(data.rows)

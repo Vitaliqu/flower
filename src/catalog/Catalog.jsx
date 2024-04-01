@@ -177,7 +177,8 @@ const Catalog = observer(() => {
             <div className={styles.horizontalInfo}>
                 <p className={styles.horizontalFlowerName}>{element.name}</p>
                 <div className={styles.horizontalDescriptionWrapper}>
-                    <div className={styles.flowerDescription}>{element.description}</div>
+                    <div className={styles.flowerDescription}
+                         dangerouslySetInnerHTML={{__html: element.description}}></div>
                     <div className={styles.horizontalCardDescription}>
                         <div className={styles.horizontalPriceWrapper}>
                             <p className={styles.horizontalPrice}>{element.price.toLocaleString().replaceAll(",", " ").replaceAll(".", ",")}</p>
@@ -190,6 +191,10 @@ const Catalog = observer(() => {
             </div>
         </div>
     );
+    try {
+    } catch (e) {
+    }
+    console.log(flower.categories.find(element => element.id === flower.currentCategory))
     return <>
         {create && <CreateFlower setCreate={setCreate}/>}
         {edit && <EditFlower id={editId} setEdit={setEdit}/>}
@@ -199,6 +204,7 @@ const Catalog = observer(() => {
                 {!isTablet && (
                     <li onClick={() => {
                         navigate(CATALOG_ROUTE)
+                        flower.setCurrentCategory(null)
                         fetchFlower(null, 1, flower.totalCount).then(data => {
                             flower.setFlowers(data.rows)
                             flower.setTotalCount(data.count)
@@ -210,7 +216,7 @@ const Catalog = observer(() => {
                 {!isTablet && flower.categories.map(renderCategory)}
             </ul>
             <div className={styles.flowersWrapper}>
-                <p className={styles.categoryLabel}>Магнолії</p>
+                <p className={styles.categoryLabel}>{flower.categories.find(element => element.id === flower.currentCategory) ? flower.categories.find(element => element.id === flower.currentCategory).name : "Всі"}</p>
                 <div className={styles.sortMenu}>
                     <div className={styles.gridLayout}>
                         {!isMobile ?

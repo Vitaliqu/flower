@@ -26,6 +26,7 @@
 }
 .description{
     height: 12rem;
+    width: 100%;
 }
 .categoryList {
     background-color: var(--backgroundGray);
