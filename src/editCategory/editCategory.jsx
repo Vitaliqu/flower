@@ -1,7 +1,6 @@
 import {useContext, useState} from 'react';
 import styles from './editCategory.module.css';
-import {createCategory, editCategory, fetchCategory} from "../http/flowerApi.jsx";
-import {registration} from "../http/userApi.jsx";
+import {editCategory, fetchCategory} from "../http/flowerApi.jsx";
 import {Context} from "../main.jsx";
 import {observer} from "mobx-react-lite";
 
@@ -29,17 +28,15 @@ const EditCategory = observer(({setEdit, id}) => {
     };
 
     const handleSubmit = async (id) => {
-        const categories = await fetchCategory();
-        if (categories.find(element => element.name === name)) {
+        if (flower.categories.find(element => element.name === name)) {
             alert("Категорія з такою назвою вже існує");
             return
         }
-        const data = await fetchCategory()
-        const oldImageResponse = await fetch(import.meta.env.VITE_API + "/" + data.find(element => element.id === id).image);
-        const oldImageBlob = await oldImageResponse.blob();
-        const formData = new FormData()
+        const oldImageResponse = await fetch(import.meta.env.VITE_API + "/" + flower.categories.find(element => element.id === id).image);
+        const oldImageBlob = await oldImageResponse;
 
-        formData.append("name", name ? name : categories.find(element => element.id === id).name)
+        const formData = new FormData()
+        formData.append("name", name ? name : flower.categories.find(element => element.id === id).name)
         formData.append("image", image ? image : oldImageBlob)
         formData.append("isNew", isNew)
         formData.append("popular", isPopular)
@@ -47,8 +44,8 @@ const EditCategory = observer(({setEdit, id}) => {
         setEdit(false)
 
         await editCategory(id, formData)
-        const updatedCategories = await fetchCategory();
-        flower.setCategories(updatedCategories);
+
+        flower.setCategories(await fetchCategory());
     };
 
     return (

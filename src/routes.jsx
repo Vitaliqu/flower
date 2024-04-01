@@ -13,19 +13,15 @@ import Catalog from "./catalog/Catalog.jsx";
 import Registration from "./register/Register.jsx";
 import Login from "./login/Login.jsx";
 import Liked from "./Liked/Liked.jsx";
-
 import {fetchCategory} from "./http/flowerApi.jsx";
+
 export const authorizedRoutes = [
-    {
-        path: ADMIN_ROUTE,
-        component: <></>
-    },
     {
         path: LIKED_ROUTE,
         component: <Liked/>
     }
 ]
-export let publicRoutes = [
+export const publicRoutes = [
     {
         path: LOGIN_ROUTE,
         component: <Login/>
@@ -53,15 +49,13 @@ export let publicRoutes = [
     {
         path: DELIVERY_ROUTE,
         component: <Delivery/>
-    },
-    {
-        path: REVIEWS_ROUTE,
-        component: <div>reviews</div>
     }
-    // , ...fetchCategory().categories.map(element => {
-    //     return {
-    //         path: "/catalog/" + element.name,
-    //         component: <Catalog/>
-    //     }
-    // })
 ]
+let fetchRoutes = [];
+
+fetchCategory().then(data => {
+    data.map(element => fetchRoutes.push({path: CATALOG_ROUTE + "/" + element.name, component: <Catalog/>   }));
+})
+
+export {fetchRoutes};
+

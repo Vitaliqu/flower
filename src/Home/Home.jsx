@@ -11,6 +11,7 @@ import {observer} from "mobx-react-lite";
 import CreateCategory from "../createCategory/CreateCategory.jsx";
 import EditCategory from "../editCategory/editCategory.jsx";
 import DeleteCategory from "../deleteCategory/deleteCategory.jsx";
+import {fetchRoutes} from "../routes.jsx";
 
 
 const Home = observer((filter) => {
@@ -37,59 +38,59 @@ const Home = observer((filter) => {
         {create && <CreateCategory setCreate={setCreate}/>}
         {edit && <EditCategory id={editId} setEdit={setEdit}/>}
         {del && <DeleteCategory id={deleteId} setDelete={setDelete}/>}
-        <div className={styles.home}>
-            <div className={styles.flowersCategory}>
-                <div className={styles.categoryLabel}>
-                    Категорії рослин
-                    <img src={plant} alt="plant" className={styles.plant}/>
-                </div>
-                <div className={styles.categorySwitch}>
-                    <div className={styles.all}
-                         style={filter.filter === "all" ? active : {}}>
-                        <Link to={HOME_ROUTE}/>Всі
+            <div className={styles.home}>
+                <div className={styles.flowersCategory}>
+                    <div className={styles.categoryLabel}>
+                        Категорії рослин
+                        <img src={plant} alt="plant" className={styles.plant}/>
                     </div>
-                    <div className={styles.new}
-                         style={filter.filter === "isNew" ? active : {}}>
-                        <Link to={NEW_ROUTE}/>Новинки
-                    </div>
-                    <div className={styles.popular}
-                         style={filter.filter === "popular" ? active : {}}>
-                        <Link to={POPULAR_ROUTE}/>Популярні
-                    </div>
-                </div>
-            </div>
-            <div className={styles.categoryGrid}>
-                {user._isAdmin && createCategory()}
-                {flower.categories.filter(element => filter.filter === "all" ? true : element[filter.filter])
-                    .map((element, index) => (
-                        <div className={styles.categoryCard} key={index}>
-                            <div className={styles.imageHolder} >
-                                {user._isAdmin && <div className={styles.categoryAdmin}>
-                                    <div className={styles.edit} onClick={() => {
-                                        setEditId(element.id)
-                                        setEdit(true)
-                                    }}><img className={styles.editImage} src={editImage}
-                                            alt=""/>
-                                    </div>
-                                    <div className={styles.delete} onClick={() => {
-                                        setDelete(true)
-                                        setDeleteId(element.id)
-                                    }}><img className={styles.deleteImage} src={deleteImage} alt=""/></div>
-                                </div>}
-                                <img onClick={() => {
-                                    navigate(CATALOG_ROUTE + '/' + element.name)
-                                    setTimeout(() => window.scrollTo({
-                                        top: 0,
-                                        behavior: "smooth"
-                                    }), 50)
-                                }} className={styles.cardImage} src={import.meta.env.VITE_API + "/" + element.image}
-                                     alt=""/>
-                            </div>
-                            <p className={styles.categoryName}>{element.name}</p>
+                    <div className={styles.categorySwitch}>
+                        <div className={styles.all}
+                             style={filter.filter === "all" ? active : {}}>
+                            <Link to={HOME_ROUTE}/>Всі
                         </div>
-                    ))}
+                        <div className={styles.new}
+                             style={filter.filter === "isNew" ? active : {}}>
+                            <Link to={NEW_ROUTE}/>Новинки
+                        </div>
+                        <div className={styles.popular}
+                             style={filter.filter === "popular" ? active : {}}>
+                            <Link to={POPULAR_ROUTE}/>Популярні
+                        </div>
+                    </div>
+                </div>
+                <div className={styles.categoryGrid}>
+                    {user._isAdmin && createCategory()}
+                    {flower.categories.filter(element => filter.filter === "all" ? true : element[filter.filter])
+                        .map((element, index) => (
+                            <div className={styles.categoryCard} key={index}>
+                                <div className={styles.imageHolder}>
+                                    {user._isAdmin && <div className={styles.categoryAdmin}>
+                                        <div className={styles.edit} onClick={() => {
+                                            setEditId(element.id)
+                                            setEdit(true)
+                                        }}><img className={styles.editImage} src={editImage}
+                                                alt=""/>
+                                        </div>
+                                        <div className={styles.delete} onClick={() => {
+                                            setDelete(true)
+                                            setDeleteId(element.id)
+                                        }}><img className={styles.deleteImage} src={deleteImage} alt=""/></div>
+                                    </div>}
+                                    <img loading={'lazy'} onClick={() => {
+                                        navigate(CATALOG_ROUTE + '/' + element.name)
+                                        setTimeout(() => window.scrollTo({
+                                            top: 0,
+                                            behavior: "smooth"
+                                        }), 50)
+                                    }} className={styles.cardImage} src={import.meta.env.VITE_API + "/" + element.image}
+                                         alt=""/>
+                                </div>
+                                <p className={styles.categoryName}>{element.name}</p>
+                            </div>
+                        ))}
+                </div>
             </div>
-        </div>
     </>
 })
 export default Home

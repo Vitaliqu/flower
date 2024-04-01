@@ -22,6 +22,7 @@
 .categorySelect {
     margin: 0;
     padding: 0;
+    max-width: 16rem;
     border-radius: 4px;
     background-color: var(--backgroundGray);
     height: max-content;
@@ -46,8 +47,8 @@ a {
 }
 
 .flowersGrid {
-    margin-top: 2rem;
-    width: 90%;
+    margin-top: 3rem;
+    width: 85%;
     max-width: 1320px;
     display: grid;
     justify-items: center;
@@ -55,11 +56,12 @@ a {
     grid-template-columns: repeat(4, 1fr);
 }
 
+
 .categoryLabel {
     color: var(--textBrown);
     font-weight: 300;
     position: absolute;
-    top: -4rem;
+    top: -3.5rem;
     font-size: 2.5rem;
 }
 
@@ -76,19 +78,47 @@ a {
 }
 
 .gridLayout {
+    position: relative;
+    padding-left: 2rem;
     display: flex;
     flex-direction: row;
     width: 4rem;
+    height: 100%;
 }
 
 .grid {
-    margin-left: 2rem;
+    cursor: pointer;
+    transition: opacity 0.3s;
     margin-right: 0.5rem;
-    width: 1rem;
+    width: 1.4rem;
 }
 
 .wideGrid {
-    width: 1.1rem;
+    cursor: pointer;
+    transition: opacity 0.3s;
+    width: 1.5rem;
+
+}
+
+.mobileGrid {
+    display: flex;
+    cursor: pointer;
+    position: relative;
+    opacity: 0.9;
+    transition: transform 0.3s, opacity 0.3s;
+    width: 1.2rem;
+}
+
+.mobileWideGrid {
+    display: flex;
+    left: 0.5rem;
+    opacity: 0;
+    top: 1rem;
+    transform: rotate(-90deg);
+    cursor: pointer;
+    position: absolute;
+    transition: transform 0.3s, opacity 0.3s;
+    width: 1.2rem;
 }
 
 .sortWrapper {
@@ -100,6 +130,7 @@ a {
     display: flex;
     height: 1rem;
     margin-right: 0.4rem;
+    align-items: center;
     font-weight: 300;
 }
 
@@ -117,6 +148,8 @@ a {
 }
 
 .sortDropdown img {
+    transition: transform 0.3s;
+    transform: rotate(90deg);
     margin-left: 0.4rem;
     object-fit: contain;
     width: 0.5rem;
@@ -155,7 +188,7 @@ a {
 
 .flowerCard {
     height: 22rem;
-    width: 13rem;
+    width: 12rem;
     display: flex;
     flex-direction: column;
     justify-content: start;
@@ -163,7 +196,7 @@ a {
 }
 
 .imageHolder {
-    border-radius: 10px;
+    border-radius: 14px;
     position: relative;
     background-color: var(--backgroundGray);
     display: flex;
@@ -182,7 +215,8 @@ a {
     width: 95%;
     height: 95%;
 }
-.cardLink{
+
+.cardLink {
     position: absolute;
 }
 
@@ -201,9 +235,11 @@ a {
 
 .flowerName {
     margin-left: 5%;
-    font-weight: 400;
     margin-top: 0.5rem;
-    margin-bottom: 1rem;
+    margin-bottom: 1.3rem;
+    text-align: center;
+    font-size: 1.15rem;
+    font-weight: 500;
 }
 
 
@@ -211,7 +247,7 @@ a {
     margin-left: 5%;
     width: 90%;
     display: flex;
-    align-items: start;
+    align-items: center;
     justify-content: space-between;
     flex-direction: row;
 }
@@ -236,6 +272,101 @@ a {
     font-size: 1.5rem;
 }
 
+.horizontalFlowersGrid {
+    row-gap: 1rem;
+    margin-top: 3rem;
+    width: 90%;
+    max-width: 1320px;
+    display: grid;
+    justify-items: center;
+    align-items: center;
+}
+
+.horizontalFlowerCard {
+    display: flex;
+    width: 100%;
+}
+
+.horizontalImageHolder {
+    display: flex;
+    width: 18rem;
+    border-radius: 14px;
+    position: relative;
+    background-color: var(--backgroundGray);
+    flex-shrink: 0;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    height: 20rem;
+}
+
+.horizontalCardImage {
+    border-radius: 10px;
+    position: absolute;
+    display: flex;
+    object-fit: cover;
+    width: 95%;
+    height: 95%;
+}
+
+.horizontalInfo {
+    display: flex;
+    flex-direction: column;
+    margin-left: 1rem;
+}
+
+.horizontalFlowerName {
+    margin-top: 0.6rem;
+    font-size: 1.6rem;
+    font-weight: 500;
+    color: var(--textBrown);
+}
+
+.horizontalCardDescription {
+    margin-bottom: 0.6rem;
+    display: flex;
+}
+
+.horizontalDescriptionWrapper {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: space-between;
+}
+
+.flowerDescription {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 10;
+    color: var(--textBrown);
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
+.horizontalPriceWrapper {
+    align-items: center;
+    color: var(--backgroundGreen);
+    font-size: 1.6rem;
+    display: flex;
+    font-weight: 500;
+}
+
+.horizontalHeart {
+    object-fit: contain;
+    height: 2rem;
+    margin-left: 0.5rem;
+}
+
+.horizontalPrice {
+
+}
+
+.horizontalCurrency {
+
+}
+
 .cardLike {
 }
 
@@ -258,7 +389,220 @@ a {
 }
 
 @media (max-width: 1200px) {
+    .flowerDescription {
+        font-size: 0.8rem;
+    }
+
+    .horizontalFlowerName {
+        font-size: 1.3rem;
+    }
+
     .flowersGrid {
         grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 992px) {
+    .horizontalFlowersGrid {
+        width: 85%;
+    }
+
+    .horizontalFlowerName {
+        font-size: 1.6rem;
+    }
+
+    .flowerDescription {
+        font-size: 1rem;
+    }
+
+    .sortMenu {
+        width: 80%;
+
+    }
+
+    .catalog {
+        width: 95%;
+    }
+
+    .flowersGrid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .catalog {
+        margin-top: 10.5rem;
+    }
+
+    .gridLayout {
+        padding-left: 0.5rem;
+        width: 1.6rem;
+
+    }
+
+    .currentFilter {
+        font-size: 0.8rem;
+    }
+
+    .filterType {
+        font-size: 0.8rem;
+    }
+
+    .sortTypes {
+
+    }
+
+    .sortMenu {
+        width: 100%;
+    }
+
+    .flowersGrid {
+        width: 100%;
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .horizontalFlowersGrid {
+        margin-top: 2rem;
+        width: 100%;
+    }
+
+    .horizontalImageHolder {
+        width: 40vw;
+        height: 46vw;
+    }
+
+    .sortText {
+        font-size: 0.8rem;
+        margin-right: 0.2rem;
+        text-align: right;
+    }
+
+    .sortDropdown {
+        padding: 0 0.5rem;
+        width: 8rem;
+        margin-right: 0.5rem;
+    }
+
+    .filterType {
+        padding: 1rem 0.3rem;
+
+    }
+
+    .grid {
+        margin-left: 0.5rem;
+    }
+
+    .horizontalCardImage {
+        width: 95%;
+    }
+
+    .flowerDescription {
+        font-size: clamp(0.4rem, 2.4vw, 1.2rem);
+        -webkit-line-clamp: 10;
+
+    }
+
+    .horizontalFlowerName, .horizontalPrice, .horizontalCurrency {
+        font-size: 1.2rem;
+    }
+
+    .horizontalHeart {
+        width: 1.6rem;
+    }
+}
+
+@media (max-width: 680px) {
+    .flowerName {
+        font-size: clamp(0.8rem, 3.4vw, 1.2rem);
+    }
+
+    .flowersGrid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .flowerCard {
+        width: 40vw;
+        height: 60vw;
+    }
+
+    .new {
+        padding: clamp(0.2rem, 3.5vw, 0.8rem) clamp(0.2rem, 3.5vw, 0.8rem);
+        font-size: clamp(0.6rem, 3.5vw, 1rem);
+    }
+
+
+    .price {
+        font-size: clamp(1rem, 4.5vw, 1.5rem);
+    }
+
+    .currency {
+        font-size: clamp(0.8rem, 2.5vw, 1.2rem);
+
+    }
+
+    .flowerName {
+        font-size: clamp(0.8rem, 3.5vw, 1.6rem);
+        margin-bottom: clamp(0rem, 1.5vw, 1rem);
+    }
+
+    .heart {
+        width: clamp(1rem, 4.5vw, 2rem);
+
+    }
+
+    .imageHolder {
+        width: 100%;
+        height: 44vw;
+    }
+
+    .cardImage {
+        width: 95%;
+    }
+
+
+}
+
+@media (max-width: 400px) {
+    .sortMenu {
+        width: 100%;
+    }
+}
+
+@media (max-width: 320px) {
+
+    .flowersGrid {
+        margin-top: 0.6rem;
+        grid-template-columns: repeat(1, 1fr);
+    }
+
+    .flowerCard {
+        width: 90%;
+        height: 120vw;
+    }
+
+    .flowerName {
+        font-size: 1rem;
+        margin-bottom: 1rem;
+    }
+
+    .price {
+        font-size: 1.3rem;
+    }
+
+    .currency {
+        font-size: 1rem;
+    }
+
+    .heart {
+        width: 1.3rem;
+    }
+
+    .imageHolder {
+        width: 84vw;
+        height: 94vw;
+    }
+
+    .flowersCategory {
+        width: 95%
     }
 }

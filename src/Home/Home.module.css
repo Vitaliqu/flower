@@ -134,7 +134,7 @@ a {
 .imageHolder {
     position: relative;
     cursor: pointer;
-    border-radius: 10px;
+    border-radius: 14px;
     background-color: var(--backgroundGray);
     display: flex;
     flex-shrink: 0;
@@ -149,6 +149,7 @@ a {
 .cardImage {
     transition: transform 0.4s;
     display: flex;
+    object-fit: cover;
     width: 95%;
     height: 95%;
     border-radius: 10px;
@@ -260,13 +261,13 @@ a {
     }
 
     .categoryCard {
-        width: 60%;
+        width: 90%;
         height: calc(120vw)
     }
 
     .imageHolder {
         width: 84vw;
-        height: calc(94vw);
+        height: 94vw;
     }
 
     .flowersCategory {

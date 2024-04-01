@@ -5,14 +5,21 @@ import heart from '../assets/heart.png';
 import {flowers_category, flowers} from "../database.js";
 import {useContext, useEffect, useState} from "react";
 import dropDown from "../assets/dropdown.png";
-import {Link, useLocation} from "react-router-dom";
+import {Link, useLocation, useNavigate} from "react-router-dom";
 import {CATALOG_ROUTE} from "../utils/consts.jsx";
 import {Context} from "../main.jsx";
 import {fetchCategory} from "../http/flowerApi.jsx";
 import {observer} from "mobx-react-lite";
+import useMediaQuery from "../Usemedia.jsx";
+
 
 const Catalog = observer(() => {
+    const [isGrid, setIsGrid] = useState(localStorage.getItem("grid") ? JSON.parse(localStorage.getItem("grid")) : true);
+    const isTablet = useMediaQuery("(max-width:992px)")
+    const isMobile = useMediaQuery("(max-width:768px)")
     const {flower} = useContext(Context)
+    const navigate = useNavigate()
+    localStorage.setItem("grid", JSON.stringify(isGrid))
     useEffect(() => {
         fetchCategory().then(data => flower.setCategories(data))
     }, []);
@@ -22,13 +29,13 @@ const Catalog = observer(() => {
     const [isOpened, setOpened] = useState(false)
     const renderCategory = (element, id) => (
         <li style={encodeURIComponent(element.name) === path.split("/")[2] ? {color: "#79A03FFF"} : {}} key={id}
-            className={styles.category}>
-            <Link to={`/catalog/${element.name}`} onClick={() => setTimeout(() => window.scrollTo({
+            className={styles.category} onClick={() => {
+            navigate(CATALOG_ROUTE + "/" + element.name)
+            setTimeout(() => window.scrollTo({
                 top: 0,
                 behavior: "smooth"
-            }), 50)}/>
-            {element.name}</li>
-    );
+            }), 50)
+        }}>{element.name}</li>);
     const filteredArray = (array, filter) => {
         array = array.slice()
         switch (filter) {
@@ -77,22 +84,58 @@ const Catalog = observer(() => {
             </div>
         </div>
     );
+    const renderHorizontalFlowerCard = (element, id) => (
+        <div className={styles.horizontalFlowerCard} key={id}>
+            <div className={styles.horizontalImageHolder}>
+                <img className={styles.horizontalCardImage} src={element.image} alt="img"/>
+                {element.new && <div className={styles.new}>Новинка</div>}
+            </div>
+            <div className={styles.horizontalInfo}>
+                <p className={styles.horizontalFlowerName}>{element.name}</p>
+                <div className={styles.horizontalDescriptionWrapper}>
+                    <div className={styles.flowerDescription}>{element.description}</div>
+                    <div className={styles.horizontalCardDescription}>
+                        <div className={styles.horizontalPriceWrapper}>
+                            <p className={styles.horizontalPrice}>{element.price.toLocaleString().replaceAll(",", " ").replaceAll(".", ",")}</p>
+                            <p className={styles.horizontalCurrency}>₴</p>
+                        </div>
+                        <img className={styles.horizontalHeart} src={heart} alt=""/>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    );
 
     return (
         <div className={styles.catalog}>
             <ul className={styles.categorySelect}>
-                <li className={styles.category}
-                    style={path === CATALOG_ROUTE ? {color: "#79A03FFF"} : {}}>Всі
-                    <Link to={CATALOG_ROUTE}/>
-                </li>
-                {flower.categories.map(renderCategory)}
+                {!isTablet && (
+                    <li className={styles.category} style={path === CATALOG_ROUTE ? {color: "#79A03FFF"} : {}}>
+                        Всі
+                        <Link to={CATALOG_ROUTE}/>
+                    </li>
+                )}
+                {!isTablet && flower.categories.map(renderCategory)}
             </ul>
             <div className={styles.flowersWrapper}>
                 <p className={styles.categoryLabel}>Магнолії</p>
                 <div className={styles.sortMenu}>
                     <div className={styles.gridLayout}>
-                        <img className={styles.grid} src={grid} alt=""/>
-                        <img className={styles.wideGrid} src={wideGrid} alt=""/>
+                        {!isMobile ?
+                            <>
+                                <img className={styles.grid} style={!isGrid ? {opacity: 0.3} : {}}
+                                     onClick={() => setIsGrid(true)} src={grid} alt=""/>
+                                <img className={styles.wideGrid} style={isGrid ? {opacity: 0.3} : {}}
+                                     onClick={() => setIsGrid(false)} src={wideGrid} alt=""/>
+                            </> :
+                            <>
+                                <img className={styles.mobileGrid} style={!isGrid ? {opacity: 0,transform:"rotate(90deg)"} : {}}
+                                     onClick={() => setIsGrid(!isGrid)} src={grid} alt=""/>
+                                <img className={styles.mobileWideGrid} style={!isGrid ? {opacity: 0.9,transform:"rotate(0deg)"} : {}}
+                                     onClick={() => setIsGrid(!isGrid)} src={wideGrid} alt=""/>
+                            </>}
+
                     </div>
                     <div className={styles.sortWrapper} onClick={() => {
                         setOpened(!isOpened)
@@ -100,20 +143,34 @@ const Catalog = observer(() => {
                         <p className={styles.sortText}> Відсортувати за:</p>
                         <div className={styles.sortDropdown}>
                             <p className={styles.currentFilter}>{filter}</p>
-                            <img src={dropDown} alt=""/>
-                            <ul style={isOpened ? {height: "19rem"} : {}} className={styles.sortTypes}>
+                            <img style={isOpened ? {transform: "rotate(0deg)"} : {}} src={dropDown} alt=""/>
+                            <ul style={isOpened ? isMobile ? {height: "17.5rem"} : {height: "19rem"} : {}}
+                                className={styles.sortTypes}>
                                 {renderSortTypes()}
                             </ul>
                         </div>
                     </div>
                 </div>
-                <div className={styles.flowersGrid}>
-                    {filteredArray(flowers, filter).filter(element => {
-                        if (path === CATALOG_ROUTE) return element;
-                        return encodeURIComponent(element.category) === path.split("/")[2];
-                    }).map(renderFlowerCard)}
-                </div>
-                <div className={styles.pageSelect}>12134567</div>
+                {isGrid ?
+                    <>
+                        <div className={styles.flowersGrid}>
+                            {filteredArray(flowers, filter).filter(element => {
+                                if (path === CATALOG_ROUTE) return element;
+                                return encodeURIComponent(element.category) === path.split("/")[2];
+                            }).map(renderFlowerCard)}
+                        </div>
+                        <div className={styles.pageSelect}>12134567</div>
+                    </> :
+                    <>
+                        <div className={styles.horizontalFlowersGrid}>
+                            {filteredArray(flowers, filter).filter(element => {
+                                if (path === CATALOG_ROUTE) return element;
+                                return encodeURIComponent(element.category) === path.split("/")[2];
+                            }).map(renderHorizontalFlowerCard)}
+                        </div>
+                        <div className={styles.pageSelect}>12134567</div>
+                    </>}
+
             </div>
         </div>
     );

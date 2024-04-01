@@ -14,7 +14,7 @@ const App = observer(() => {
         user.setUser(true)
         user.setIsAuth(true)
         if (data.role === "ADMIN") user.setIsAdmin(true)
-    }).catch(e => e).finally(() => setLoading(false))
+    }).catch(e => e).finally(() => setLoading(false)).then()
     return <>
         <BrowserRouter>
             <Header/>

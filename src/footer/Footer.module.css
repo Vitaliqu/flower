@@ -29,9 +29,11 @@
     background-color: var(--textBrown);
     display: flex;
     flex-direction: row;
+    justify-content: center;
 }
 
 .about {
+    max-width: 400px;
     width: calc(50% - 2rem);
     padding-right: 2rem;
     display: flex;
@@ -64,6 +66,10 @@
     flex-direction: row;
     margin: 0.5rem 0;
 }
+.infoWrapper{
+    max-width: 1320px;
+    display: flex;
+}
 
 .addressWrapper img, .phoneWrapper img, .faceBookWrapper img {
     width: 2rem;
@@ -86,9 +92,12 @@
         padding-bottom: 0;
     }
     .about{
+        max-width: none;
         margin-top: 1rem;
     }
-
+    .infoWrapper{
+        flex-direction: column;
+    }
     .about, .info {
         margin-left: 0;
         width: 100%;

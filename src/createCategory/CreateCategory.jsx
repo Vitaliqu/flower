@@ -2,7 +2,7 @@ import {useContext, useState} from 'react';
 import styles from './createCategory.module.css';
 import {createCategory, fetchCategory} from "../http/flowerApi.jsx";
 import {Context} from "../main.jsx";
-import {compress, compressAccurately} from 'image-conversion';
+import Compressor from 'compressorjs';
 
 const CreateCategory = ({setCreate}) => {
     const {flower} = useContext(Context)
@@ -17,7 +17,13 @@ const CreateCategory = ({setCreate}) => {
     };
 
     const handleImageChange = (e) => {
-        setImage(e.target.files[0]);
+        const image = e.target.files[0];
+        new Compressor(image, {
+            quality: 0.8,
+            success: (compressedResult) => {
+                setImage(compressedResult)
+            },
+        });
     };
 
     const handleNewChange = (e) => {
@@ -29,6 +35,18 @@ const CreateCategory = ({setCreate}) => {
     };
 
     const handleSubmit = async () => {
+        if (!name) {
+            alert('Назва відсутня')
+            return
+        }
+        if (!image) {
+            alert('Фотографія не вибрана')
+            return
+        }
+        if (flower.categories.find(element => element.name === name)) {
+            alert("Категорія з такою назвою вже існує");
+            return
+        }
         const formData = new FormData()
         formData.append("name", name)
         formData.append("image", image)
@@ -36,8 +54,7 @@ const CreateCategory = ({setCreate}) => {
         formData.append("popular", isPopular)
         setCreate(false)
         await createCategory(formData)
-        const updatedCategories = await fetchCategory();
-        flower.setCategories(updatedCategories);
+        flower.setCategories(await fetchCategory());
     };
 
     return (
