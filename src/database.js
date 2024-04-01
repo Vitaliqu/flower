@@ -16,7 +16,7 @@ export const flowers_category = [
 export const flowers = [
     {
         id: 1,
-        name: "Квітка Амаріліс",
+        name: "Magnolia grandiflora Bracken’s Brown Beauty",
         category: "Магнолії",
         image: one,
         new: false,

@@ -8,6 +8,7 @@
 
 .horizontalWrapper {
     display: flex;
+    align-items: end;
     flex-direction: row;
 }
 
@@ -111,9 +112,8 @@ a {
 
 .mobileWideGrid {
     display: flex;
-    left: 0.5rem;
     opacity: 0;
-    top: 1rem;
+    top: 0.9rem;
     transform: rotate(-90deg);
     cursor: pointer;
     position: absolute;
@@ -237,8 +237,8 @@ a {
     margin-left: 5%;
     margin-top: 0.5rem;
     margin-bottom: 1.3rem;
-    text-align: center;
-    font-size: 1.15rem;
+    text-align: left;
+    font-size: 1rem;
     font-weight: 500;
 }
 
@@ -434,10 +434,14 @@ a {
         margin-top: 10.5rem;
     }
 
-    .gridLayout {
-        padding-left: 0.5rem;
-        width: 1.6rem;
+    .sortMenu {
+        box-sizing: border-box;
+        padding: 0 1rem;
+    }
 
+    .gridLayout {
+        padding: 0;
+        width: 1.6rem;
     }
 
     .currentFilter {
@@ -466,6 +470,10 @@ a {
         width: 100%;
     }
 
+    .horizontalDescriptionWrapper {
+        margin-top: clamp(0.2rem, 2vw, 0.8rem);
+    }
+
     .horizontalImageHolder {
         width: 40vw;
         height: 46vw;
@@ -480,7 +488,7 @@ a {
     .sortDropdown {
         padding: 0 0.5rem;
         width: 8rem;
-        margin-right: 0.5rem;
+        margin-right: 0;
     }
 
     .filterType {
@@ -499,22 +507,27 @@ a {
     .flowerDescription {
         font-size: clamp(0.4rem, 2.4vw, 1.2rem);
         -webkit-line-clamp: 10;
-
     }
 
-    .horizontalFlowerName, .horizontalPrice, .horizontalCurrency {
-        font-size: 1.2rem;
+    .horizontalFlowerName {
+        font-size: clamp(0.6rem, 3vw, 1.2rem);
+    }
+
+    .horizontalPrice {
+        font-size: clamp(0.8rem, 4vw, 1.6rem);
+    }
+
+    .horizontalCurrency {
+        font-size: clamp(0.4rem, 3vw, 1.2rem);
+
     }
 
     .horizontalHeart {
-        width: 1.6rem;
+        width: clamp(1rem, 4vw, 1.6rem);
     }
 }
 
 @media (max-width: 680px) {
-    .flowerName {
-        font-size: clamp(0.8rem, 3.4vw, 1.2rem);
-    }
 
     .flowersGrid {
         grid-template-columns: repeat(2, 1fr);
@@ -522,7 +535,7 @@ a {
 
     .flowerCard {
         width: 40vw;
-        height: 60vw;
+        height: 65vw;
     }
 
     .new {
@@ -541,7 +554,7 @@ a {
     }
 
     .flowerName {
-        font-size: clamp(0.8rem, 3.5vw, 1.6rem);
+        font-size: clamp(0.6rem, 2.5vw, 1rem);
         margin-bottom: clamp(0rem, 1.5vw, 1rem);
     }
 
@@ -565,6 +578,15 @@ a {
 @media (max-width: 400px) {
     .sortMenu {
         width: 100%;
+    }
+
+    .horizontalCardDescription {
+        margin-bottom: 0.2rem;
+    }
+
+    .horizontalFlowerName {
+        margin-top: 0.2rem;
+
     }
 }
 

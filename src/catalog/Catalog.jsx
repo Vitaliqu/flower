@@ -144,7 +144,7 @@ const Catalog = observer(() => {
                         <div className={styles.sortDropdown}>
                             <p className={styles.currentFilter}>{filter}</p>
                             <img style={isOpened ? {transform: "rotate(0deg)"} : {}} src={dropDown} alt=""/>
-                            <ul style={isOpened ? isMobile ? {height: "17.5rem"} : {height: "19rem"} : {}}
+                            <ul style={isOpened ? isMobile ? {height: "18rem"} : {height: "19rem"} : {}}
                                 className={styles.sortTypes}>
                                 {renderSortTypes()}
                             </ul>
