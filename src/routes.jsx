@@ -49,13 +49,10 @@ export const publicRoutes = [
     {
         path: DELIVERY_ROUTE,
         component: <Delivery/>
+    }, {
+        path: CATALOG_ROUTE + '/:id',
+        component: <Catalog/>
     }
 ]
-let fetchRoutes = [];
 
-fetchCategory().then(data => {
-    data.map(element => fetchRoutes.push({path: CATALOG_ROUTE + "/" + element.name, component: <Catalog/>   }));
-})
-
-export {fetchRoutes};
 

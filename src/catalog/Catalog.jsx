@@ -2,15 +2,20 @@ import styles from './catalog.module.css';
 import grid from '../assets/grid.svg';
 import wideGrid from '../assets/widegrid.svg';
 import heart from '../assets/heart.png';
-import {flowers_category, flowers} from "../database.js";
 import {useContext, useEffect, useState} from "react";
 import dropDown from "../assets/dropdown.png";
 import {Link, useLocation, useNavigate} from "react-router-dom";
 import {CATALOG_ROUTE} from "../utils/consts.jsx";
 import {Context} from "../main.jsx";
-import {fetchCategory} from "../http/flowerApi.jsx";
+import {fetchCategory, fetchFlower} from "../http/flowerApi.jsx";
 import {observer} from "mobx-react-lite";
+import editImage from '../assets/edit.png'
+import deleteImage from '../assets/delete.png'
 import useMediaQuery from "../Usemedia.jsx";
+import EditCategory from "../editCategory/editCategory.jsx";
+import DeleteFlower from "../deleteFlower/deleteFlower.jsx";
+import CreateFlower from "../createFlower/CreateFlower.jsx";
+import EditFlower from "../editflower/editFlower.jsx";
 
 
 const Catalog = observer(() => {
@@ -18,29 +23,85 @@ const Catalog = observer(() => {
     const isTablet = useMediaQuery("(max-width:992px)")
     const isMobile = useMediaQuery("(max-width:768px)")
     const {flower} = useContext(Context)
+    const {user} = useContext(Context)
     const navigate = useNavigate()
     localStorage.setItem("grid", JSON.stringify(isGrid))
-    useEffect(() => {
-        fetchCategory().then(data => flower.setCategories(data))
-    }, []);
+    const createFlower = () => (<div className={styles.flowerCard}>
+        <div className={styles.imageHolder} onClick={() => setCreate(true)}><p
+            className={styles.createFlower}>Створити<br/>позицію</p>
+        </div>
+    </div>)
+    const createHorizontalFlower = () => (<div className={styles.horizontalFlowerCard}>
+        <div className={styles.imageHolder} onClick={() => setCreate(true)}><p
+            className={styles.createFlower}>Створити<br/>позицію</p>
+        </div>
+    </div>)
 
     const path = useLocation().pathname;
     const [filter, setFilter] = useState(localStorage.getItem('filter') === null ? "Новинки" : localStorage.getItem('filter'))
     const [isOpened, setOpened] = useState(false)
+
+    const [create, setCreate] = useState(false)
+    const [edit, setEdit] = useState(false)
+    const [del, setDelete] = useState(false)
+    const [editId, setEditId] = useState(0)
+    const [deleteId, setDeleteId] = useState(0)
+    useEffect(() => {
+        async function fetchData() {
+            try {
+
+                const flowerData = await fetchFlower();
+                flower.setTotalCount(flowerData.count);
+
+                const categoryData = await fetchCategory()
+                flower.setCategories(categoryData)
+
+                const categoryInPath = flower.categories.find(element => encodeURIComponent(element.name) === path.split("/")[2]);
+                if (categoryInPath) {
+                    // Set current category if found
+                    await flower.setCurrentCategory(categoryInPath.id);
+
+                    // Fetch flowers for current category
+                    const flowersForCategory = await fetchFlower(categoryInPath.id, 1, flowerData.count);
+                    flower.setFlowers(flowersForCategory.rows);
+                } else {
+                    // If category not found in path, fetch flowers without filtering by category
+                    const allFlowers = await fetchFlower(null, 1, flowerData.count);
+                    flower.setFlowers(allFlowers.rows);
+
+                }
+                const categoriesData = await fetchCategory();
+                flower.setCategories(categoriesData);
+
+            } catch (error) {
+                // Handle errors
+                console.error('Error fetching data:', error);
+            }
+        }
+
+        // Call fetchData when component mounts
+        fetchData();
+    }, []);
+
     const renderCategory = (element, id) => (
         <li style={encodeURIComponent(element.name) === path.split("/")[2] ? {color: "#79A03FFF"} : {}} key={id}
             className={styles.category} onClick={() => {
             navigate(CATALOG_ROUTE + "/" + element.name)
+            flower.setCurrentCategory(element.id)
+            fetchFlower(flower.currentCategory, 1, 3).then(data => {
+                flower.setFlowers(data.rows)
+            })
             setTimeout(() => window.scrollTo({
                 top: 0,
                 behavior: "smooth"
             }), 50)
         }}>{element.name}</li>);
     const filteredArray = (array, filter) => {
+        if (!array) return {}
         array = array.slice()
         switch (filter) {
             case "Новинки":
-                return array.sort((a, b) => b.new - a.new);
+                return array.sort((a, b) => b.isNew - a.isNew);
             case "Популярні":
                 return array.sort((a, b) => a.popular - b.popular);
             case "Назва, А-Я":
@@ -55,7 +116,6 @@ const Catalog = observer(() => {
                 return array;
         }
     }
-
     const renderSortTypes = () => (
         <>
             {["Новинки", "Популярні", "Назва, А-Я", "Назва, Я-А", "Ціна, найдорожчі", "Ціна, найдешевші"].map((item) => (
@@ -67,12 +127,23 @@ const Catalog = observer(() => {
             ))}
         </>
     );
-
     const renderFlowerCard = (element, id) => (
         <div className={styles.flowerCard} key={id}>
             <div className={styles.imageHolder}>
-                <img className={styles.cardImage} src={element.image} alt="img"/>
-                {element.new && <div className={styles.new}>Новинка</div>}
+                {user._isAdmin && <div className={styles.categoryAdmin}>
+                    <div className={styles.edit} onClick={() => {
+                        setEditId(element.id)
+                        setEdit(true)
+                    }}><img className={styles.editImage} src={editImage}
+                            alt=""/>
+                    </div>
+                    <div className={styles.delete} onClick={() => {
+                        setDelete(true)
+                        setDeleteId(element.id)
+                    }}><img className={styles.deleteImage} src={deleteImage} alt=""/></div>
+                </div>}
+                <img className={styles.cardImage} src={import.meta.env.VITE_API + "/" + element.image} alt="img"/>
+                {element.isNew && <div className={styles.new}>Новинка</div>}
             </div>
             <p className={styles.flowerName}>{element.name}</p>
             <div className={styles.cardDescription}>
@@ -87,8 +158,21 @@ const Catalog = observer(() => {
     const renderHorizontalFlowerCard = (element, id) => (
         <div className={styles.horizontalFlowerCard} key={id}>
             <div className={styles.horizontalImageHolder}>
-                <img className={styles.horizontalCardImage} src={element.image} alt="img"/>
-                {element.new && <div className={styles.new}>Новинка</div>}
+                {user._isAdmin && <div className={styles.categoryAdmin}>
+                    <div className={styles.edit} onClick={() => {
+                        setEditId(element.id)
+                        setEdit(true)
+                    }}><img className={styles.editImage} src={editImage}
+                            alt=""/>
+                    </div>
+                    <div className={styles.delete} onClick={() => {
+                        setDelete(true)
+                        setDeleteId(element.id)
+                    }}><img className={styles.deleteImage} src={deleteImage} alt=""/></div>
+                </div>}
+                <img className={styles.horizontalCardImage} src={import.meta.env.VITE_API + "/" + element.image}
+                     alt="img"/>
+                {element.isNew && <div className={styles.new}>Новинка</div>}
             </div>
             <div className={styles.horizontalInfo}>
                 <p className={styles.horizontalFlowerName}>{element.name}</p>
@@ -106,14 +190,21 @@ const Catalog = observer(() => {
             </div>
         </div>
     );
-
-    return (
+    return <>
+        {create && <CreateFlower setCreate={setCreate}/>}
+        {edit && <EditFlower id={editId} setEdit={setEdit}/>}
+        {del && <DeleteFlower id={deleteId} setDelete={setDelete}/>}
         <div className={styles.catalog}>
             <ul className={styles.categorySelect}>
                 {!isTablet && (
-                    <li className={styles.category} style={path === CATALOG_ROUTE ? {color: "#79A03FFF"} : {}}>
+                    <li onClick={() => {
+                        navigate(CATALOG_ROUTE)
+                        fetchFlower(null, 1, flower.totalCount).then(data => {
+                            flower.setFlowers(data.rows)
+                            flower.setTotalCount(data.count)
+                        })
+                    }} className={styles.category} style={path === CATALOG_ROUTE ? {color: "#79A03FFF"} : {}}>
                         Всі
-                        <Link to={CATALOG_ROUTE}/>
                     </li>
                 )}
                 {!isTablet && flower.categories.map(renderCategory)}
@@ -130,9 +221,11 @@ const Catalog = observer(() => {
                                      onClick={() => setIsGrid(false)} src={wideGrid} alt=""/>
                             </> :
                             <>
-                                <img className={styles.mobileGrid} style={!isGrid ? {opacity: 0,transform:"rotate(90deg)"} : {}}
+                                <img className={styles.mobileGrid}
+                                     style={!isGrid ? {opacity: 0, transform: "rotate(90deg)"} : {}}
                                      onClick={() => setIsGrid(!isGrid)} src={grid} alt=""/>
-                                <img className={styles.mobileWideGrid} style={!isGrid ? {opacity: 0.9,transform:"rotate(0deg)"} : {}}
+                                <img className={styles.mobileWideGrid}
+                                     style={!isGrid ? {opacity: 0.9, transform: "rotate(0deg)"} : {}}
                                      onClick={() => setIsGrid(!isGrid)} src={wideGrid} alt=""/>
                             </>}
 
@@ -154,26 +247,22 @@ const Catalog = observer(() => {
                 {isGrid ?
                     <>
                         <div className={styles.flowersGrid}>
-                            {filteredArray(flowers, filter).filter(element => {
-                                if (path === CATALOG_ROUTE) return element;
-                                return encodeURIComponent(element.category) === path.split("/")[2];
-                            }).map(renderFlowerCard)}
+                            {user._isAdmin && createFlower()}
+                            {filteredArray(flower.flowers, filter).map(renderFlowerCard)}
                         </div>
                         <div className={styles.pageSelect}>12134567</div>
                     </> :
                     <>
                         <div className={styles.horizontalFlowersGrid}>
-                            {filteredArray(flowers, filter).filter(element => {
-                                if (path === CATALOG_ROUTE) return element;
-                                return encodeURIComponent(element.category) === path.split("/")[2];
-                            }).map(renderHorizontalFlowerCard)}
+                            {user._isAdmin && createHorizontalFlower()}
+                            {filteredArray(flower.flowers, filter).map(renderHorizontalFlowerCard)}
                         </div>
                         <div className={styles.pageSelect}>12134567</div>
                     </>}
 
             </div>
         </div>
-    );
+    </>;
 });
 
 export default Catalog;

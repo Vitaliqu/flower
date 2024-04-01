@@ -11,7 +11,6 @@ import {observer} from "mobx-react-lite";
 import CreateCategory from "../createCategory/CreateCategory.jsx";
 import EditCategory from "../editCategory/editCategory.jsx";
 import DeleteCategory from "../deleteCategory/deleteCategory.jsx";
-import {fetchRoutes} from "../routes.jsx";
 
 
 const Home = observer((filter) => {

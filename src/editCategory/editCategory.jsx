@@ -33,7 +33,7 @@ const EditCategory = observer(({setEdit, id}) => {
             return
         }
         const oldImageResponse = await fetch(import.meta.env.VITE_API + "/" + flower.categories.find(element => element.id === id).image);
-        const oldImageBlob = await oldImageResponse;
+        const oldImageBlob = await oldImageResponse.blob();
 
         const formData = new FormData()
         formData.append("name", name ? name : flower.categories.find(element => element.id === id).name)

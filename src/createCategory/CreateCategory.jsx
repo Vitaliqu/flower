@@ -63,7 +63,7 @@ const CreateCategory = ({setCreate}) => {
                 <span className={styles.close} onClick={() => setCreate(false)}>&times;</span>
                 <h2>Додати категорію</h2>
                 <input type="text" placeholder="Назва" value={name} onChange={handleNameChange}/>
-                <input type={'file'} accept={"image/jpeg"} onChange={handleImageChange}/>
+                <input type={'file'} accept={"image/*"} onChange={handleImageChange}/>
                 <div className={styles.Wrapper}>
                     <p className={styles.Label}>Новинка</p>
                     <input type="checkbox" className={styles.checkbox} checked={isNew} onChange={handleNewChange}/>

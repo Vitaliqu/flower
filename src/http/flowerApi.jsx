@@ -16,11 +16,23 @@ export const fetchCategory = async () => {
     const {data} = await $host.get('api/category')
     return data
 }
-export const createFlower = async (category) => {
-    const {data} = await $authHost.post('api/flower/create', category)
+export const createFlower = async (flower) => {
+    const {data} = await $authHost.post('api/flower/create', flower)
     return data
 }
-export const fetchFlower = async () => {
-    const {data} = await $host.get('api/flower')
+export const deleteFlower = async (id) => {
+    const {data} = await $authHost.get(`api/flower/delete/${id}`)
+    return data
+}
+export const editFlower = async (id, flower) => {
+    const {data} = await $authHost.post(`api/flower/edit/${id}`, flower)
+    return data
+}
+export const fetchFlower = async (categoryId, page, limit) => {
+    const {data} = await $host.get('api/flower', {
+        params: {
+            categoryId, page, limit
+        }
+    })
     return data
 }

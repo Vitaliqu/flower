@@ -38,7 +38,12 @@
     font-size: 1rem;
     cursor: pointer;
 }
-
+.createFlower{
+    font-size: 1.5rem;
+    display: flex;
+    justify-content: end;
+    align-items: center;
+}
 .category:hover {
     color: var(--backgroundGreen);
 }
@@ -146,7 +151,9 @@ a {
     padding: 0 1rem;
     cursor: pointer;
 }
-
+p{
+    color:var(--textBrown)
+}
 .sortDropdown img {
     transition: transform 0.3s;
     transform: rotate(90deg);
@@ -156,7 +163,7 @@ a {
 }
 
 .sortTypes {
-    z-index: 1;
+    z-index: 3;
     transition: height 0.3s;
     height: 0;
     overflow: hidden;
@@ -211,11 +218,51 @@ a {
 .cardImage {
     position: absolute;
     border-radius: 10px;
+    object-fit: cover;
     display: flex;
     width: 95%;
     height: 95%;
 }
+.categoryAdmin {
+    position: absolute;
+    right: 1rem;
+    top: 1rem;
+    display: flex;
+    flex-direction: row;
+}
 
+.delete {
+    border-radius: 4px;
+    background-color: #de5151;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    display: flex;
+    width: 1.5rem;
+    height: 1.5rem;
+    z-index: 1;
+}
+
+.edit {
+    z-index: 1;
+    border-radius: 4px;
+    margin-right: 0.4rem;
+    cursor: pointer;
+    background-color: #e1e171;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+.editImage {
+    width: 1rem;
+}
+
+.deleteImage {
+    width: 1rem;
+}
 .cardLink {
     position: absolute;
 }
@@ -238,6 +285,7 @@ a {
     margin-top: 0.5rem;
     margin-bottom: 1.3rem;
     text-align: left;
+
     font-size: 1rem;
     font-weight: 500;
 }
@@ -325,6 +373,7 @@ a {
 .horizontalCardDescription {
     margin-bottom: 0.6rem;
     display: flex;
+    align-items: end;
 }
 
 .horizontalDescriptionWrapper {
@@ -346,7 +395,7 @@ a {
 
 
 .horizontalPriceWrapper {
-    align-items: center;
+    align-items: end;
     color: var(--backgroundGreen);
     font-size: 1.6rem;
     display: flex;
@@ -355,7 +404,9 @@ a {
 
 .horizontalHeart {
     object-fit: contain;
-    height: 2rem;
+    display: flex;
+    align-items: end;
+    width: 1.6rem;
     margin-left: 0.5rem;
 }
 
@@ -523,7 +574,7 @@ a {
     }
 
     .horizontalHeart {
-        width: clamp(1rem, 4vw, 1.6rem);
+        width: clamp(1rem, 3vw, 1.6rem);
     }
 }
 
@@ -599,7 +650,7 @@ a {
 
     .flowerCard {
         width: 90%;
-        height: 120vw;
+        height: 130vw;
     }
 
     .flowerName {

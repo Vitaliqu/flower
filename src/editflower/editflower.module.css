@@ -1,0 +1,81 @@
+.modal {
+    position: fixed;
+    z-index: 4;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    display: flex;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.chouseCategory {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    background-color: var(--backgroundGray);
+    display: flex;
+    width: 16rem;
+    height: 3rem;
+    margin-bottom: 0.5rem;
+    border-radius: 6px;
+    cursor: pointer;
+}
+.description{
+    height: 12rem;
+}
+.categoryList {
+    background-color: var(--backgroundGray);
+    border-radius: 6px;
+    list-style: none;
+    position: absolute;
+    z-index: 2;
+    top: 3rem;
+    height: 12rem;
+    overflow:scroll;
+}
+
+.categoryList li {
+    display: flex;
+    cursor: pointer;
+    align-items: center;
+    height: 3rem;
+}
+
+.modalContent {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.Wrapper {
+    display: flex;
+    flex-direction: row;
+}
+
+.Label {
+
+}
+
+.checkbox {
+    width: 1rem;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
