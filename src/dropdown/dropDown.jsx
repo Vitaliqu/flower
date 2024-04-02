@@ -32,19 +32,25 @@ const DropDown = (state) => {
     };
     const renderCategory = (element, id) => (
         <li style={encodeURIComponent(element.name) === path.split("/")[2] ? {color: "#79A03FFF"} : {}} key={id}
-            className={styles.category} onClick={() => {
-            setOpenedCategories(false)
-            flower.setCurrentCategory(element.id)
-            fetchFlower(flower.currentCategory, 1, 3).then(data => {
-                flower.setFlowers(data.rows)
-            })
-            closeMenu()
-            navigate(CATALOG_ROUTE + "/" + element.name)
-            setTimeout(() => window.scrollTo({
-                top: 0,
-                behavior: "smooth"
-            }), 50)
-        }}>{element.name}</li>);
+            className={styles.category}
+            onClick={async () => {
+                setOpenedCategories(false)
+                closeMenu()
+                window.scrollTo({top: 0, behavior: "smooth"});
+                if (!element.name) {
+                    flower.setCurrentCategory(undefined);
+                    const data = await fetchFlower(flower.currentCategory, flower.Page, flower.limit, flower.filter)
+                    navigate(CATALOG_ROUTE + "?sort=" + flower.filter)
+                    flower.setFlowers(data.rows);
+                    return
+                }
+                flower.setCurrentCategory(element.id);
+
+                navigate(CATALOG_ROUTE + '/?category=' + element.id + "&sort=" + flower.filter)
+                const data = await fetchFlower(flower.currentCategory, flower.Page, flower.limit, flower.filter);
+                flower.setFlowers(data.rows);
+
+            }}>{element.name}</li>);
 
     const selectCategory = () => {
         return <>
@@ -53,12 +59,12 @@ const DropDown = (state) => {
                     onClick={() => {
                         flower.setCurrentCategory(null)
                         setOpenedCategories(false)
-                        fetchFlower(null, 1, flower.totalCount).then(data => {
+                        closeMenu()
+                        navigate(CATALOG_ROUTE + "?sort=" + flower.filter)
+                        fetchFlower(undefined, flower.Page, flower.totalCount).then(data => {
                             flower.setFlowers(data.rows)
                             flower.setTotalCount(data.count)
                         })
-                        closeMenu()
-                        navigate(CATALOG_ROUTE)
                         setTimeout(() => window.scrollTo({
                             top: 0,
                             behavior: "smooth"

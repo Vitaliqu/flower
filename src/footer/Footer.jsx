@@ -38,10 +38,6 @@ const Footer = () => {
                                 href="https://www.facebook.com/groups/246459866644485/?locale=ru_RU" target={"_blank"}></a>
                             <p className={styles.faceBook}>Офіційна группа</p>
                         </div>
-                        <div className={styles.mailWrapper}>
-                            <img src={mail} alt="mail"/>
-                            <p className={styles.mailText}>example@gmail.com</p>
-                        </div>
                     </div>
                 </div>
             </div>

@@ -5,9 +5,10 @@ export default class FlowerStore {
         this._categories = []
         this._flowers = []
         this._page = 1
+        this._currentFilter = 'isNew'
         this._totalCount = 0
-        this._currentCateory = null
-        this._limit = 10
+        this._currentCateory = undefined
+        this._limit = 1000000
         makeAutoObservable(this)
     }
 
@@ -21,6 +22,10 @@ export default class FlowerStore {
 
     setTotalCount(count) {
         this._totalCount = count
+    }
+
+    setFilter(filter) {
+        this._currentFilter = filter
     }
 
     setLimit(limit) {
@@ -51,11 +56,15 @@ export default class FlowerStore {
         return this._totalCount
     }
 
+    get filter() {
+        return this._currentFilter
+    }
+
     get limit() {
         return this._limit
     }
 
-    get currentCategory(){
+    get currentCategory() {
         return this._currentCateory
     }
 }
