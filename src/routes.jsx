@@ -52,9 +52,6 @@ export const publicRoutes = [
     }, {
         path: CATALOG_ROUTE + '/:id',
         component: <Catalog/>
-    }, {
-        path: CATALOG_ROUTE + '/:id/:id',
-        component: <Catalog/>
     }
 ]
 

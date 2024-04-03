@@ -55,7 +55,7 @@ const Header = observer(() => {
                         <div className={styles.hamburgerMenu}>
                             <DropDown isOpened={isOpened} setIsOpened={setIsOpened}/>
                             <img className={styles.hamburger}
-                                 style={isOpened ? {opacity: "0", transform: "rotateZ(180deg)"} : {}}
+                                 style={isOpened ? {opacity: "0", transform: "rotateZ(90deg)"} : {}}
                                  onClick={() => setIsOpened(!isOpened)} src={hamburger} alt="hamburger"/>
                             <img className={styles.x}
                                  style={isOpened ? {opacity: "1", transform: "rotateZ(180deg)"} : {}}

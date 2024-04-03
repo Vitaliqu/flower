@@ -27,7 +27,7 @@ span{
     align-items: center;
     right: 0;
     height: 6rem;
-    z-index: 2;
+    z-index: 3;
 }
 
 .searchBar {
