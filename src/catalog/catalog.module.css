@@ -38,12 +38,14 @@
     font-size: 1rem;
     cursor: pointer;
 }
-.createFlower{
+
+.createFlower {
     font-size: 1.5rem;
     display: flex;
     justify-content: end;
     align-items: center;
 }
+
 .category:hover {
     color: var(--backgroundGreen);
 }
@@ -151,6 +153,7 @@ a {
     padding: 0 1rem;
     cursor: pointer;
 }
+
 .sortDropdown img {
     transition: transform 0.3s;
     transform: rotate(90deg);
@@ -160,7 +163,7 @@ a {
 }
 
 .sortTypes {
-    z-index: 3;
+    z-index: 1;
     transition: height 0.3s;
     height: 0;
     overflow: hidden;
@@ -191,6 +194,7 @@ a {
 }
 
 .flowerCard {
+    position: relative;
     height: 22rem;
     width: 12rem;
     display: flex;
@@ -220,6 +224,7 @@ a {
     width: 95%;
     height: 95%;
 }
+
 .categoryAdmin {
     position: absolute;
     right: 1rem;
@@ -260,6 +265,7 @@ a {
 .deleteImage {
     width: 1rem;
 }
+
 .cardLink {
     position: absolute;
 }
@@ -289,6 +295,8 @@ a {
 
 
 .cardDescription {
+    bottom: 2rem;
+    position: absolute;
     margin-left: 5%;
     width: 90%;
     display: flex;
@@ -368,6 +376,7 @@ a {
 }
 
 .horizontalCardDescription {
+    position: relative;
     margin-bottom: 0.6rem;
     display: flex;
     align-items: end;
@@ -394,17 +403,26 @@ a {
 .horizontalPriceWrapper {
     align-items: end;
     color: var(--backgroundGreen);
-    font-size: 1.6rem;
     display: flex;
     font-weight: 500;
 }
 
+.horizontalPrice {
+    font-size: 2rem;
+}
+
+.horizontalCurrency {
+    font-size: 1.6rem;
+}
+
 .horizontalHeart {
+    position: absolute;
     object-fit: contain;
     display: flex;
     align-items: end;
-    width: 1.6rem;
-    margin-left: 0.5rem;
+    width: 2rem;
+    bottom: 0;
+    right: 0;
 }
 
 .horizontalPrice {
@@ -493,12 +511,9 @@ a {
     }
 
     .currentFilter {
-        font-size: 0.8rem;
+        font-size: 0.7rem;
     }
 
-    .filterType {
-        font-size: 0.8rem;
-    }
 
     .sortTypes {
 
@@ -512,10 +527,12 @@ a {
         width: 100%;
         grid-template-columns: repeat(3, 1fr);
     }
+
     .categoryLabel {
         margin-top: 0.6rem;
         font-size: 1.6rem;
     }
+
     .horizontalFlowersGrid {
         margin-top: 2rem;
         width: 100%;
@@ -543,7 +560,8 @@ a {
     }
 
     .filterType {
-        padding: 1rem 0.3rem;
+        padding: 1rem 0.5rem;
+        font-size: 0.7rem;
 
     }
 
@@ -565,16 +583,15 @@ a {
     }
 
     .horizontalPrice {
-        font-size: clamp(0.8rem, 4vw, 1.6rem);
+        font-size: clamp(1rem, 5.5vw, 2rem);
     }
 
     .horizontalCurrency {
-        font-size: clamp(0.4rem, 3vw, 1.2rem);
-
+        font-size: clamp(0.8rem, 4vw, 1.6rem);
     }
 
     .horizontalHeart {
-        width: clamp(1rem, 3vw, 1.6rem);
+        width: clamp(1rem, 5.5vw, 2rem);
     }
 }
 
@@ -596,13 +613,18 @@ a {
 
 
     .price {
-        font-size: clamp(1rem, 4.5vw, 1.5rem);
+        font-size: clamp(1rem, 5.5vw, 2rem);
     }
 
     .currency {
-        font-size: clamp(0.8rem, 2.5vw, 1.2rem);
+        font-size: clamp(0.8rem, 4vw, 1.6rem);
 
     }
+
+    .cardDescription {
+        bottom: clamp(0.5rem, 4vw, 2rem);
+    }
+
 
     .flowerName {
         font-size: clamp(0.6rem, 2.5vw, 1rem);
@@ -631,6 +653,7 @@ a {
         font-size: 1.2rem;
     }
 }
+
 @media (max-width: 400px) {
     .sortMenu {
         width: 100%;
@@ -664,11 +687,12 @@ a {
     }
 
     .price {
-        font-size: 1.3rem;
+        font-size: 2rem;
     }
 
     .currency {
-        font-size: 1rem;
+        font-size: 1.6rem;
+
     }
 
     .heart {

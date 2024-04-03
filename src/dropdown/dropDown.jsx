@@ -56,15 +56,14 @@ const DropDown = (state) => {
         return <>
             <div className={styles.categories}>
                 <li className={styles.category}
-                    onClick={() => {
+                    onClick={async () => {
                         flower.setCurrentCategory(null)
                         setOpenedCategories(false)
                         closeMenu()
+                        const data = await fetchFlower(flower.currentCategory, flower.Page, flower.limit, flower.filter);
+                        flower.setFlowers(data.rows);
                         navigate(CATALOG_ROUTE + "?sort=" + flower.filter)
-                        fetchFlower(undefined, flower.Page, flower.totalCount).then(data => {
-                            flower.setFlowers(data.rows)
-                            flower.setTotalCount(data.count)
-                        })
+
                         setTimeout(() => window.scrollTo({
                             top: 0,
                             behavior: "smooth"
@@ -80,9 +79,10 @@ const DropDown = (state) => {
     const Item = ({path, label, active}) => (
         <li className={styles.navigate} style={active ? {...activeStyle} : {}} onClick={() => {
             setOpenedCategories(false)
+            navigate(path)
             closeMenu()
         }}>
-            <Link to={path}/>{label}
+            {label}
         </li>
     );
 
@@ -93,7 +93,10 @@ const DropDown = (state) => {
             <ul className={styles.dropDownList}>
                 <Item path={HOME_ROUTE} label="Головна"
                       active={path === HOME_ROUTE || path === NEW_ROUTE || path === POPULAR_ROUTE}/>
-                <Item path={CATALOG_ROUTE} label="Каталог" active={path.includes(CATALOG_ROUTE)}/>
+                <Item
+                    path={flower.currentCategory ? CATALOG_ROUTE + `/?category=${flower.currentCategory}&sort=${flower.filter}` :
+                        CATALOG_ROUTE + `/?sort=${flower.filter}`} label="Каталог"
+                    active={path.includes(CATALOG_ROUTE)}/>
                 {path.includes(CATALOG_ROUTE) &&
                     <li style={openedCategories ? activeStyle : {}} className={styles.navigate} onClick={() => {
                         setOpenedCategories(!openedCategories)

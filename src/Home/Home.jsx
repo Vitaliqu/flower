@@ -55,7 +55,7 @@ const Home = observer((filter) => {
                 <img loading={'lazy'} onClick={async () => {
                     flower.setCurrentCategory(element.id)
                     const flowers = await fetchFlower(flower.currentCategory)
-                    navigate(CATALOG_ROUTE + '/?category=' + element.id)
+                    navigate(CATALOG_ROUTE + '/?category=' + element.id+`&sort=${flower.filter}`)
                     flower.setFlowers(flowers.rows)
                     requestAnimationFrame(() => window.scrollTo({
                         top: 0,

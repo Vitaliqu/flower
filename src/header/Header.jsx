@@ -29,12 +29,16 @@ const Header = observer(() => {
     const activeStyle = {color: "#79A03FFF"};
     const path = useLocation().pathname;
     const {user} = useContext(Context)
+    const {flower} = useContext(Context)
     const Item = ({path, label, active}) => (
-        <p style={active ? {...activeStyle} : {}}>
-            <Link to={path} onClick={() => setTimeout(() => window.scrollTo({
+        <p onClick={() => {
+            navigate(path)
+            setTimeout(() => window.scrollTo({
                 top: 0,
                 behavior: "smooth"
-            }), 50)}/>{label}
+            }), 50)
+        }} style={active ? {...activeStyle} : {}}>
+            {label}
         </p>);
 
     return (
@@ -57,7 +61,7 @@ const Header = observer(() => {
                                  style={isOpened ? {opacity: "1", transform: "rotateZ(180deg)"} : {}}
                                  onClick={() => setIsOpened(!isOpened)} src={x} alt="hamburger"/>
                         </div>}
-                    <div className={styles.logoText}>
+                    <div className={styles.logoText} onClick={() => navigate(HOME_ROUTE)}>
                         <p>
                             <span style={{color: "#4F4038"}}>Flower</span>
                             <span style={{color: "#79A03F", letterSpacing: "-2px"}}> O`N</span>
@@ -67,7 +71,10 @@ const Header = observer(() => {
                     {!isTablet && <div className={styles.navigationPanel}>
                         <Item path={HOME_ROUTE} label="Головна"
                               active={path === HOME_ROUTE || path === NEW_ROUTE || path === POPULAR_ROUTE}/>
-                        <Item path={CATALOG_ROUTE} label="Каталог" active={path.includes(CATALOG_ROUTE)}/>
+                        <Item
+                            path={flower.currentCategory ? CATALOG_ROUTE + `/?category=${flower.currentCategory}&sort=${flower.filter}` :
+                                CATALOG_ROUTE + `/?sort=${flower.filter}`}
+                            label="Каталог" active={path.includes(CATALOG_ROUTE)}/>
                         <Item path={DELIVERY_ROUTE} label="Доставка" active={path.includes(DELIVERY_ROUTE)}/>
                         {/*<Item path={REVIEWS_ROUTE} label="Відгуки" active={path.includes(REVIEWS_ROUTE)}/>*/}
                         <span onClick={() => window.scrollTo({

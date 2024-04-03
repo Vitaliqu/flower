@@ -7,6 +7,7 @@ import AppRouter from "./components/AppRouter.jsx";
 import {Context} from "./main.jsx";
 import {check} from "./http/userApi.jsx";
 
+
 const App = observer(() => {
     const {flower} = useContext(Context)
     const {user} = useContext(Context);
