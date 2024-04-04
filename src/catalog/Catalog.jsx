@@ -15,8 +15,9 @@ import dropDown from "../assets/dropdown.png";
 import editImage from '../assets/edit.png';
 import deleteImage from '../assets/delete.png';
 import heart from '../assets/heart.png';
-import {flow} from "mobx";
+import Pagination from '@mui/material/Pagination';
 import {ClickAwayListener} from '@mui/base';
+import {catalogNavigate} from "../catalogNavigate.jsx";
 
 const Catalog = observer(() => {
     const [isGrid, setIsGrid] = useState(localStorage.getItem("grid") ? JSON.parse(localStorage.getItem("grid")) : true);
@@ -46,13 +47,13 @@ const Catalog = observer(() => {
                 flower.setCurrentCategory(undefined)
                 navigate(HOME_ROUTE)
             }
-
             if (!flower.categories.length) flower.setCategories(categories)
             if (!flower.currentCategory && urlId) flower.setCurrentCategory(parseInt(urlId))
 
             const filterValue = url.searchParams.get('sort') || "isNew"
+            const page = url.searchParams.get('page') || 1
             flower.setFilter(filterValue)
-
+            await flower.setPage(parseInt(page))
             const filterText = {
                 'isNew': 'Новинки',
                 'popular': 'Популярні',
@@ -62,16 +63,23 @@ const Catalog = observer(() => {
                 'cheap': 'Ціна, найдешевші'
             }[filterValue]
             if (filterText) setFilter(filterText)
+            if(!flower.totalCount){
+                const count = await fetchFlower(flower.currentCategory, flower.page, flower.limit, flower.filter)
+                flower.setTotalCount(count.count)
+            }
+            if (flower.page > Math.ceil(flower.totalCount / flower.limit)) {
+                flower.setPage(1)
+                catalogNavigate(flower, navigate, 1)
+            }
 
             if (!flower.flowers.length) {
-                const flowers = await fetchFlower(flower.currentCategory, flower.Page, flower.limit, flower.filter)
+                const flowers = await fetchFlower(flower.currentCategory, flower.page, flower.limit, flower.filter)
                 flower.setFlowers(flowers.rows)
             }
         }
 
         fetchData();
     }, []);
-
 
     const handleFilterChange = async (filter) => {
         setFilter(filter)
@@ -88,10 +96,10 @@ const Catalog = observer(() => {
         } else if (filter === "Ціна, найдешевші") {
             flower.setFilter('cheap')
         }
-        if (flower.currentCategory) navigate(CATALOG_ROUTE + `?category=${flower.currentCategory}&sort=${flower.filter}`)
-        if (!flower.currentCategory) navigate(CATALOG_ROUTE + `?sort=${flower.filter}`)
+        catalogNavigate(flower, navigate, flower.page)
 
-        const flowers = await fetchFlower(flower.currentCategory, flower.Page, flower.limit, flower.filter)
+
+        const flowers = await fetchFlower(flower.currentCategory, flower.page, flower.limit, flower.filter)
         flower.setFlowers(flowers.rows)
     }
 
@@ -102,19 +110,13 @@ const Catalog = observer(() => {
             {element.name}
         </li>
     );
-
     const handleCategoryClick = async (category) => {
         window.scrollTo({top: 0, behavior: "smooth"});
-        if (!category.name) {
-            navigate(CATALOG_ROUTE + `?sort=${flower.filter}`)
-            flower.setCurrentCategory(undefined);
-            const data = await fetchFlower(flower.currentCategory, flower.Page, flower.limit, flower.filter)
-            flower.setFlowers(data.rows);
-            return
-        }
         flower.setCurrentCategory(category.id);
-        navigate(CATALOG_ROUTE + '/?category=' + category.id + "&sort=" + flower.filter)
+        flower.setPage(1)
+        catalogNavigate(flower, navigate, 1)
         const data = await fetchFlower(category.id, flower.Page, flower.limit, flower.filter)
+        flower.setTotalCount(data.count)
         flower.setFlowers(data.rows);
     };
 
@@ -140,7 +142,7 @@ const Catalog = observer(() => {
                     </div>
                 )}
                 <img className={styles.cardImage}
-                     src={import.meta.env.VITE_API + "/" + element.image} alt="img"/>
+                     src={import.meta.env.VITE_API + "/" + element.image} alt=""/>
                 {element.isNew && <div className={styles.new}>Новинка</div>}
             </div>
             <p className={styles.flowerName}>{element.name}</p>
@@ -153,6 +155,7 @@ const Catalog = observer(() => {
             </div>
         </div>
     );
+
     const renderHorizontalFlowerCard = (element, id) => (
         <div className={styles.horizontalFlowerCard} key={id}>
             <div className={styles.horizontalImageHolder}>
@@ -169,7 +172,7 @@ const Catalog = observer(() => {
                     }}><img className={styles.deleteImage} src={deleteImage} alt=""/></div>
                 </div>}
                 <img className={styles.horizontalCardImage} src={import.meta.env.VITE_API + "/" + element.image}
-                     alt="img"/>
+                     alt=""/>
                 {element.isNew && <div className={styles.new}>Новинка</div>}
             </div>
             <div className={styles.horizontalInfo}>
@@ -199,9 +202,15 @@ const Catalog = observer(() => {
         setDeleteId(id);
         setDelete(true);
     };
-
+    const handleChangePage = async (event, page) => {
+        await catalogNavigate(flower, navigate, page)
+        window.scrollTo({top: 0, behavior: "smooth"});
+        catalogNavigate(flower, navigate, flower.page)
+        const flowers = await fetchFlower(flower.currentCategory, flower.page, flower.limit, flower.filter)
+        await flower.setFlowers(flowers.rows)
+    }
     const createFlowerCard = (isHorizontal = false) => (
-        <div className={`${styles.flowerCard} ${isHorizontal ? styles.horizontalFlowerCard : ''}`}>
+        <div className={isHorizontal ? styles.horizontalFlowerCard : styles.flowerCard}>
             <div className={styles.imageHolder} onClick={() => setCreate(true)}>
                 <p className={styles.createFlower}>Створити<br/>позицію</p>
             </div>
@@ -213,62 +222,67 @@ const Catalog = observer(() => {
             {create && <CreateFlower setCreate={setCreate}/>}
             {edit && <EditFlower id={editId} setEdit={setEdit}/>}
             {del && <DeleteFlower id={deleteId} setDelete={setDelete}/>}
-                <div className={styles.catalog}>
-                    <ul className={styles.categorySelect}>
-                        {!isTablet && <li style={flower.currentCategory === undefined ? {color: "#79A03FFF"} : {}}
-                                          onClick={() => handleCategoryClick({name: ""})}
-                                          className={`${styles.category} ${path === CATALOG_ROUTE ? styles.activeCategory : ''}`}>Всі</li>}
-                        {!isTablet && flower.categories.map(renderCategory)}
-                    </ul>
-                    <div className={styles.flowersWrapper}>
-                        <p className={styles.categoryLabel}>{flower.categories.find(element => element.id === flower.currentCategory)?.name || "Всі"}</p>
-                        <div className={styles.sortMenu}>
-                            <div className={styles.gridLayout}>
-                                {!isMobile ? (
-                                    <>
-                                        <img className={styles.grid} style={!isGrid ? {opacity: 0.3} : {}}
-                                             onClick={() => setIsGrid(true)} src={grid} alt=""/>
-                                        <img className={styles.wideGrid} style={isGrid ? {opacity: 0.3} : {}}
-                                             onClick={() => setIsGrid(false)} src={wideGrid} alt=""/>
-                                    </>
-                                ) : (
-                                    <>
-                                        <img className={styles.mobileGrid}
-                                             style={!isGrid ? {opacity: 0, transform: "rotate(90deg)"} : {}}
-                                             onClick={() => setIsGrid(!isGrid)} src={grid} alt=""/>
-                                        <img className={styles.mobileWideGrid}
-                                             style={!isGrid ? {opacity: 0.9, transform: "rotate(0deg)"} : {}}
-                                             onClick={() => setIsGrid(!isGrid)} src={wideGrid} alt=""/>
-                                    </>
-                                )}
-                            </div>
-                            <div className={styles.sortWrapper} onClick={() => setSortOpen(!sortOpen)}>
-                                <p className={styles.sortText}> Відсортувати за:</p>
-                                <ClickAwayListener onClickAway={() => sortOpen && setSortOpen(false)}>
-                                    <div className={styles.sortDropdown}>
-                                        <p className={styles.currentFilter}>{filter}</p>
-                                        <img style={sortOpen ? {transform: "rotate(0deg)"} : {}} src={dropDown} alt=""/>
-                                        <ul style={sortOpen ? isMobile ? {height: "18rem"} : {height: "19rem"} : {}}
-                                            className={styles.sortTypes}>
-                                            {renderSortTypes()}
-                                        </ul>
-                                    </div>
-                                </ClickAwayListener>
-                            </div>
+            <div className={styles.catalog}>
+                <ul className={styles.categorySelect}>
+                    {!isTablet && <li style={flower.currentCategory === undefined ? {color: "#79A03FFF"} : {}}
+                                      onClick={() => handleCategoryClick({name: ""})}
+                                      className={`${styles.category} ${path === CATALOG_ROUTE ? styles.activeCategory : ''}`}>Всі</li>}
+                    {!isTablet && flower.categories.map(renderCategory)}
+                </ul>
+                <div className={styles.flowersWrapper}>
+                    <p className={styles.categoryLabel}>{flower.categories.find(element => element.id === flower.currentCategory)?.name || "Всі"}</p>
+                    <div className={styles.sortMenu}>
+                        <div className={styles.gridLayout}>
+                            {!isMobile ? (
+                                <>
+                                    <img className={styles.grid} style={!isGrid ? {opacity: 0.3} : {}}
+                                         onClick={() => setIsGrid(true)} src={grid} alt=""/>
+                                    <img className={styles.wideGrid} style={isGrid ? {opacity: 0.3} : {}}
+                                         onClick={() => setIsGrid(false)} src={wideGrid} alt=""/>
+                                </>
+                            ) : (
+                                <>
+                                    <img className={styles.mobileGrid}
+                                         style={!isGrid ? {opacity: 0, transform: "rotate(90deg)"} : {}}
+                                         onClick={() => setIsGrid(!isGrid)} src={grid} alt=""/>
+                                    <img className={styles.mobileWideGrid}
+                                         style={!isGrid ? {opacity: 0.9, transform: "rotate(0deg)"} : {}}
+                                         onClick={() => setIsGrid(!isGrid)} src={wideGrid} alt=""/>
+                                </>
+                            )}
                         </div>
-                        {isGrid ? (
-                            <div className={styles.flowersGrid}>
-                                {user._isAdmin && createFlowerCard()}
-                                {flower.flowers.map((flower, index) => renderFlowerCard(flower, index))}
-                            </div>
-                        ) : (
-                            <div className={styles.horizontalFlowersGrid}>
-                                {user._isAdmin && createFlowerCard(true)}
-                                {flower.flowers.map((flower, index) => renderHorizontalFlowerCard(flower, index, true))}
-                            </div>
-                        )}
+                        <div className={styles.sortWrapper} onClick={() => setSortOpen(!sortOpen)}>
+                            <p className={styles.sortText}> Відсортувати за:</p>
+                            <ClickAwayListener onClickAway={() => sortOpen && setSortOpen(false)}>
+                                <div className={styles.sortDropdown}>
+                                    <p className={styles.currentFilter}>{filter}</p>
+                                    <img style={sortOpen ? {transform: "rotate(0deg)"} : {}} src={dropDown} alt=""/>
+                                    <ul style={sortOpen ? isMobile ? {height: "18rem"} : {height: "19rem"} : {}}
+                                        className={styles.sortTypes}>
+                                        {renderSortTypes()}
+                                    </ul>
+                                </div>
+                            </ClickAwayListener>
+                        </div>
                     </div>
+                    {isGrid ? (
+                        <div className={styles.flowersGrid}>
+                            {user._isAdmin && createFlowerCard()}
+                            {flower.flowers.map((flower, index) => renderFlowerCard(flower, index))}
+                        </div>
+                    ) : (
+                        <div className={styles.horizontalFlowersGrid}>
+                            {user._isAdmin && createFlowerCard(true)}
+                            {flower.flowers.map((flower, index) => renderHorizontalFlowerCard(flower, index, true))}
+                        </div>
+
+                    )}
+                    {flower.totalCount > flower.limit &&
+                        <Pagination page={flower.page} onChange={(event, page) => handleChangePage(event, page)}
+                                    className={styles.pagination}
+                                    count={Math.ceil(flower.totalCount / flower.limit)}/>}
                 </div>
+            </div>
         </>
     )
         ;

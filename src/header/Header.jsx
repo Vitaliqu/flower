@@ -7,8 +7,8 @@ import hamburger from "../assets/hamburger.png"
 import phone from "../assets/phone.svg"
 import faceBook from "../assets/facebook.svg"
 import DropDown from "../dropdown/dropDown.jsx";
-import {useContext, useState} from "react";
-import {Link, useLocation, useNavigate} from "react-router-dom";
+import React, {useContext, useState} from "react";
+import {useLocation, useNavigate} from "react-router-dom";
 import {
     CATALOG_ROUTE,
     DELIVERY_ROUTE,
@@ -20,12 +20,15 @@ import {
 } from "../utils/consts.jsx";
 import {Context} from "../main.jsx";
 import {observer} from "mobx-react-lite";
+import {ClickAwayListener} from "@mui/base";
+import {catalogNavigate} from "../catalogNavigate.jsx";
 
 
 const Header = observer(() => {
     const navigate = useNavigate()
     const isTablet = useMediaQuery("(max-width:992px)")
     const [isOpened, setIsOpened] = useState(false)
+    const [openedCategories, setOpenedCategories] = useState(false)
     const activeStyle = {color: "#79A03FFF"};
     const path = useLocation().pathname;
     const {user} = useContext(Context)
@@ -42,7 +45,10 @@ const Header = observer(() => {
         </p>);
 
     return (
-        <>
+        <>        <ClickAwayListener onClickAway={() => {
+            setOpenedCategories(false)
+            setIsOpened(false)
+        }}>
             <div className={styles.header}>
                 <div className={styles.infoWrapper}>
                     <p className={styles.phone}><img src={phone} alt={phone}/>+38-068-688-06-27</p>
@@ -53,13 +59,17 @@ const Header = observer(() => {
                 <div className={styles.searchBar}>
                     {isTablet &&
                         <div className={styles.hamburgerMenu}>
-                            <DropDown isOpened={isOpened} setIsOpened={setIsOpened}/>
+                            <DropDown openedCategories={openedCategories} setOpenedCategories={setOpenedCategories}
+                                      isOpened={isOpened} setIsOpened={setIsOpened}/>
                             <img className={styles.hamburger}
                                  style={isOpened ? {opacity: "0", transform: "rotateZ(90deg)"} : {}}
-                                 onClick={() => setIsOpened(!isOpened)} src={hamburger} alt="hamburger"/>
+                                 onClick={() => setIsOpened(true)} src={hamburger} alt="hamburger"/>
                             <img className={styles.x}
                                  style={isOpened ? {opacity: "1", transform: "rotateZ(180deg)"} : {}}
-                                 onClick={() => setIsOpened(!isOpened)} src={x} alt="hamburger"/>
+                                 onClick={() => {
+                                     setOpenedCategories(false)
+                                     setIsOpened(!isOpened)
+                                 }} src={x} alt="hamburger"/>
                         </div>}
                     <div className={styles.logoText} onClick={() => navigate(HOME_ROUTE)}>
                         <p>
@@ -71,12 +81,13 @@ const Header = observer(() => {
                     {!isTablet && <div className={styles.navigationPanel}>
                         <Item path={HOME_ROUTE} label="Головна"
                               active={path === HOME_ROUTE || path === NEW_ROUTE || path === POPULAR_ROUTE}/>
-                        <Item
-                            path={flower.currentCategory ? CATALOG_ROUTE + `/?category=${flower.currentCategory}&sort=${flower.filter}` :
-                                CATALOG_ROUTE + `/?sort=${flower.filter}`}
-                            label="Каталог" active={path.includes(CATALOG_ROUTE)}/>
+                        <p onClick={() => {
+                            setOpenedCategories(false)
+                            catalogNavigate(flower, navigate, flower.page)
+                        }}
+                           style={path.includes(CATALOG_ROUTE) ? activeStyle : {}}>Каталог
+                        </p>
                         <Item path={DELIVERY_ROUTE} label="Доставка" active={path.includes(DELIVERY_ROUTE)}/>
-                        {/*<Item path={REVIEWS_ROUTE} label="Відгуки" active={path.includes(REVIEWS_ROUTE)}/>*/}
                         <span onClick={() => window.scrollTo({
                             top: document.documentElement.scrollHeight,
                             behavior: "smooth"
@@ -92,6 +103,7 @@ const Header = observer(() => {
                     </div>
                 </div>
             </div>
+        </ClickAwayListener>
         </>)
 })
 export default Header

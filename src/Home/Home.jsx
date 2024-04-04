@@ -12,6 +12,7 @@ import CreateCategory from "../createCategory/CreateCategory.jsx";
 import EditCategory from "../editCategory/editCategory.jsx";
 import DeleteCategory from "../deleteCategory/deleteCategory.jsx";
 import CyrillicToTranslit from 'cyrillic-to-translit-js';
+import {catalogNavigate} from "../catalogNavigate.jsx";
 
 const Home = observer((filter) => {
 
@@ -55,8 +56,9 @@ const Home = observer((filter) => {
                 <img loading={'lazy'} onClick={async () => {
                     flower.setCurrentCategory(element.id)
                     const flowers = await fetchFlower(flower.currentCategory)
-                    navigate(CATALOG_ROUTE + '/?category=' + element.id+`&sort=${flower.filter}`)
+                    catalogNavigate(flower, navigate, 1)
                     flower.setFlowers(flowers.rows)
+                    flower.setTotalCount(flowers.count)
                     requestAnimationFrame(() => window.scrollTo({
                         top: 0,
                         behavior: "smooth"

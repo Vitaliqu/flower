@@ -8,7 +8,7 @@ export default class FlowerStore {
         this._currentFilter = 'isNew'
         this._totalCount = 0
         this._currentCateory = undefined
-        this._limit = 1000000
+        this._limit = 12
         makeAutoObservable(this)
     }
 
@@ -48,7 +48,7 @@ export default class FlowerStore {
         return this._flowers
     }
 
-    get Page() {
+    get page() {
         return this._page
     }
 
