@@ -26,7 +26,7 @@ const Footer = () => {
                         <p className={styles.infoLabel}>Зворотній Зв’язок</p>
                         <div className={styles.addressWrapper}>
                             <img src={address} alt="address"/>
-                            <p className={styles.addressText}>м.Хуст, об'їзна дорога, (біля кільця)</p>
+                            <p className={styles.addressText}>м.Хуст, об'їзна дорога, (зʼїзд з кільця на ізу)</p>
                         </div>
                         <div className={styles.phoneWrapper}>
                             <img src={phone} alt="phone"/>
