@@ -1,0 +1,173 @@
+.container {
+    width: 80%;
+    max-width: 1320px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    height: calc(100vh - 6rem);
+    flex-shrink: 0;
+    margin-top: 6rem;
+    flex-direction: row;
+}
+
+
+.imageContainer {
+    width: 50%;
+    height: 80%;
+}
+
+.infoContainer {
+}
+
+.flowerName {
+}
+
+.flowerDescription {
+}
+
+.priceWrapper {
+}
+
+.price {
+}
+
+.currency {
+}
+
+.horizontalFlowerCard {
+    display: flex;
+    width: 100%;
+}
+
+.horizontalImageHolder {
+    display: flex;
+    width: 18rem;
+    border-radius: 14px;
+    position: relative;
+    background-color: var(--backgroundGray);
+    flex-shrink: 0;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    height: 20rem;
+}
+
+.horizontalCardImage {
+    border-radius: 10px;
+    position: absolute;
+    display: flex;
+    object-fit: cover;
+    width: 95%;
+    height: 95%;
+    z-index: 0  ;
+}
+.categoryAdmin {
+    position: absolute;
+    right: 1rem;
+    top: 1rem;
+    display: flex;
+    flex-direction: row;
+}
+.horizontalInfo {
+    display: flex;
+    width:100%;
+    flex-direction: column;
+    margin-left: 1rem;
+}
+
+.horizontalFlowerName {
+    margin-top: 0.6rem;
+    font-size: 1.6rem;
+    font-weight: 500;
+    color: var(--textBrown);
+}
+
+.horizontalCardDescription {
+    position: relative;
+    margin-bottom: 0.6rem;
+    display: flex;
+    align-items: end;
+}
+
+.horizontalDescriptionWrapper {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.flowerDescription {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 10;
+    color: var(--textBrown);
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
+.horizontalPriceWrapper {
+    align-items: end;
+    color: var(--backgroundGreen);
+    display: flex;
+    font-weight: 500;
+}
+
+.horizontalPrice {
+    font-size: 3rem;
+}
+
+.horizontalCurrency {
+    font-size: 2.4rem;
+}
+
+.horizontalHeart {
+    position: absolute;
+    object-fit: contain;
+    display: flex;
+    align-items: end;
+    width: 3rem;
+    bottom: 0;
+    right: 0;
+}
+
+.horizontalPrice {
+
+}
+
+.horizontalCurrency {
+
+}
+.delete {
+    border-radius: 4px;
+    background-color: #de5151;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    display: flex;
+    width: 1.5rem;
+    height: 1.5rem;
+    z-index: 3;
+}
+
+.deleteImage {
+    width: 1rem;
+}
+.editImage {
+    width: 1rem;
+}
+
+.edit {
+    z-index: 3;
+    border-radius: 4px;
+    margin-right: 0.4rem;
+    cursor: pointer;
+    background-color: #e1e171;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 1.5rem;
+    height: 1.5rem;
+}

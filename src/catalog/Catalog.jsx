@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from "react";
-import {useLocation, useNavigate} from "react-router-dom";
+import {useLocation, useNavigate, useParams} from "react-router-dom";
 import {observer} from "mobx-react-lite";
 import {Context} from "../main.jsx";
 import {fetchCategory, fetchFlower} from "../http/flowerApi.jsx";
@@ -43,12 +43,13 @@ const Catalog = observer(() => {
             const urlId = url.searchParams.get('category')
             const categories = await fetchCategory()
 
-            if (path === "/catalog/" && urlId && !categories.map(element => `${element.id}`).includes(urlId)) {
+            if (path === "/catalog" && urlId && !categories.map(element => `${element.id}`).includes(urlId)) {
                 flower.setCurrentCategory(undefined)
                 navigate(HOME_ROUTE)
             }
-            if (!flower.categories.length) flower.setCategories(categories)
-            if (!flower.currentCategory && urlId) flower.setCurrentCategory(parseInt(urlId))
+            flower.setCategories(categories)
+            if (urlId) flower.setCurrentCategory(parseInt(urlId))
+            else flower.setCurrentCategory(undefined)
 
             const filterValue = url.searchParams.get('sort') || "isNew"
             const page = url.searchParams.get('page') || 1
@@ -63,23 +64,19 @@ const Catalog = observer(() => {
                 'cheap': 'Ціна, найдешевші'
             }[filterValue]
             if (filterText) setFilter(filterText)
-            if(!flower.totalCount){
-                const count = await fetchFlower(flower.currentCategory, flower.page, flower.limit, flower.filter)
-                flower.setTotalCount(count.count)
-            }
-            if (flower.page > Math.ceil(flower.totalCount / flower.limit)) {
+            const count = await fetchFlower(flower.currentCategory, flower.page, flower.limit, flower.filter)
+            flower.setTotalCount(count.count)
+            if (Math.ceil(flower.totalCount / flower.limit) && flower.page > Math.ceil(flower.totalCount / flower.limit)) {
                 flower.setPage(1)
                 catalogNavigate(flower, navigate, 1)
             }
 
-            if (!flower.flowers.length) {
-                const flowers = await fetchFlower(flower.currentCategory, flower.page, flower.limit, flower.filter)
-                flower.setFlowers(flowers.rows)
-            }
+            const flowers = await fetchFlower(flower.currentCategory, flower.page, flower.limit, flower.filter)
+            flower.setFlowers(flowers.rows)
         }
 
         fetchData();
-    }, []);
+    }, [useParams()]);
 
     const handleFilterChange = async (filter) => {
         setFilter(filter)
@@ -203,12 +200,12 @@ const Catalog = observer(() => {
         setDelete(true);
     };
     const handleChangePage = async (event, page) => {
-        await catalogNavigate(flower, navigate, page)
-        window.scrollTo({top: 0, behavior: "smooth"});
-        catalogNavigate(flower, navigate, flower.page)
-        const flowers = await fetchFlower(flower.currentCategory, flower.page, flower.limit, flower.filter)
-        await flower.setFlowers(flowers.rows)
+        await catalogNavigate(flower, navigate, page);
+        const flowers = await fetchFlower(flower.currentCategory, flower.page, flower.limit, flower.filter);
+        await flower.setFlowers(flowers.rows);
+        setTimeout(() => window.scrollTo({top: 0, behavior: "smooth"}), 1)
     }
+
     const createFlowerCard = (isHorizontal = false) => (
         <div className={isHorizontal ? styles.horizontalFlowerCard : styles.flowerCard}>
             <div className={styles.imageHolder} onClick={() => setCreate(true)}>

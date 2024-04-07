@@ -1,5 +1,5 @@
 import {
-    ADMIN_ROUTE, CATALOG_ROUTE, DELIVERY_ROUTE,
+    ADMIN_ROUTE, CATALOG_ROUTE, DELIVERY_ROUTE, FULLPAGE_ROUTE,
     HOME_ROUTE,
     LIKED_ROUTE,
     LOGIN_ROUTE,
@@ -14,6 +14,7 @@ import Registration from "./register/Register.jsx";
 import Login from "./login/Login.jsx";
 import Liked from "./Liked/Liked.jsx";
 import {fetchCategory} from "./http/flowerApi.jsx";
+import FullPage from "./fullPage/fullPage.jsx";
 
 export const authorizedRoutes = [
     {
@@ -52,6 +53,9 @@ export const publicRoutes = [
     }, {
         path: CATALOG_ROUTE + '/:id',
         component: <Catalog/>
+    }, {
+        path: FULLPAGE_ROUTE + '/:id',
+        component: <FullPage/>
     }
 ]
 

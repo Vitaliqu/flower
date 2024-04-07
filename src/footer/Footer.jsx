@@ -26,16 +26,17 @@ const Footer = () => {
                         <p className={styles.infoLabel}>Зворотній Зв’язок</p>
                         <div className={styles.addressWrapper}>
                             <img src={address} alt="address"/>
-                            <p className={styles.addressText}>м.Хуст, об'їзна дорога, (біля кільця)</p>
+                            <p className={styles.addressText}>м.Хуст, об'їзна дорога, <br/>(з'їзд з кільця на Ізу)</p>
                         </div>
                         <div className={styles.phoneWrapper}>
                             <img src={phone} alt="phone"/>
-                            <p className={styles.phoneText}>+38-068-688-06-27</p>
+                            <p className={styles.phoneText}>+380-686-880-627</p>
                         </div>
                         <div className={styles.faceBookWrapper}>
                             <img src={faceBook} alt={faceBook}/>
                             <a className={styles.facebookLink}
-                                href="https://www.facebook.com/groups/246459866644485/?locale=ru_RU" target={"_blank"}></a>
+                               href="https://www.facebook.com/groups/246459866644485/?locale=ru_RU"
+                               target={"_blank"}></a>
                             <p className={styles.faceBook}>Офіційна группа</p>
                         </div>
                     </div>

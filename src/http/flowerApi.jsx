@@ -28,6 +28,10 @@ export const editFlower = async (id, flower) => {
     const {data} = await $authHost.post(`api/flower/edit/${id}`, flower)
     return data
 }
+export const fetchOne = async (id) => {
+    const {data} = await $host.get(`api/flower/${id}`)
+    return data
+}
 export const fetchFlower = async (categoryId, page, limit, sort) => {
     const {data} = await $host.get('api/flower', {
         params: {
