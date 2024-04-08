@@ -6,15 +6,15 @@ import Compressor from 'compressorjs';
 
 const EditFlower = ({setEdit, id}) => {
     const {flower} = useContext(Context)
-    const [forceRender, setForceRender] = useState(false);
-    const [name, setName] = useState('');
+    const currentFlower = flower.flowers.find(element => element.id === id)
+    const [name, setName] = useState(currentFlower.name);
     const [image, setImage] = useState(null);
-    const [price, setPrice] = useState(0);
-    const [category, setCategory] = useState('');
-    const [categoryText, setCategoryText] = useState("Категорія");
-    const [isNew, setIsNew] = useState(false);
-    const [isPopular, setIsPopular] = useState(false);
-    const [description, setDescription] = useState('');
+    const [price, setPrice] = useState(currentFlower.price);
+    const [category, setCategory] = useState(currentFlower.categoryId);
+    const [categoryText, setCategoryText] = useState(flower.categories.find(element => element.id === currentFlower.categoryId).name);
+    const [isNew, setIsNew] = useState(currentFlower.isNew);
+    const [isPopular, setIsPopular] = useState(currentFlower.popular);
+    const [description, setDescription] = useState(currentFlower.description);
     const [openCategory, setOpenCategory] = useState(false)
     const handleNameChange = (e) => {
         setName(e.target.value);
@@ -32,14 +32,14 @@ const EditFlower = ({setEdit, id}) => {
     const handleDescriptionChange = (e) => {
         setDescription(e.target.value);
     };
+    console.log((!(categoryText === "Немає")))
 
     const handlePopularChange = (e) => {
         setIsPopular(e.target.checked);
     };
-    console.log(import.meta.env.VITE_API + "/" + flower.flowers.find(element => element.id === id).image)
     const handleSubmit = async () => {
 
-        if (flower.flowers.find(element => element.name === name)) {
+        if (flower.flowers.find(element => element.name === name) && !currentFlower.name === name) {
             alert("Категорія з такою назвою вже існує");
             return
         }
@@ -47,19 +47,19 @@ const EditFlower = ({setEdit, id}) => {
         const oldImageResponse = await fetch(import.meta.env.VITE_API + "/" + flower.flowers.find(element => element.id === id).image);
         const oldImageBlob = await oldImageResponse.blob();
 
-        console.log(oldImageResponse)
         const formData = new FormData()
-        formData.append("name", name ? name : flower.flowers.find(element => element.id === id).name)
+
+        formData.append("name", name)
         formData.append("image", image ? image : oldImageBlob)
-        formData.append("price", price ? price : flower.flowers.find(element => element.id === id).price)
+        formData.append("price", price)
         formData.append("isNew", isNew)
-        console.log(flower.flowers.find(element => element.id === id).categoryId)
         formData.append("popular", isPopular)
-        formData.append("description", description ? description.replaceAll("\n","<br/>") : flower.flowers.find(element => element.id === id).description.replaceAll("\n","<br/>"))
-        if (!(categoryText === "Категорія" || categoryText === "Немає")) formData.append("categoryId", flower.categories.find(element => element.name === categoryText).id)
+        formData.append("description", description.replaceAll("\n", "<br/>"))
+        if (!(categoryText === "Немає")) formData.append("categoryId", flower.categories.find(element => element.name === categoryText).id)
+        else formData.append("categoryId", "NaN")
         setEdit(false)
         await editFlower(id, formData)
-        const fetchedFlower = await fetchFlower(flower.currentCategory, 1, flower.totalCount)
+        const fetchedFlower = await fetchFlower(flower.currentCategory, flower.page, flower.limit, flower.filter)
         flower.setFlowers(fetchedFlower.rows);
     };
 
@@ -72,14 +72,14 @@ const EditFlower = ({setEdit, id}) => {
                     {openCategory &&
                         <ul className={styles.categoryList}>
                             <li onClick={() => {
-                                setOpenCategory(false); // Set openCategory to false when clicking a category item
+                                setOpenCategory(false);
                                 setCategoryText('Немає');
                             }}>
                                 Немає
                             </li>
                             {flower.categories.map((element, id) => (
                                 <li key={id} onClick={() => {
-                                    setOpenCategory(false); // Set openCategory to false when clicking a category item
+                                    setOpenCategory(false);
                                     setCategoryText(element.name);
                                 }}>
                                     {element.name}
@@ -91,9 +91,10 @@ const EditFlower = ({setEdit, id}) => {
 
                 <input type="text" placeholder="Назва" value={name} onChange={handleNameChange}/>
                 <input type="file" accept="image/*" onChange={handleImageChange}/>
-                <input type="text" placeholder="Ціна" onChange={handlePriceChange}/>
-                <textarea className={styles.description} placeholder="Опис"
-                       onChange={handleDescriptionChange}/>
+                <input type="text" placeholder="Ціна" value={price} onChange={handlePriceChange}/>
+                <textarea className={styles.description} value={description.replaceAll('<br/>', '\n')}
+                          placeholder="Опис"
+                          onChange={handleDescriptionChange}/>
                 <div className={styles.Wrapper}>
                     <p className={styles.Label}>Новинка</p>
                     <input type="checkbox" className={styles.checkbox} checked={isNew} onChange={handleNewChange}/>

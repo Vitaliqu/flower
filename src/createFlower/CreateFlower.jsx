@@ -11,7 +11,7 @@ const CreateFlower = ({setCreate}) => {
     const [image, setImage] = useState(null);
     const [price, setPrice] = useState(0);
     const [category, setCategory] = useState('');
-    const [categoryText, setCategoryText] = useState("Категорія");
+    const [categoryText, setCategoryText] = useState(flower.categories.find(element=>element.id ===flower.currentCategory).name);
     const [isNew, setIsNew] = useState(false);
     const [isPopular, setIsPopular] = useState(false);
     const [description, setDescription] = useState('');
@@ -70,7 +70,7 @@ const CreateFlower = ({setCreate}) => {
         !(categoryText === "Категорія" || categoryText === "Немає") ? formData.append("categoryId", flower.categories.find(element => element.name === categoryText).id) : null
         setCreate(false)
         await createFlower(formData)
-        const fetchedFlower = await fetchFlower(flower.currentCategory, 1, flower.totalCount)
+        const fetchedFlower = await fetchFlower(flower.currentCategory, flower.page, flower.limit, flower.filter)
         flower.setFlowers(fetchedFlower.rows);
     };
 

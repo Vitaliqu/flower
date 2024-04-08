@@ -50,7 +50,7 @@ const Catalog = observer(() => {
             flower.setCategories(categories)
             if (urlId) flower.setCurrentCategory(parseInt(urlId))
             else flower.setCurrentCategory(undefined)
-
+            if(!flower.categories.map(element=>element.id).includes(flower.currentCategory))flower.setCurrentCategory(undefined)
             const filterValue = url.searchParams.get('sort') || "isNew"
             const page = url.searchParams.get('page') || 1
             flower.setFilter(filterValue)
@@ -139,6 +139,7 @@ const Catalog = observer(() => {
                     </div>
                 )}
                 <img className={styles.cardImage}
+                     onClick={() => navigate(`/flower/${element.id}`)}
                      src={import.meta.env.VITE_API + "/" + element.image} alt=""/>
                 {element.isNew && <div className={styles.new}>Новинка</div>}
             </div>
@@ -169,6 +170,7 @@ const Catalog = observer(() => {
                     }}><img className={styles.deleteImage} src={deleteImage} alt=""/></div>
                 </div>}
                 <img className={styles.horizontalCardImage} src={import.meta.env.VITE_API + "/" + element.image}
+                     onClick={() => navigate(`/flower/${element.id}`)}
                      alt=""/>
                 {element.isNew && <div className={styles.new}>Новинка</div>}
             </div>

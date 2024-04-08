@@ -10,7 +10,7 @@ const DeleteFlower = observer(({setDelete, id}) => {
     const handleDelete = async (id) => {
         setDelete(false)
         await deleteFlower(id)
-        const fetchedFlower = await fetchFlower(flower.currentCategory, 1, flower.totalCount)
+        const fetchedFlower = await fetchFlower(flower.currentCategory, flower.page, flower.limit, flower.filter)
         flower.setFlowers(fetchedFlower.rows)};
 
     return (
