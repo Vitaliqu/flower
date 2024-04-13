@@ -7,12 +7,16 @@
 }
 
 p {
+    margin: 0;
+}
+.logoText p {
     position: relative;
     line-height: 1;
     margin: 0;
     user-select: none;
 }
-span{
+
+span {
     cursor: pointer;
 }
 
@@ -79,7 +83,7 @@ span{
     width: auto;
 }
 
-.navigationPanel p,.navigationPanel span {
+.navigationPanel p, .navigationPanel span {
     cursor: pointer;
     margin: 0 clamp(0.5rem, 1.25dvw, 1.25rem);
 }
@@ -130,6 +134,7 @@ span{
     align-items: center;
     font-family: "Montserrat", sans-serif;
     color: white;
+    position: relative;
 }
 
 .hamburger {

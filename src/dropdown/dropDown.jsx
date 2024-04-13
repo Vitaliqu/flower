@@ -24,10 +24,7 @@ const DropDown = (state) => {
 
     const closeMenu = () => {
         setIsOpened(false)
-        setTimeout(() => window.scrollTo({
-            top: 0,
-            behavior: "smooth"
-        }), 20)
+        window.scroll(0,0)
 
     };
     const renderCategory = (category, id) => (
@@ -36,7 +33,7 @@ const DropDown = (state) => {
             onClick={async () => {
                 setOpenedCategories(false)
                 closeMenu()
-                window.scrollTo({top: 0, behavior: "smooth"});
+                window.scroll(0,0)
                 flower.setCurrentCategory(category.id);
                 flower.setPage(1)
                 catalogNavigate(flower, navigate, 1)
@@ -60,10 +57,7 @@ const DropDown = (state) => {
                         flower.setCurrentCategory(undefined);
                         flower.setPage(1)
                         catalogNavigate(flower, navigate, 1)
-                        setTimeout(() => window.scrollTo({
-                            top: 0,
-                            behavior: "smooth"
-                        }), 50)
+                        window.scroll(0,0)
                     }}
                     style={!flower.currentCategory ? {color: "#79A03FFF"} : {}}>
                     Всі
@@ -102,7 +96,10 @@ const DropDown = (state) => {
                     }}>Категорії</li>}
                 <Item path={DELIVERY_ROUTE} label="Доставка" active={path.includes(DELIVERY_ROUTE)}
                       onClick={closeMenu}/>
-                <li className={styles.navigate} onClick={scrollToFooter}>
+                <li className={styles.navigate} onClick={() => {
+                    scrollToFooter();
+                    setOpenedCategories(false)
+                }}>
                     Детальніше
                 </li>
             </ul>

@@ -2,7 +2,6 @@ import {useContext, useState} from 'react';
 import styles from './editflower.module.css';
 import {editFlower, fetchFlower} from "../http/flowerApi.jsx";
 import {Context} from "../main.jsx";
-import Compressor from 'compressorjs';
 
 const EditFlower = ({setEdit, id}) => {
     const {flower} = useContext(Context)
@@ -10,7 +9,6 @@ const EditFlower = ({setEdit, id}) => {
     const [name, setName] = useState(currentFlower.name);
     const [image, setImage] = useState(null);
     const [price, setPrice] = useState(currentFlower.price);
-    const [category, setCategory] = useState(currentFlower.categoryId);
     const [categoryText, setCategoryText] = useState(flower.categories.find(element => element.id === currentFlower.categoryId).name);
     const [isNew, setIsNew] = useState(currentFlower.isNew);
     const [isPopular, setIsPopular] = useState(currentFlower.popular);
@@ -32,7 +30,6 @@ const EditFlower = ({setEdit, id}) => {
     const handleDescriptionChange = (e) => {
         setDescription(e.target.value);
     };
-    console.log((!(categoryText === "Немає")))
 
     const handlePopularChange = (e) => {
         setIsPopular(e.target.checked);

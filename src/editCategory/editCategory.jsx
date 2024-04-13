@@ -6,11 +6,12 @@ import {observer} from "mobx-react-lite";
 
 const EditCategory = observer(({setEdit, id}) => {
     const {flower} = useContext(Context)
-    const [name, setName] = useState('');
+    const currentCategory = flower.categories.find(element => element.id === id)
+    const [name, setName] = useState(currentCategory.name);
     const [image, setImage] = useState(null);
-    const [isNew, setIsNew] = useState(false);
-    const [isPopular, setIsPopular] = useState(false);
-
+    const [isNew, setIsNew] = useState(currentCategory.isNew);
+    const [isPopular, setIsPopular] = useState(currentCategory.popular);
+    console.log(currentCategory.name)
     const handleNameChange = (e) => {
         setName(e.target.value);
     };
@@ -28,7 +29,7 @@ const EditCategory = observer(({setEdit, id}) => {
     };
 
     const handleSubmit = async (id) => {
-        if (flower.categories.find(element => element.name === name)) {
+        if (flower.categories.find(element => element.name === name) && !(currentCategory.name === name)) {
             alert("Категорія з такою назвою вже існує");
             return
         }
@@ -36,7 +37,7 @@ const EditCategory = observer(({setEdit, id}) => {
         const oldImageBlob = await oldImageResponse.blob();
 
         const formData = new FormData()
-        formData.append("name", name ? name : flower.categories.find(element => element.id === id).name)
+        formData.append("name", name)
         formData.append("image", image ? image : oldImageBlob)
         formData.append("isNew", isNew)
         formData.append("popular", isPopular)

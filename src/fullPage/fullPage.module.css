@@ -3,48 +3,24 @@
     max-width: 1320px;
     text-align: center;
     display: flex;
-    height: calc(100vh - 6rem);
+    height: calc(100dvh - 6rem);
     flex-shrink: 0;
     margin-top: 6rem;
     flex-direction: row;
     align-items: center;
 }
 
-
-.imageContainer {
-    width: 50%;
-    height: 80%;
-}
-
-.infoContainer {
-}
-
-.flowerName {
-}
-
-.flowerDescription {
-}
-
-.priceWrapper {
-}
-
-.price {
-}
-
-.currency {
-}
-
-.horizontalFlowerCard {
+.flowerCard {
     display: flex;
     width: 100%;
 }
 
-.horizontalImageHolder {
+.imageHolder {
     display: flex;
-    width: 28vw;
-    max-width: 660px;
-    max-height: 792px;
-    height: 33.4vw;
+    width: 35vw;
+    max-width: 550px;
+    max-height: 660px;
+    height: 42vw;
     border-radius: 6px;
     position: relative;
     background-color: var(--backgroundGray);
@@ -54,15 +30,41 @@
     justify-content: center;
 }
 
-.horizontalCardImage {
+.tabletFlowerCard {
+    flex-shrink: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+.tabletImageHolder {
+    margin-top: 3rem;
+    display: flex;
+    width: 24rem;
+    max-width: 550px;
+    max-height: 660px;
+    height: 30rem;
     border-radius: 6px;
+    position: relative;
+    flex-shrink: 0;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.cardImage {
+    border-radius: 6px;
+    top: 0;
     position: absolute;
     display: flex;
     object-fit: cover;
     width: 100%;
     height: 100%;
-    z-index: 0  ;
+    z-index: 0;
 }
+
 .categoryAdmin {
     position: absolute;
     right: 1rem;
@@ -70,28 +72,30 @@
     display: flex;
     flex-direction: row;
 }
-.horizontalInfo {
+
+.info {
     display: flex;
-    width:100%;
+    align-items: flex-start;
+    width: 100%;
     flex-direction: column;
-    margin-left: 1rem;
+    margin-left: 2rem;
 }
 
-.horizontalFlowerName {
-    margin-top: 0.6rem;
-    font-size: 1.6rem;
+.flowerName {
+    text-align: left;
+    font-size: clamp(1.5rem, 2.5vw, 2.5rem);
     font-weight: 500;
     color: var(--textBrown);
 }
 
-.horizontalCardDescription {
+.cardDescription {
     position: relative;
     margin-bottom: 0.6rem;
     display: flex;
     align-items: end;
 }
 
-.horizontalDescriptionWrapper {
+.descriptionWrapper {
     margin-top: 1rem;
     display: flex;
     flex-direction: column;
@@ -99,51 +103,51 @@
     justify-content: space-between;
 }
 
-.flowerDescription {
+.description {
     display: -webkit-box;
     justify-content: space-between;
     height: 100%;
-    display: flex;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 10;
     color: var(--textBrown);
     overflow: hidden;
+    font-size: clamp(1rem, 1.5vw, 1.5rem);
+    text-align: left;
     text-overflow: ellipsis;
 }
 
 
-.horizontalPriceWrapper {
+.priceWrapper {
     align-items: end;
     color: var(--backgroundGreen);
     display: flex;
     font-weight: 500;
 }
 
-.horizontalPrice {
-    font-size: 3rem;
+.price {
+    font-size: clamp(3rem, 4vw, 4rem);
 }
 
-.horizontalCurrency {
-    font-size: 2.4rem;
+.currency {
+    font-size: clamp(2.2rem, 3vw, 3.2rem);
 }
 
-.horizontalHeart {
-    position: absolute;
+.heart {
+    margin-left: 1rem;
     object-fit: contain;
     display: flex;
     align-items: end;
-    width: 3rem;
+    width: clamp(2rem, 3.5vw, 3rem);
     bottom: 0;
     right: 0;
+    cursor: pointer;
 }
 
-.horizontalPrice {
-
+.nameWrapper {
+    display: flex;
+    flex-direction: row;
 }
 
-.horizontalCurrency {
-
-}
 .delete {
     border-radius: 4px;
     background-color: #de5151;
@@ -153,18 +157,29 @@
     display: flex;
     width: 1.5rem;
     height: 1.5rem;
-    z-index: 3;
+    z-index: 2;
 }
 
 .deleteImage {
     width: 1rem;
 }
+
 .editImage {
     width: 1rem;
 }
 
+.order {
+    color: var(--textBrown);
+    display: flex;
+    text-align: left;
+    margin-bottom: 2rem;
+    margin-top: 3rem;
+    font-size: clamp(1.5rem, 2.5vw, 2.5rem);
+    font-weight: 500;
+}
+
 .edit {
-    z-index: 3;
+    z-index: 2;
     border-radius: 4px;
     margin-right: 0.4rem;
     cursor: pointer;
@@ -174,4 +189,92 @@
     align-items: center;
     width: 1.5rem;
     height: 1.5rem;
+}
+
+@media (max-width: 992px) {
+
+    .flowerName {
+        font-size: 2rem;
+    }
+
+    .container {
+        height: auto;
+    }
+
+    .order {
+        margin-top: 0;
+        font-size: 1.6rem;
+        margin-bottom: 1rem;
+    }
+
+    .tabletImageHolder {
+        margin-top: 6rem;
+        width: 28rem;
+        height: 35rem;
+    }
+    .nameWrapper{
+        width: 100%;
+        justify-content: space-between;
+    }
+    .info {
+        box-sizing: border-box;
+        margin-top: 0.8rem;
+        margin-left: 0;
+        margin-bottom: 3rem;
+        width: 28rem;
+    }
+    .heart{
+        width: 3rem;
+    }
+
+    .categoryAdmin {
+        right: 1rem;
+        top: 1rem;
+        display: flex;
+        flex-direction: row;
+    }
+}
+
+@media (max-width: 768px) {
+    .tabletImageHolder{
+        margin-top: 3rem;
+    }
+    .tabletImageHolder {
+        width: 65vw;
+        height: 81vw;
+    }
+    .info{
+        width: 65vw;
+    }
+    .flowerName{
+        font-size: clamp(1.5rem, 5.5vw, 2.5rem);
+    }
+    .heart{
+        width: clamp(2rem, 5.5vw, 3rem);
+    }
+    .order{
+        font-size: clamp(1rem, 4vw, 2rem);
+    }
+    .description{
+        font-size: clamp(0.8rem, 3.5vw, 1.3rem);
+    }
+    .price{
+        font-size: clamp(2rem, 8vw,3.2rem);
+    }
+    .currency{
+        font-size: clamp(1.5rem, 6vw,2.2rem);
+
+    }
+}
+@media (max-width: 480px) {
+    .tabletImageHolder{
+        margin-top: 1rem;
+    }
+    .tabletImageHolder {
+        width: 75vw;
+        height: 94vw;
+    }
+    .info{
+        width: 75vw;
+    }
 }

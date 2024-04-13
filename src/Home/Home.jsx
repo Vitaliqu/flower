@@ -31,8 +31,6 @@ const Home = observer((filter) => {
     const [editId, setEditId] = useState(0);
     const [deleteId, setDeleteId] = useState(0);
 
-    const cyrillicToTranslit = new CyrillicToTranslit();
-
     useEffect(() => {
         fetchCategory().then(data => flower.setCategories(data));
     }, []);
@@ -59,10 +57,7 @@ const Home = observer((filter) => {
                     catalogNavigate(flower, navigate, 1)
                     flower.setFlowers(flowers.rows)
                     flower.setTotalCount(flowers.count)
-                    requestAnimationFrame(() => window.scrollTo({
-                        top: 0,
-                        behavior: "smooth"
-                    }))
+                    requestAnimationFrame(() => window.scroll(0, 0))
                 }} className={styles.cardImage} src={import.meta.env.VITE_API + "/" + element.image}
                      alt=""/>
             </div>

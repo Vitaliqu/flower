@@ -4,12 +4,17 @@ export default class FlowerStore {
     constructor() {
         this._categories = []
         this._flowers = []
+        this._liked = localStorage.getItem('liked') ? JSON.parse(localStorage.getItem('liked')) : []
         this._page = 1
         this._currentFilter = 'isNew'
         this._totalCount = 0
         this._currentCateory = undefined
         this._limit = 12
         makeAutoObservable(this)
+    }
+
+    setLiked(liked) {
+        this._liked = liked
     }
 
     setCurrentCategory(category) {
@@ -42,6 +47,10 @@ export default class FlowerStore {
 
     get categories() {
         return this._categories
+    }
+
+    get liked() {
+        return this._liked
     }
 
     get flowers() {

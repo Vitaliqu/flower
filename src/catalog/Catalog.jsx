@@ -9,12 +9,13 @@ import DeleteFlower from "../deleteFlower/deleteFlower.jsx";
 import CreateFlower from "../createFlower/CreateFlower.jsx";
 import EditFlower from "../editflower/editFlower.jsx";
 import styles from './catalog.module.css';
-import grid from '../assets/grid.svg';
-import wideGrid from '../assets/widegrid.svg';
+import grid from '../assets/grid.png';
+import wideGrid from '../assets/widegrid.png';
 import dropDown from "../assets/dropdown.png";
 import editImage from '../assets/edit.png';
 import deleteImage from '../assets/delete.png';
 import heart from '../assets/heart.png';
+import activeHeart from '../assets/active-heart.png';
 import Pagination from '@mui/material/Pagination';
 import {ClickAwayListener} from '@mui/base';
 import {catalogNavigate} from "../catalogNavigate.jsx";
@@ -28,7 +29,7 @@ const Catalog = observer(() => {
     const navigate = useNavigate();
     const path = useLocation().pathname;
 
-    const [filter, setFilter] = useState("Новинки");
+    const [filter, setFilter] = useState(flower.currentFilter);
     const [sortOpen, setSortOpen] = useState(false);
     const [create, setCreate] = useState(false);
     const [edit, setEdit] = useState(false);
@@ -39,6 +40,7 @@ const Catalog = observer(() => {
     useEffect(() => {
 
         async function fetchData() {
+
             const url = new URL(location)
             const urlId = url.searchParams.get('category')
             const categories = await fetchCategory()
@@ -50,10 +52,11 @@ const Catalog = observer(() => {
             flower.setCategories(categories)
             if (urlId) flower.setCurrentCategory(parseInt(urlId))
             else flower.setCurrentCategory(undefined)
-            if(!flower.categories.map(element=>element.id).includes(flower.currentCategory))flower.setCurrentCategory(undefined)
+            if (!flower.categories.map(element => element.id).includes(flower.currentCategory)) flower.setCurrentCategory(undefined)
             const filterValue = url.searchParams.get('sort') || "isNew"
             const page = url.searchParams.get('page') || 1
             flower.setFilter(filterValue)
+            window.scroll(0, 0)
             await flower.setPage(parseInt(page))
             const filterText = {
                 'isNew': 'Новинки',
@@ -73,6 +76,7 @@ const Catalog = observer(() => {
 
             const flowers = await fetchFlower(flower.currentCategory, flower.page, flower.limit, flower.filter)
             flower.setFlowers(flowers.rows)
+
         }
 
         fetchData();
@@ -108,7 +112,7 @@ const Catalog = observer(() => {
         </li>
     );
     const handleCategoryClick = async (category) => {
-        window.scrollTo({top: 0, behavior: "smooth"});
+        window.scroll(0, 0)
         flower.setCurrentCategory(category.id);
         flower.setPage(1)
         catalogNavigate(flower, navigate, 1)
@@ -149,7 +153,8 @@ const Catalog = observer(() => {
                     <p className={styles.price}>{element.price.toLocaleString().replaceAll(",", " ").replaceAll(".", ",")}</p>
                     <p className={styles.currency}>₴</p>
                 </div>
-                <img className={styles.heart} src={heart} alt=""/>
+                <img className={styles.heart} onClick={() => handleLikeClick(element.id)}
+                     src={flower.liked.includes(element.id) ? activeHeart : heart} alt=""/>
             </div>
         </div>
     );
@@ -184,13 +189,15 @@ const Catalog = observer(() => {
                             <p className={styles.horizontalPrice}>{element.price.toLocaleString().replaceAll(",", " ").replaceAll(".", ",")}</p>
                             <p className={styles.horizontalCurrency}>₴</p>
                         </div>
-                        <img className={styles.horizontalHeart} src={heart} alt=""/>
+                        <img className={styles.horizontalHeart} onClick={() => handleLikeClick(element.id)}
+                             src={flower.liked.includes(element.id) ? activeHeart : heart} alt=""/>
                     </div>
                 </div>
 
             </div>
         </div>
     );
+    console.log(flower.liked)
 
     const handleEditClick = (id) => {
         setEditId(id);
@@ -201,6 +208,16 @@ const Catalog = observer(() => {
         setDeleteId(id);
         setDelete(true);
     };
+    const handleLikeClick = (id) => {
+        if (!flower.liked.includes(id)) {
+            console.log(1)
+            flower.setLiked(flower.liked.concat(id))
+            localStorage.setItem('liked', JSON.stringify(flower.liked))
+        } else {
+            flower.setLiked(flower.liked.filter(element => element !== id))
+            localStorage.setItem('liked', JSON.stringify(flower.liked))
+        }
+    }
     const handleChangePage = async (event, page) => {
         await catalogNavigate(flower, navigate, page);
         const flowers = await fetchFlower(flower.currentCategory, flower.page, flower.limit, flower.filter);
@@ -232,31 +249,22 @@ const Catalog = observer(() => {
                     <p className={styles.categoryLabel}>{flower.categories.find(element => element.id === flower.currentCategory)?.name || "Всі"}</p>
                     <div className={styles.sortMenu}>
                         <div className={styles.gridLayout}>
-                            {!isMobile ? (
-                                <>
-                                    <img className={styles.grid} style={!isGrid ? {opacity: 0.3} : {}}
-                                         onClick={() => setIsGrid(true)} src={grid} alt=""/>
-                                    <img className={styles.wideGrid} style={isGrid ? {opacity: 0.3} : {}}
-                                         onClick={() => setIsGrid(false)} src={wideGrid} alt=""/>
-                                </>
-                            ) : (
-                                <>
-                                    <img className={styles.mobileGrid}
-                                         style={!isGrid ? {opacity: 0, transform: "rotate(90deg)"} : {}}
-                                         onClick={() => setIsGrid(!isGrid)} src={grid} alt=""/>
-                                    <img className={styles.mobileWideGrid}
-                                         style={!isGrid ? {opacity: 0.9, transform: "rotate(0deg)"} : {}}
-                                         onClick={() => setIsGrid(!isGrid)} src={wideGrid} alt=""/>
-                                </>
-                            )}
+                            <>
+                                <img className={styles.mobileGrid}
+                                     style={!isGrid ? {opacity: 0, transform: "rotate(90deg)"} : {}}
+                                     onClick={() => setIsGrid(!isGrid)} src={grid} alt=""/>
+                                <img className={styles.mobileWideGrid}
+                                     style={!isGrid ? {opacity: 0.9, transform: "rotate(0deg)"} : {}}
+                                     onClick={() => setIsGrid(!isGrid)} src={wideGrid} alt=""/>
+                            </>
                         </div>
                         <div className={styles.sortWrapper} onClick={() => setSortOpen(!sortOpen)}>
-                            <p className={styles.sortText}> Відсортувати за:</p>
+                            <p className={styles.sortText}> Відсортувати:</p>
                             <ClickAwayListener onClickAway={() => sortOpen && setSortOpen(false)}>
                                 <div className={styles.sortDropdown}>
                                     <p className={styles.currentFilter}>{filter}</p>
                                     <img style={sortOpen ? {transform: "rotate(0deg)"} : {}} src={dropDown} alt=""/>
-                                    <ul style={sortOpen ? isMobile ? {height: "18rem"} : {height: "19rem"} : {}}
+                                    <ul style={sortOpen ? isMobile ? {height: "18rem"} : {height: "20rem"} : {}}
                                         className={styles.sortTypes}>
                                         {renderSortTypes()}
                                     </ul>

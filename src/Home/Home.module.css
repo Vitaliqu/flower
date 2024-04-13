@@ -43,7 +43,7 @@ div {
 
 .all, .new, .popular {
     user-select: none;
-    cursor: pointer;
+    cursor: pointer ;
     transition: background-color 0.5s, color 0.5s;
     position: relative;
     display: flex;

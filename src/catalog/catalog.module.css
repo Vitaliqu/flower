@@ -121,19 +121,21 @@ a {
     cursor: pointer;
     position: relative;
     opacity: 0.9;
+    object-fit: contain;
     transition: transform 0.3s, opacity 0.3s;
-    width: 1.2rem;
+    width: 1.5rem;
 }
 
 .mobileWideGrid {
     display: flex;
     opacity: 0;
-    top: 0.9rem;
+    top: 0.7rem;
+    object-fit: contain;
     transform: rotate(-90deg);
     cursor: pointer;
     position: absolute;
     transition: transform 0.3s, opacity 0.3s;
-    width: 1.2rem;
+    width: 1.5rem;
 }
 
 .sortWrapper {
@@ -434,6 +436,7 @@ a {
 }
 
 .horizontalHeart {
+    cursor: pointer;
     position: absolute;
     object-fit: contain;
     display: flex;
@@ -462,6 +465,7 @@ a {
 
 
 .heart {
+    cursor: pointer;
     object-fit: contain;
     width: 1.5rem;
 }
