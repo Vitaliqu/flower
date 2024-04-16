@@ -38,6 +38,7 @@ const Catalog = observer(() => {
     const [deleteId, setDeleteId] = useState(0);
 
     useEffect(() => {
+        window.scroll(0, 0)
 
         async function fetchData() {
 
@@ -56,7 +57,6 @@ const Catalog = observer(() => {
             const filterValue = url.searchParams.get('sort') || "isNew"
             const page = url.searchParams.get('page') || 1
             flower.setFilter(filterValue)
-            window.scroll(0, 0)
             await flower.setPage(parseInt(page))
             const filterText = {
                 'isNew': 'Новинки',
@@ -197,7 +197,6 @@ const Catalog = observer(() => {
             </div>
         </div>
     );
-    console.log(flower.liked)
 
     const handleEditClick = (id) => {
         setEditId(id);
@@ -219,10 +218,10 @@ const Catalog = observer(() => {
         }
     }
     const handleChangePage = async (event, page) => {
+        window.scroll(0, 0)
         await catalogNavigate(flower, navigate, page);
         const flowers = await fetchFlower(flower.currentCategory, flower.page, flower.limit, flower.filter);
         await flower.setFlowers(flowers.rows);
-        setTimeout(() => window.scrollTo({top: 0, behavior: "smooth"}), 1)
     }
 
     const createFlowerCard = (isHorizontal = false) => (

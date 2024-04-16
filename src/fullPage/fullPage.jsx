@@ -14,7 +14,6 @@ import useMediaQuery from "../Usemedia.jsx";
 import {CATALOG_ROUTE} from "../utils/consts.jsx";
 
 const FullPage = observer(() => {
-    window.scroll(0, 0);
     const {flower} = useContext(Context)
     const params = useParams();
     const [currentFlower, setFlower] = useState(flower.flowers.find(element => element.id === parseInt(params.id)));
@@ -28,6 +27,8 @@ const FullPage = observer(() => {
     const [editId, setEditId] = useState(0);
     const [deleteId, setDeleteId] = useState(0);
     useEffect(() => {
+        window.scroll(0, 0);
+
         async function fetchData() {
             const data = await fetchOne(parseInt(params.id));
             setFlower(data);
@@ -39,7 +40,6 @@ const FullPage = observer(() => {
 
         fetchData();
     }, []);
-    console.log(hearsState)
     const handleLikeClick = () => {
         if (!hearsState) {
             flower.setLiked(flower.liked.concat(currentFlower.id))

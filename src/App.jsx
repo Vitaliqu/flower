@@ -47,11 +47,10 @@ const App = observer(() => {
         fetchData();
 
     }, [useParams()]); // Add dependencies if needed
-    console.log(loading)
     if (loading) return <></>;
     return (
         <>
-            <BrowserRouter>
+            <BrowserRouter scrollToTop={true}>
                 <Header/>
                 <AppRouter/>
                 <Footer/>

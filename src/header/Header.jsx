@@ -36,10 +36,8 @@ const Header = observer(() => {
     const Item = ({path, label, active}) => (
         <p onClick={() => {
             navigate(path)
-            setTimeout(() => window.scrollTo({
-                top: 0,
-                behavior: "smooth"
-            }), 50)
+            window.scroll(0, 0)
+
         }} style={active ? {...activeStyle} : {}}>
             {label}
         </p>);
@@ -65,7 +63,7 @@ const Header = observer(() => {
                                  style={isOpened ? {opacity: "0", transform: "rotateZ(90deg)"} : {}}
                                  onClick={() => setIsOpened(true)} src={hamburger} alt="hamburger"/>
                             <img className={styles.x}
-                                 style={isOpened ? {opacity: "1", transform: "rotateZ(180deg)"} : {}}
+                                 style={isOpened ? {opacity: "1", transform: "rotateZ(90deg)"} : {}}
                                  onClick={() => {
                                      setOpenedCategories(false)
                                      setIsOpened(!isOpened)
@@ -84,6 +82,7 @@ const Header = observer(() => {
                         <p onClick={() => {
                             setOpenedCategories(false)
                             catalogNavigate(flower, navigate, flower.page)
+                            window.scroll(0, 0)
                         }}
                            style={path.includes(CATALOG_ROUTE) ? activeStyle : {}}>Каталог
                         </p>

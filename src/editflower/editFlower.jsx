@@ -9,11 +9,12 @@ const EditFlower = ({setEdit, id}) => {
     const [name, setName] = useState(currentFlower.name);
     const [image, setImage] = useState(null);
     const [price, setPrice] = useState(currentFlower.price);
-    const [categoryText, setCategoryText] = useState(flower.categories.find(element => element.id === currentFlower.categoryId).name);
+    const [categoryText, setCategoryText] = useState(!currentFlower.categoryId ? "Немає" : flower.categories.find(element => element.id === currentFlower.categoryId).name);
     const [isNew, setIsNew] = useState(currentFlower.isNew);
     const [isPopular, setIsPopular] = useState(currentFlower.popular);
     const [description, setDescription] = useState(currentFlower.description);
     const [openCategory, setOpenCategory] = useState(false)
+    console.log(currentFlower.categoryId)
     const handleNameChange = (e) => {
         setName(e.target.value);
     };
@@ -43,7 +44,6 @@ const EditFlower = ({setEdit, id}) => {
 
         const oldImageResponse = await fetch(import.meta.env.VITE_API + "/" + flower.flowers.find(element => element.id === id).image);
         const oldImageBlob = await oldImageResponse.blob();
-
         const formData = new FormData()
 
         formData.append("name", name)
@@ -53,7 +53,7 @@ const EditFlower = ({setEdit, id}) => {
         formData.append("popular", isPopular)
         formData.append("description", description.replaceAll("\n", "<br/>"))
         if (!(categoryText === "Немає")) formData.append("categoryId", flower.categories.find(element => element.name === categoryText).id)
-        else formData.append("categoryId", "NaN")
+        else formData.append("categoryId", 'null')
         setEdit(false)
         await editFlower(id, formData)
         const fetchedFlower = await fetchFlower(flower.currentCategory, flower.page, flower.limit, flower.filter)

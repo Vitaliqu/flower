@@ -11,7 +11,7 @@ const CreateFlower = ({setCreate}) => {
     const [image, setImage] = useState(null);
     const [price, setPrice] = useState(0);
     const [category, setCategory] = useState('');
-    const [categoryText, setCategoryText] = useState(flower.categories.find(element=>element.id ===flower.currentCategory).name);
+    const [categoryText, setCategoryText] = useState(!flower.currentCategory ? 'Немає' : flower.categories.find(element => element.id === flower.currentCategory).name);
     const [isNew, setIsNew] = useState(false);
     const [isPopular, setIsPopular] = useState(false);
     const [description, setDescription] = useState('');
@@ -66,7 +66,7 @@ const CreateFlower = ({setCreate}) => {
         formData.append("price", price)
         formData.append("isNew", isNew)
         formData.append("popular", isPopular)
-        formData.append("description", description.replaceAll("\n","<br/>"))
+        formData.append("description", description.replaceAll("\n", "<br/>"))
         !(categoryText === "Категорія" || categoryText === "Немає") ? formData.append("categoryId", flower.categories.find(element => element.name === categoryText).id) : null
         setCreate(false)
         await createFlower(formData)
@@ -103,8 +103,8 @@ const CreateFlower = ({setCreate}) => {
                 <input type="text" placeholder="Назва" value={name} onChange={handleNameChange}/>
                 <input type={'file'} accept={"image/jpeg"} onChange={handleImageChange}/>
                 <input type="text" placeholder="Ціна" onChange={handlePriceChange}/>
-                <textarea className={styles.description}  placeholder="Опис"
-                       onChange={handleDescriptionChange}/>
+                <textarea className={styles.description} placeholder="Опис"
+                          onChange={handleDescriptionChange}/>
                 <div className={styles.Wrapper}>
                     <p className={styles.Label}>Новинка</p>
                     <input type="checkbox" className={styles.checkbox} checked={isNew} onChange={handleNewChange}/>
