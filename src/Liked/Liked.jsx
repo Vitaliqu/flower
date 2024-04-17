@@ -8,7 +8,7 @@ import {fetchCategory} from "../http/flowerApi.jsx";
 
 const Liked = observer(() => {
     const {user, flower} = useContext(Context)
-
+    flower.setLoading(false)
     const navigate = useNavigate()
     return (
         <div className={styles.container}>

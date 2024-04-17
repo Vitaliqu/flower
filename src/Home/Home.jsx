@@ -30,9 +30,8 @@ const Home = observer((filter) => {
     const [del, setDelete] = useState(false);
     const [editId, setEditId] = useState(0);
     const [deleteId, setDeleteId] = useState(0);
-
     useEffect(() => {
-        fetchCategory().then(data => flower.setCategories(data));
+        fetchCategory().then(data => flower.setCategories(data)).then(() => flower.setLoading(false));
     }, []);
 
     const active = {color: "white", backgroundColor: "#79A03F"};
@@ -64,7 +63,7 @@ const Home = observer((filter) => {
             <p className={styles.categoryName}>{element.name}</p>
         </div>
     }
-
+    if (flower.loading) return <></>
     return (
         <>
             {create && <CreateCategory setCreate={setCreate}/>}

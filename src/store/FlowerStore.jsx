@@ -2,6 +2,7 @@ import {makeAutoObservable} from "mobx";
 
 export default class FlowerStore {
     constructor() {
+        this._loading = true
         this._categories = []
         this._flowers = []
         this._liked = localStorage.getItem('liked') ? JSON.parse(localStorage.getItem('liked')) : []
@@ -12,6 +13,11 @@ export default class FlowerStore {
         this._limit = 12
         makeAutoObservable(this)
     }
+
+    setLoading(bool) {
+        this._loading = bool
+    }
+
 
     setLiked(liked) {
         this._liked = liked
@@ -55,6 +61,10 @@ export default class FlowerStore {
 
     get flowers() {
         return this._flowers
+    }
+
+    get loading(){
+        return this._loading
     }
 
     get page() {

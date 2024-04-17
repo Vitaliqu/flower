@@ -12,7 +12,6 @@ import {fetchCategory, fetchFlower} from "./http/flowerApi.jsx";
 const App = observer(() => {
     const {flower} = useContext(Context)
     const {user} = useContext(Context);
-    const [loading, setLoading] = useState(true);
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -40,14 +39,14 @@ const App = observer(() => {
                 if (checkData.role === "ADMIN") user.setIsAdmin(true);
             } catch (error) {
             } finally {
-                setLoading(false)
+                flower.setLoading(false)
             }
         };
 
         fetchData();
 
     }, [useParams()]); // Add dependencies if needed
-    if (loading) return <></>;
+    if (flower.loading) return <></>;
     return (
         <>
             <BrowserRouter scrollToTop={true}>

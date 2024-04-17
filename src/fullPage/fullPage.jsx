@@ -16,12 +16,11 @@ import {CATALOG_ROUTE} from "../utils/consts.jsx";
 const FullPage = observer(() => {
     const {flower} = useContext(Context)
     const params = useParams();
-    const [currentFlower, setFlower] = useState(flower.flowers.find(element => element.id === parseInt(params.id)));
+    const [currentFlower, setFlower] = useState(flower.flowers ? flower.flowers.find(element => element.id === parseInt(params.id)) : {});
     const isTablet = useMediaQuery("(max-width:992px)");
-    const [hearsState, setHeart] = useState(flower.liked.includes(currentFlower.id))
+    const [hearsState, setHeart] = useState(false)
     const {user} = useContext(Context);
     const navigate = useNavigate();
-
     const [edit, setEdit] = useState(false);
     const [del, setDelete] = useState(false);
     const [editId, setEditId] = useState(0);
@@ -30,15 +29,17 @@ const FullPage = observer(() => {
         window.scroll(0, 0);
 
         async function fetchData() {
-            const data = await fetchOne(parseInt(params.id));
-            setFlower(data);
-            const flowers = await fetchFlower(flower.currentCategory, flower.page, flower.limit, flower.filter)
-            flower.setFlowers(flowers.rows)
+            if (flower.liked.includes(parseInt(params.id))) setHeart(true)
+            if (!flower.flowers.length > 0) {
+                flower.setLoading(true)
+                const flowers = await fetchFlower(flower.currentCategory, 1, 1000000)
+                    setFlower(flowers.rows.find(element => element.id === parseInt(params.id)))
+                if(!flowers.rows.map(element => `${element.id}`).includes(params.id))navigate(CATALOG_ROUTE)
+            }
             flower.setCategories(await fetchCategory())
-            if (!flower.flowers.map(element => element.id).includes(parseInt(params.id))) navigate(CATALOG_ROUTE)
         }
 
-        fetchData();
+        fetchData().then(() => flower.setLoading(false));
     }, []);
     const handleLikeClick = () => {
         if (!hearsState) {
@@ -52,6 +53,7 @@ const FullPage = observer(() => {
         }
     }
     const renderCard = () => {
+        if (flower.loading) return <></>
         return <div className={styles.flowerCard}>
             <div className={styles.imageHolder}>
                 {user._isAdmin && <div className={styles.categoryAdmin}>
@@ -93,6 +95,8 @@ const FullPage = observer(() => {
         </div>
     }
     const renderTabletCard = () => {
+        if (!currentFlower) return <></>
+
         return <div className={styles.tabletFlowerCard}>
             <div className={styles.tabletImageHolder}>
                 {user._isAdmin && <div className={styles.categoryAdmin}>
@@ -131,6 +135,7 @@ const FullPage = observer(() => {
             </div>
         </div>
     }
+    if (!currentFlower) return <></>
     return (
         <>      {edit && <EditFlower id={editId} setEdit={setEdit}/>}
             {del && <DeleteFlower id={deleteId} setDelete={setDelete}/>}

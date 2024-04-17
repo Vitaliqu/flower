@@ -39,7 +39,6 @@ const Catalog = observer(() => {
 
     useEffect(() => {
         window.scroll(0, 0)
-
         async function fetchData() {
 
             const url = new URL(location)
@@ -78,8 +77,7 @@ const Catalog = observer(() => {
             flower.setFlowers(flowers.rows)
 
         }
-
-        fetchData();
+        fetchData().then(() => flower.setLoading(false));
     }, [useParams()]);
 
     const handleFilterChange = async (filter) => {
@@ -231,7 +229,7 @@ const Catalog = observer(() => {
             </div>
         </div>
     );
-
+    if (flower.loading) return <></>
     return (
         <>
             {create && <CreateFlower setCreate={setCreate}/>}

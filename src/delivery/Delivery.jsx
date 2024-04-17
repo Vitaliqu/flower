@@ -1,6 +1,10 @@
 import styles from "./Delivery.module.css"
+import {useContext} from "react";
+import {Context} from "../main.jsx";
 
 const Delivery = () => {
+    const {flower} = useContext(Context)
+    flower.setLoading(false)
     return (
         <>
             <div className={styles.deliveryWrapper}>

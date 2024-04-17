@@ -2,9 +2,13 @@ import styles from "./Footer.module.css"
 import address from "../assets/address.png"
 import phone from "../assets/phone.svg"
 import faceBook from "../assets/facebook.svg";
-import mail from "../assets/mail.png"
+import {useContext} from "react";
+import {Context} from "../main.jsx";
+import {observer} from "mobx-react-lite";
 
-const Footer = () => {
+const Footer = observer(() => {
+    const {flower} = useContext(Context)
+    if (flower.loading) return <></>
     return <>
         <div id="footer" className={styles.footer}>
             <div className={styles.top}>
@@ -17,7 +21,8 @@ const Footer = () => {
                         <p className={styles.aboutLabel}>Детальніше про нас</p>
                         <p className={styles.aboutText}>Ласкаво просимо до нашого квіткового магазину, де ми творимо
                             магію
-                            квітів і принесемо красу у ваше життя! У нашому закладі ви знайдете не лише найсвіжіші та
+                            квітів і принесемо красу у ваше життя! У нашому закладі ви знайдете не лише найсвіжіші
+                            та
                             найкрасивіші квіти, але і особисте підход до кожного клієнта.Наша команда - це колектив
                             професіоналів, що з дбайливістю доглядає за кожним бутоном, надаючи вам найвищий рівень
                             обслуговування. </p>
@@ -26,7 +31,8 @@ const Footer = () => {
                         <p className={styles.infoLabel}>Зворотній Зв’язок</p>
                         <div className={styles.addressWrapper}>
                             <img src={address} alt="address"/>
-                            <p className={styles.addressText}>м.Хуст, об'їзна дорога, <br/>(з'їзд з кільця на Ізу)</p>
+                            <p className={styles.addressText}>м.Хуст, об'їзна дорога, <br/>(з'їзд з кільця на Ізу)
+                            </p>
                         </div>
                         <div className={styles.phoneWrapper}>
                             <img src={phone} alt="phone"/>
@@ -44,5 +50,5 @@ const Footer = () => {
             </div>
         </div>
     </>
-}
+})
 export default Footer

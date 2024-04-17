@@ -41,7 +41,7 @@ const Header = observer(() => {
         }} style={active ? {...activeStyle} : {}}>
             {label}
         </p>);
-
+    if (flower.loading) return <></>
     return (
         <>        <ClickAwayListener onClickAway={() => {
             setOpenedCategories(false)
