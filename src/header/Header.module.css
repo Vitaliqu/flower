@@ -9,6 +9,7 @@
 p {
     margin: 0;
 }
+
 .logoText p {
     position: relative;
     line-height: 1;
@@ -98,6 +99,7 @@ span {
     display: flex;
     align-items: center;
     justify-content: center;
+    cursor: pointer;
     margin-right: 0.5rem;
 }
 
@@ -171,6 +173,55 @@ span {
     justify-content: space-between;
 }
 
+.searchWrapper {
+    display: flex;
+    position: relative;
+    width: 100%;
+}
+
+.search {
+    position: relative;
+    display: flex;
+    margin: 0 2rem;
+    height: 2.5rem;
+    border-radius: 18px;
+    padding: 0 1rem;
+    font-size: 1.125rem;
+}
+
+.searchArray {
+    position: absolute;
+    display: flex;
+    margin: 3rem 2rem;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.searchArrayList {
+    margin-top: 0;
+    z-index: 20;
+    max-height: 21rem;
+    overflow-y: scroll;
+    background-color: white;
+    width: 100%;
+    box-shadow: 2px 2px 5px #838383;
+    list-style: none;
+    padding-left: 1rem;
+    margin-right: 4rem;
+    border-radius: 8px;
+}
+
+.searchArrayElement {
+    transition: color 0.25s;
+    cursor: pointer;
+    list-style: none;
+    font-size: 1.125rem;
+    padding: 0.25rem 0;
+}
+
+.searchArrayElement:hover {
+    color: var(--backgroundGreen);
+}
 
 @media (max-width: 992px) {
 
@@ -180,6 +231,25 @@ span {
 @media (max-width: 768px) {
     .header {
         height: 3rem;
+    }
+
+    .search {
+        margin: 0 0.5rem;
+        font-size: 0.75rem;
+    }
+
+    .searchArrayElement {
+        font-size: 0.75rem;
+    }
+
+    .searchArray {
+        margin-left: 0.5rem;
+        margin-right: 0;
+        width: 100%;
+    }
+
+    .searchArrayList {
+        margin-right: 1rem;
     }
 
     .searchBar {

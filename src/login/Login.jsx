@@ -23,7 +23,7 @@ const Login = observer(() => {
         try {
             const data = await login(formData.email, formData.password);
             if (data.role === "ADMIN") user.setIsAdmin(true)
-            user.setUser(user)
+            user.setUser(true)
             user.setIsAuth(true)
             navigate(HOME_ROUTE)
         } catch (e) {

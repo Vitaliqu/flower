@@ -36,9 +36,11 @@ const Catalog = observer(() => {
     const [del, setDelete] = useState(false);
     const [editId, setEditId] = useState(0);
     const [deleteId, setDeleteId] = useState(0);
-
     useEffect(() => {
         window.scroll(0, 0)
+
+    }, []);
+    useEffect(() => {
         async function fetchData() {
 
             const url = new URL(location)

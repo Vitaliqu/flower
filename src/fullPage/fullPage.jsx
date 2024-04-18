@@ -16,7 +16,7 @@ import {CATALOG_ROUTE} from "../utils/consts.jsx";
 const FullPage = observer(() => {
     const {flower} = useContext(Context)
     const params = useParams();
-    const [currentFlower, setFlower] = useState(flower.flowers ? flower.flowers.find(element => element.id === parseInt(params.id)) : {});
+    const [currentFlower, setFlower] = useState(flower.flowers.length > 0 ? flower.flowers.find(element => element.id === parseInt(params.id)) : {});
     const isTablet = useMediaQuery("(max-width:992px)");
     const [hearsState, setHeart] = useState(false)
     const {user} = useContext(Context);
@@ -25,22 +25,20 @@ const FullPage = observer(() => {
     const [del, setDelete] = useState(false);
     const [editId, setEditId] = useState(0);
     const [deleteId, setDeleteId] = useState(0);
+    console.log(1)
     useEffect(() => {
         window.scroll(0, 0);
 
         async function fetchData() {
             if (flower.liked.includes(parseInt(params.id))) setHeart(true)
-            if (!flower.flowers.length > 0) {
-                flower.setLoading(true)
-                const flowers = await fetchFlower(flower.currentCategory, 1, 1000000)
-                    setFlower(flowers.rows.find(element => element.id === parseInt(params.id)))
-                if(!flowers.rows.map(element => `${element.id}`).includes(params.id))navigate(CATALOG_ROUTE)
-            }
+            const flowers = await fetchFlower(flower.currentCategory, 1, 1000000)
+            await setFlower(flowers.rows.find(element => element.id === parseInt(params.id)))
+            if (!flowers.rows.map(element => `${element.id}`).includes(params.id)) navigate(CATALOG_ROUTE)
             flower.setCategories(await fetchCategory())
         }
 
-        fetchData().then(() => flower.setLoading(false));
-    }, []);
+        fetchData()
+    }, [useParams()]);
     const handleLikeClick = () => {
         if (!hearsState) {
             flower.setLiked(flower.liked.concat(currentFlower.id))

@@ -1,7 +1,8 @@
 .container {
-    width: 300px;
+    width: 100%;
     text-align: center;
     display: flex;
+    position: relative;
     justify-content: center;
     align-items: center;
     flex-direction: column;
@@ -11,5 +12,8 @@
 }
 
 .exit {
-
+    top: 4rem;
+    right: 7rem;
+    position: absolute;
+    cursor: pointer;
 }

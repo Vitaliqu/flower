@@ -12,6 +12,7 @@ import {fetchCategory, fetchFlower} from "./http/flowerApi.jsx";
 const App = observer(() => {
     const {flower} = useContext(Context)
     const {user} = useContext(Context);
+    console.log(flower.liked)
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -31,8 +32,7 @@ const App = observer(() => {
 
                 await flower.setPage(parseInt(page))
                 await flower.setCategories(categories)
-                const flowers = await fetchFlower(flower.currentCategory, flower.page, flower.limit, flower.filter)
-                await flower.setFlowers(flowers.rows)
+
                 const checkData = await check();
                 user.setUser(true);
                 user.setIsAuth(true);

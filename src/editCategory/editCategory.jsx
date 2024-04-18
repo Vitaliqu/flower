@@ -11,7 +11,6 @@ const EditCategory = observer(({setEdit, id}) => {
     const [image, setImage] = useState(null);
     const [isNew, setIsNew] = useState(currentCategory.isNew);
     const [isPopular, setIsPopular] = useState(currentCategory.popular);
-    console.log(currentCategory.name)
     const handleNameChange = (e) => {
         setName(e.target.value);
     };
