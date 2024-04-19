@@ -249,6 +249,7 @@ span {
     }
 
     .searchArrayList {
+        z-index: 100;
         margin-right: 1rem;
     }
 
