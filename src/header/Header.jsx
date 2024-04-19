@@ -51,10 +51,11 @@ const Header = observer(() => {
     const searchArray = () => {
         return (<div className={styles.searchArray} onClick={(e) => e.stopPropagation()}
         >
-            <ul className={styles.searchArrayList}>
+            <ul className={styles.searchArrayList} onClick={(e) => e.stopPropagation()}>
                 {flowers.filter(element => searchText !== '' && element.name.toLowerCase().includes(searchText.toLowerCase())).map((element, id) =>
                     <li
-                        onClick={() => {
+                        onClick={(e) => {
+                            e.stopPropagation()
                             navigate(`/flower/${element.id}`)
                             setOpenSearch(false)
                             setSearchText('')
@@ -142,7 +143,7 @@ const Header = observer(() => {
                     }
 
                     <div className={styles.rightPart}>
-                        <ClickAwayListener onClickAway={() => {}}>
+                        <ClickAwayListener onClickAway={() => setOpenSearch(false)}>
                             <div
                                 className={styles.glass}>
                                 <img onClick={() => setOpenSearch(!openSearch)} src={glass} alt="glass"/>
