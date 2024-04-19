@@ -114,6 +114,7 @@ const Header = observer(() => {
                         </div>}
                     {openSearch &&
                         <div className={styles.searchWrapper}><input type={'text'} autoFocus={true}
+                                                                     onfocusout={()=>setOpenSearch(false)}
                                                                      onChange={handleSearchTextChange}
                                                                      value={searchText}
                                                                      onClick={(e) => e.stopPropagation()}
@@ -147,7 +148,7 @@ const Header = observer(() => {
                     <div className={styles.rightPart}>
                         <div
                             className={styles.glass}>
-                            <img onfocusout={()=>setOpenSearch(false)} onClick={() => setOpenSearch(!openSearch)} src={glass} alt="glass"/>
+                            <img  onClick={() => setOpenSearch(!openSearch)} src={glass} alt="glass"/>
 
                         </div>
                         <div className={styles.account}
