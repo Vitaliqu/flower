@@ -142,7 +142,7 @@ const Header = observer(() => {
                     }
 
                     <div className={styles.rightPart}>
-                        <ClickAwayListener onClickAway={() => setOpenSearch(false)}>
+                        <ClickAwayListener onClickAway={() => {}}>
                             <div
                                 className={styles.glass}>
                                 <img onClick={() => setOpenSearch(!openSearch)} src={glass} alt="glass"/>
