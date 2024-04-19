@@ -7,7 +7,7 @@ import AppRouter from "./components/AppRouter.jsx";
 import {Context} from "./main.jsx";
 import {check} from "./http/userApi.jsx";
 import {fetchCategory, fetchFlower} from "./http/flowerApi.jsx";
-
+import {Helmet} from "react-helmet";
 
 const App = observer(() => {
     const {flower} = useContext(Context)
@@ -49,6 +49,10 @@ const App = observer(() => {
     if (flower.loading) return <></>;
     return (
         <>
+            <Helmet>
+                <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+                <meta name="theme-color" content="#79A03FFF"/>
+            </Helmet>
             <BrowserRouter scrollToTop={true}>
                 <Header/>
                 <AppRouter/>
