@@ -49,11 +49,13 @@ const Header = observer(() => {
         fetchData()
     }, []);
     const searchArray = () => {
-        return (<div className={styles.searchArray}>
+        return (<div className={styles.searchArray} onClick={(e) => e.stopPropagation()}
+        >
             <ul className={styles.searchArrayList}>
                 {flowers.filter(element => searchText !== '' && element.name.toLowerCase().includes(searchText.toLowerCase())).map((element, id) =>
                     <li
                         onClick={() => {
+                            setOpenSearch(false)
                             navigate(`/flower/${element.id}`)
                             setSearchText('')
                         }}
