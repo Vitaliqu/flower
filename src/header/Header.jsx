@@ -56,6 +56,8 @@ const Header = observer(() => {
                     <li
                         onClick={() => {
                             navigate(`/flower/${element.id}`)
+                            setOpenSearch(false)
+                            setSearchText('')
                         }}
                         className={styles.searchArrayElement} key={id}>{element.name}</li>)}
             </ul>
@@ -140,7 +142,7 @@ const Header = observer(() => {
                     }
 
                     <div className={styles.rightPart}>
-                        <ClickAwayListener onClickAway={() => {}}>
+                        <ClickAwayListener onClickAway={() => setOpenSearch(false)}>
                             <div
                                 className={styles.glass}>
                                 <img onClick={() => setOpenSearch(!openSearch)} src={glass} alt="glass"/>
