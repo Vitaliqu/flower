@@ -147,7 +147,7 @@ const Header = observer(() => {
                     <div className={styles.rightPart}>
                         <div
                             className={styles.glass}>
-                            <img onClick={() => setOpenSearch(!openSearch)} src={glass} alt="glass"/>
+                            <img onfocusout={()=>setOpenSearch(false)} onClick={() => setOpenSearch(!openSearch)} src={glass} alt="glass"/>
 
                         </div>
                         <div className={styles.account}
