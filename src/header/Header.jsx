@@ -49,20 +49,22 @@ const Header = observer(() => {
         fetchData()
     }, []);
     const searchArray = () => {
-        return (<div className={styles.searchArray} onClick={(e) => e.stopPropagation()}
-        >
-            <ul className={styles.searchArrayList} onClick={(e) => e.stopPropagation()}>
-                {flowers.filter(element => searchText !== '' && element.name.toLowerCase().includes(searchText.toLowerCase())).map((element, id) =>
-                    <li
-                        onClick={(e) => {
-                            e.stopPropagation()
-                            navigate(`/flower/${element.id}`)
-                            setOpenSearch(false)
-                            setSearchText('')
-                        }}
-                        className={styles.searchArrayElement} key={id}>{element.name}</li>)}
-            </ul>
-        </div>)
+        return (
+            <ClickAwayListener onClickAway={() => setOpenSearch(false)}>
+                <div className={styles.searchArray}
+                >
+                    <ul className={styles.searchArrayList}>
+                        {flowers.filter(element => searchText !== '' && element.name.toLowerCase().includes(searchText.toLowerCase())).map((element, id) =>
+                            <li
+                                onClick={(e) => {
+                                    navigate(`/flower/${element.id}`)
+                                    setOpenSearch(false)
+                                    setSearchText('')
+                                }}
+                                className={styles.searchArrayElement} key={id}>{element.name}</li>)}
+                    </ul>
+                </div>
+            </ClickAwayListener>)
     }
     const Item = ({path, label, active}) => (
         <p onClick={() => {
@@ -143,13 +145,11 @@ const Header = observer(() => {
                     }
 
                     <div className={styles.rightPart}>
-                        <ClickAwayListener onClickAway={() => setOpenSearch(false)}>
-                            <div
-                                className={styles.glass}>
-                                <img onClick={() => setOpenSearch(!openSearch)} src={glass} alt="glass"/>
+                        <div
+                            className={styles.glass}>
+                            <img onClick={() => setOpenSearch(!openSearch)} src={glass} alt="glass"/>
 
-                            </div>
-                        </ClickAwayListener>
+                        </div>
                         <div className={styles.account}
                              onClick={() => user._isAuth ? navigate(LIKED_ROUTE) : navigate(REGISTRATION_ROUTE)}><img
                             src={account} alt="account"/></div>
