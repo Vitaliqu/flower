@@ -25,9 +25,11 @@ const FullPage = observer(() => {
     const [del, setDelete] = useState(false);
     const [editId, setEditId] = useState(0);
     const [deleteId, setDeleteId] = useState(0);
-    console.log(1)
     useEffect(() => {
         window.scroll(0, 0);
+
+    }, []);
+    useEffect(() => {
 
         async function fetchData() {
             if (flower.liked.includes(parseInt(params.id))) setHeart(true)

@@ -82,7 +82,7 @@ a {
 
 @media (max-width: 768px) {
     .dropDownList {
-        margin-top: clamp(1rem, 8vh, 3rem);
+        margin-top: 0;
     }
     .categories{
         height: 91dvh;

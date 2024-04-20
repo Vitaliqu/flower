@@ -12,7 +12,6 @@ import {Helmet} from "react-helmet";
 const App = observer(() => {
     const {flower} = useContext(Context)
     const {user} = useContext(Context);
-    console.log(flower.liked)
     useEffect(() => {
         const fetchData = async () => {
             try {

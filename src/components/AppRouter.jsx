@@ -8,7 +8,6 @@ import {Context} from "../main.jsx";
 
 const AppRouter = () => {
     const {user} = useContext(Context)
-    console.log(user._isAuth)
     return (
         <Routes>
             {user._isAuth && authorizedRoutes.map(({path, component}) =>
