@@ -17,7 +17,9 @@ div {
     justify-content: end;
     align-items: center;
 }
-
+.spinner{
+    width: 4rem;
+}
 .flowersCategory {
     display: flex;
     flex-direction: column;

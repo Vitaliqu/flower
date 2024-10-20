@@ -3,13 +3,17 @@
     max-width: 1320px;
     text-align: center;
     display: flex;
-    height: calc(100dvh - 6rem);
+    height: calc(100dvh - 10rem);
     flex-shrink: 0;
-    margin-top: 6rem;
+    margin-top: 10rem;
     flex-direction: row;
     align-items: center;
 }
 
+.spinner{
+    margin-top: 14rem;
+    width: 4rem;
+}
 .flowerCard {
     display: flex;
     width: 100%;
@@ -26,6 +30,7 @@
     background-color: var(--backgroundGray);
     flex-shrink: 0;
     flex-direction: row;
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.4);
     align-items: center;
     justify-content: center;
 }

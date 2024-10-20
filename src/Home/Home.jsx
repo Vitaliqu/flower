@@ -5,13 +5,14 @@ import editImage from '../assets/edit.png';
 import deleteImage from '../assets/delete.png';
 import {CATALOG_ROUTE, HOME_ROUTE, NEW_ROUTE, POPULAR_ROUTE} from "../utils/consts.jsx";
 import {fetchCategory, fetchFlower} from "../http/flowerApi.jsx";
-import {useContext, useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {Context} from "../main.jsx";
 import {observer} from "mobx-react-lite";
 import CreateCategory from "../createCategory/CreateCategory.jsx";
 import EditCategory from "../editCategory/editCategory.jsx";
 import DeleteCategory from "../deleteCategory/deleteCategory.jsx";
 import CyrillicToTranslit from 'cyrillic-to-translit-js';
+import spinner from '../assets/kOnzy.gif';
 import {catalogNavigate} from "../catalogNavigate.jsx";
 
 const Home = observer((filter) => {
@@ -28,10 +29,11 @@ const Home = observer((filter) => {
     const [create, setCreate] = useState(false);
     const [edit, setEdit] = useState(false);
     const [del, setDelete] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
     const [editId, setEditId] = useState(0);
     const [deleteId, setDeleteId] = useState(0);
     useEffect(() => {
-        fetchCategory().then(data => flower.setCategories(data)).then(() => flower.setLoading(false));
+        fetchCategory().then(data => flower.setCategories(data)).then(() => flower.setLoading(false)).finally(() => setIsLoading(false));
     }, []);
 
     const active = {color: "white", backgroundColor: "#79A03F"};
@@ -87,11 +89,12 @@ const Home = observer((filter) => {
                         </div>
                     </div>
                 </div>
-                <div className={styles.categoryGrid}>
-                    {user._isAdmin && createCategory()}
-                    {flower.categories.filter(element => filter.filter === "all" ? true : element[filter.filter])
-                        .map((element, index) => (renderCategoryCard(element, index)))}
-                </div>
+                {isLoading ? <img className={styles.spinner} src={spinner} alt=""/> :
+                    <div className={styles.categoryGrid}>
+                        {user._isAdmin && createCategory()}
+                        {flower.categories.filter(element => filter.filter === "all" ? true : element[filter.filter])
+                            .map((element, index) => (renderCategoryCard(element, index)))}
+                    </div>}
             </div>
         </>
     );

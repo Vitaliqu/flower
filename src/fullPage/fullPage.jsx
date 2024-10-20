@@ -12,6 +12,7 @@ import EditFlower from "../editflower/editFlower.jsx";
 import DeleteFlower from "../deleteFlower/deleteFlower.jsx";
 import useMediaQuery from "../Usemedia.jsx";
 import {CATALOG_ROUTE} from "../utils/consts.jsx";
+import spinner from "../assets/kOnzy.gif";
 
 const FullPage = observer(() => {
     const {flower} = useContext(Context)
@@ -23,6 +24,7 @@ const FullPage = observer(() => {
     const navigate = useNavigate();
     const [edit, setEdit] = useState(false);
     const [del, setDelete] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
     const [editId, setEditId] = useState(0);
     const [deleteId, setDeleteId] = useState(0);
     useEffect(() => {
@@ -37,6 +39,7 @@ const FullPage = observer(() => {
             await setFlower(flowers.rows.find(element => element.id === parseInt(params.id)))
             if (!flowers.rows.map(element => `${element.id}`).includes(params.id)) navigate(CATALOG_ROUTE)
             flower.setCategories(await fetchCategory())
+            setIsLoading(false)
         }
 
         fetchData()
@@ -137,13 +140,14 @@ const FullPage = observer(() => {
     }
     if (!currentFlower) return <></>
     return (
-        <>      {edit && <EditFlower id={editId} setEdit={setEdit}/>}
-            {del && <DeleteFlower id={deleteId} setDelete={setDelete}/>}
-            <div className={styles.container}>
-                {isTablet ? renderTabletCard() :
-                    renderCard()}
-            </div>
-        </>
+        isLoading ? <img className={styles.spinner} src={spinner} alt=""/>: <>
+            {edit && <EditFlower id={editId} setEdit={setEdit}/>}
+                {del && <DeleteFlower id={deleteId} setDelete={setDelete}/>}
+                <div className={styles.container}>
+                    {isTablet ? renderTabletCard() :
+                        renderCard()}
+                </div>
+            </>
     );
 });
 

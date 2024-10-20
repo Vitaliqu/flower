@@ -15,10 +15,12 @@ import dropDown from "../assets/dropdown.png";
 import editImage from '../assets/edit.png';
 import deleteImage from '../assets/delete.png';
 import heart from '../assets/heart.png';
+import spinner from '../assets/kOnzy.gif';
 import activeHeart from '../assets/active-heart.png';
 import Pagination from '@mui/material/Pagination';
 import {ClickAwayListener} from '@mui/base';
 import {catalogNavigate} from "../catalogNavigate.jsx";
+
 
 const Catalog = observer(() => {
     const [isGrid, setIsGrid] = useState(localStorage.getItem("grid") ? JSON.parse(localStorage.getItem("grid")) : true);
@@ -28,7 +30,7 @@ const Catalog = observer(() => {
     const {flower, user} = useContext(Context);
     const navigate = useNavigate();
     const path = useLocation().pathname;
-
+    const [isLoading, setIsLoading] = useState(true);
     const [filter, setFilter] = useState(flower.currentFilter);
     const [sortOpen, setSortOpen] = useState(false);
     const [create, setCreate] = useState(false);
@@ -79,10 +81,11 @@ const Catalog = observer(() => {
             flower.setFlowers(flowers.rows)
 
         }
-        fetchData().then(() => flower.setLoading(false));
+        fetchData().then(() => flower.setLoading(false)).finally(() => setIsLoading(false));
     }, [useParams()]);
 
     const handleFilterChange = async (filter) => {
+        setIsLoading(true)
         setFilter(filter)
         if (filter === "Новинки") {
             flower.setFilter('isNew')
@@ -98,8 +101,6 @@ const Catalog = observer(() => {
             flower.setFilter('cheap')
         }
         catalogNavigate(flower, navigate, flower.page)
-
-
         const flowers = await fetchFlower(flower.currentCategory, flower.page, flower.limit, flower.filter)
         flower.setFlowers(flowers.rows)
     }
@@ -112,6 +113,7 @@ const Catalog = observer(() => {
         </li>
     );
     const handleCategoryClick = async (category) => {
+        setIsLoading(true)
         window.scroll(0, 0)
         flower.setCurrentCategory(category.id);
         flower.setPage(1)
@@ -119,6 +121,7 @@ const Catalog = observer(() => {
         const data = await fetchFlower(category.id, flower.Page, flower.limit, flower.filter)
         flower.setTotalCount(data.count)
         flower.setFlowers(data.rows);
+        setIsLoading(false)
     };
 
     const renderSortTypes = () => (
@@ -182,6 +185,7 @@ const Catalog = observer(() => {
             <div className={styles.horizontalInfo}>
                 <p className={styles.horizontalFlowerName}>{element.name}</p>
                 <div className={styles.horizontalDescriptionWrapper}>
+
                     <div className={styles.flowerDescription}
                          dangerouslySetInnerHTML={{__html: element.description}}></div>
                     <div className={styles.horizontalCardDescription}>
@@ -218,10 +222,12 @@ const Catalog = observer(() => {
         }
     }
     const handleChangePage = async (event, page) => {
+        setIsLoading(true)
         window.scroll(0, 0)
         await catalogNavigate(flower, navigate, page);
         const flowers = await fetchFlower(flower.currentCategory, flower.page, flower.limit, flower.filter);
         await flower.setFlowers(flowers.rows);
+        setIsLoading(false)
     }
 
     const createFlowerCard = (isHorizontal = false) => (
@@ -271,18 +277,19 @@ const Catalog = observer(() => {
                             </ClickAwayListener>
                         </div>
                     </div>
-                    {isGrid ? (
-                        <div className={styles.flowersGrid}>
-                            {user._isAdmin && createFlowerCard()}
-                            {flower.flowers.map((flower, index) => renderFlowerCard(flower, index))}
-                        </div>
-                    ) : (
-                        <div className={styles.horizontalFlowersGrid}>
-                            {user._isAdmin && createFlowerCard(true)}
-                            {flower.flowers.map((flower, index) => renderHorizontalFlowerCard(flower, index, true))}
-                        </div>
+                    {isLoading?<img className={styles.spinner} src={spinner} alt=""/>: isGrid ? (
+                            <div className={styles.flowersGrid}>
+                                {user._isAdmin && createFlowerCard()}
+                                {flower.flowers.map((flower, index) => renderFlowerCard(flower, index))}
+                            </div>
+                        ) : (
+                            <div className={styles.horizontalFlowersGrid}>
+                                {user._isAdmin && createFlowerCard(true)}
+                                {flower.flowers.map((flower, index) => renderHorizontalFlowerCard(flower, index, true))}
+                            </div>
 
-                    )}
+                        )}
+
                     {flower.totalCount > flower.limit &&
                         <Pagination page={flower.page} onChange={(event, page) => handleChangePage(event, page)}
                                     className={styles.pagination}
