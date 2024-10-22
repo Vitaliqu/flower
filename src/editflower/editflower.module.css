@@ -10,7 +10,10 @@
     align-items: center;
     background-color: rgba(0, 0, 0, 0.4);
 }
-
+.spinner{
+    margin-top: 1rem;
+    width: 4rem;
+}
 .chouseCategory {
     display: flex;
     justify-content: center;

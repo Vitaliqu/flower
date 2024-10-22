@@ -1,8 +1,9 @@
-import {useContext, useState} from 'react';
+import React, {useContext, useState} from 'react';
 import styles from './createCategory.module.css';
 import {createCategory, fetchCategory} from "../http/flowerApi.jsx";
 import {Context} from "../main.jsx";
 import Compressor from 'compressorjs';
+import spinner from "../assets/kOnzy.gif";
 
 const CreateCategory = ({setCreate}) => {
     const {flower} = useContext(Context)
@@ -11,7 +12,7 @@ const CreateCategory = ({setCreate}) => {
     const [image, setImage] = useState(null);
     const [isNew, setIsNew] = useState(false);
     const [isPopular, setIsPopular] = useState(false);
-
+    const [isLoading, setIsLoading] = useState(false);
     const handleNameChange = (e) => {
         setName(e.target.value);
     };
@@ -35,27 +36,38 @@ const CreateCategory = ({setCreate}) => {
     };
 
     const handleSubmit = async () => {
-        if (!name) {
-            alert('Назва відсутня')
-            return
+        try {
+            if (!name) {
+                alert('Назва відсутня');
+                return;
+            }
+            if (!image) {
+                alert('Фотографія не вибрана');
+                return;
+            }
+            if (flower.categories.some(category => category.name === name)) {
+                alert('Категорія з такою назвою вже існує');
+                return;
+            }
+            setIsLoading(true);
+            const formData = new FormData();
+            formData.append('name', name);
+            formData.append('image', image);
+            formData.append('isNew', isNew);
+            formData.append('popular', isPopular);
+
+            await createCategory(formData);
+
+            const updatedCategories = await fetchCategory();
+            flower.setCategories(updatedCategories);
+            setCreate(false);
+            setIsLoading(false);
+        } catch (error) {
+            console.error('Error creating category:', error);
+            alert('Помилка при створенні категорії. Спробуйте ще раз.');
         }
-        if (!image) {
-            alert('Фотографія не вибрана')
-            return
-        }
-        if (flower.categories.find(element => element.name === name)) {
-            alert("Категорія з такою назвою вже існує");
-            return
-        }
-        const formData = new FormData()
-        formData.append("name", name)
-        formData.append("image", image)
-        formData.append("isNew", isNew)
-        formData.append("popular", isPopular)
-        setCreate(false)
-        await createCategory(formData)
-        flower.setCategories(await fetchCategory());
     };
+
 
     return (
         <div className={styles.modal}>
@@ -74,6 +86,7 @@ const CreateCategory = ({setCreate}) => {
                            onChange={handlePopularChange}/>
                 </div>
                 <button onClick={handleSubmit}>Створити</button>
+                {isLoading && <img className={styles.spinner} src={spinner} alt=""/>}
             </div>
         </div>
     );

@@ -10,7 +10,10 @@
     align-items: center;
     background-color: rgba(0, 0, 0, 0.4);
 }
-
+.spinner{
+    margin-top: 2rem;
+    width: 4rem;
+}
 .chouseCategory {
     display: flex;
     justify-content: center;
@@ -38,10 +41,12 @@
     height: 12rem;
     overflow:scroll;
     width: 100%;
+    padding: 0;
 }
 
 .categoryList li {
     display: flex;
+    margin-left: 1rem;
     cursor: pointer;
     align-items: center;
     height: 3rem;

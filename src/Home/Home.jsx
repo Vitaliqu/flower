@@ -92,8 +92,11 @@ const Home = observer((filter) => {
                 {isLoading ? <img className={styles.spinner} src={spinner} alt=""/> :
                     <div className={styles.categoryGrid}>
                         {user._isAdmin && createCategory()}
-                        {flower.categories.filter(element => filter.filter === "all" ? true : element[filter.filter])
-                            .map((element, index) => (renderCategoryCard(element, index)))}
+                        {flower.categories
+                            .filter(element => filter.filter === "all" ? true : element[filter.filter])
+                            .sort((a, b) => a.name.localeCompare(b.name))
+                            .map((element, index) => renderCategoryCard(element, index))}
+
                     </div>}
             </div>
         </>
