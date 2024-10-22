@@ -45,6 +45,7 @@ const Catalog = observer(() => {
     window.scroll(0, 0);
   }, []);
   useEffect(() => {
+    setIsLoading(true);
     async function fetchData() {
       const url = new URL(location);
       const urlId = url.searchParams.get("category");
@@ -146,7 +147,7 @@ const Catalog = observer(() => {
       {element.name}
     </li>
   );
-  const githandleCategoryClick = async (category) => {
+  const handleCategoryClick = async (category) => {
     setIsLoading(true);
     window.scroll(0, 0);
     flower.setCurrentCategory(category.id);
