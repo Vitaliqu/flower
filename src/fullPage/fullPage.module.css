@@ -204,6 +204,7 @@
 
     .container {
         height: auto;
+        margin-top: 6rem;
     }
 
     .order {
@@ -275,6 +276,7 @@
     .tabletImageHolder{
         margin-top: 1rem;
     }
+
     .tabletImageHolder {
         width: 75vw;
         height: 94vw;
