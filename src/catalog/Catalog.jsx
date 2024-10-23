@@ -214,10 +214,11 @@ const Catalog = observer(() => {
       <div className={styles.cardDescription}>
         <div className={styles.priceWrapper}>
           <p className={styles.price}>
-            {element.price
-              .toLocaleString()
-              .replaceAll(",", " ")
-              .replaceAll(".", ",")}
+            {element.price &&
+              element?.price
+                .toLocaleString()
+                .replaceAll(",", " ")
+                .replaceAll(".", ",")}
           </p>
           <p className={styles.currency}>₴</p>
         </div>
@@ -304,7 +305,6 @@ const Catalog = observer(() => {
   };
   const handleLikeClick = (id) => {
     if (!flower.liked.includes(id)) {
-      console.log(1);
       flower.setLiked(flower.liked.concat(id));
       localStorage.setItem("liked", JSON.stringify(flower.liked));
     } else {

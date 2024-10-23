@@ -15,7 +15,7 @@ const CreateFlower = ({ setCreate }) => {
   const [forceRender, setForceRender] = useState(false);
   const [name, setName] = useState("");
   const [image, setImage] = useState(null);
-  const [price, setPrice] = useState(0);
+  const [price, setPrice] = useState("");
   const [category, setCategory] = useState("");
   const [categoryText, setCategoryText] = useState(
     !flower.currentCategory
@@ -65,10 +65,17 @@ const CreateFlower = ({ setCreate }) => {
         alert("Фотографія не вибрана");
         return;
       }
-      if (isNaN(price) || price === "") {
-        alert("Ціна повинна бути числом");
+      if (
+        price === null ||
+        price === "" ||
+        price.trim().length === 0 ||
+        isNaN(Number(price)) ||
+        Number(price) < 0
+      ) {
+        alert("Ціна вказана неправильно");
         return;
       }
+
       if (flower.flowers.find((element) => element.name === name)) {
         alert("Категорія з такою назвою вже існує");
         return;

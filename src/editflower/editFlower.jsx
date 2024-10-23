@@ -22,7 +22,6 @@ const EditFlower = ({ setEdit, id }) => {
   const [description, setDescription] = useState(currentFlower.description);
   const [openCategory, setOpenCategory] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  console.log(currentFlower.categoryId);
   const handleNameChange = (e) => {
     setName(e.target.value);
   };
@@ -52,6 +51,17 @@ const EditFlower = ({ setEdit, id }) => {
         alert("Категорія з такою назвою вже існує");
         return;
       }
+      if (
+        price === null ||
+        price === "" ||
+        price.trim().length === 0 ||
+        isNaN(Number(price)) ||
+        Number(price) < 0
+      ) {
+        alert("Ціна вказана неправильно");
+        return;
+      }
+
       setIsLoading(true);
       const oldImageResponse = await fetch(
         import.meta.env.VITE_API +
