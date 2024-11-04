@@ -54,7 +54,7 @@ const EditFlower = ({ setEdit, id }) => {
       if (
         price === null ||
         price === "" ||
-        price.trim().length === 0 ||
+        String(price).trim().length === 0 ||
         isNaN(Number(price)) ||
         Number(price) < 0
       ) {
