@@ -637,7 +637,7 @@ a {
 
 
     .price {
-        font-size: clamp(1rem, 5.5vw, 2rem);
+        font-size: clamp(0.75rem, 4.5vw, 2rem);
     }
 
     .currency {

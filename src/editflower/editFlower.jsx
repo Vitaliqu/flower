@@ -54,8 +54,7 @@ const EditFlower = ({ setEdit, id }) => {
       if (
         price === null ||
         price === "" ||
-        String(price).trim().length === 0 ||
-        isNaN(Number(price)) ||
+        price.trim().length === 0 ||
         Number(price) < 0
       ) {
         alert("Ціна вказана неправильно");
